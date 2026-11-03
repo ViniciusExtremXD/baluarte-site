@@ -8,7 +8,7 @@
 <meta name="description" content="{{ description }}">
 {% if PREVIEW %}<meta name="robots" content="noindex, nofollow">{% endif %}
 <link rel="canonical" href="{{ canonical }}">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0f172a">
 <meta property="og:type" content="{% block ogtype %}website{% endblock %}">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Baluarte Extintores">
@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="{{ root }}assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="{{ root }}assets/css/site.css">
 <script>
 /* Liga as animações. Quem pede menos movimento no sistema fica só com os fades; ?motion=full mostra tudo e fica salvo no navegador, ?motion=auto volta ao normal. */
@@ -39,28 +39,38 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
 <body>
 {% if not PREVIEW %}<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ GTM_ID }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>{% endif %}
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="topbar-item topbar-loc">{{ icon("pin") }}Atendemos toda a Baixada Santista</span>
+    <div class="topbar-right">
+      <a class="topbar-item" href="tel:{{ PHONE_TEL }}">{{ icon("phone") }}{{ PHONE_LABEL }}</a>
+      <a class="topbar-item topbar-wa" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}{{ WA_LABEL }}</a>
+    </div>
+  </div>
+</div>
 
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="logo" href="{{ root or './' }}"><img src="{{ root }}assets/img/logo.png" alt="Baluarte Extintores de Incêndio" width="280" height="92"></a>
-    <nav class="nav" aria-label="Principal">
+    <a class="brand" href="{{ root or './' }}" aria-label="Baluarte Extintores, início">
+      <img src="{{ root }}assets/img/logo.png" alt="Baluarte Extintores de Incêndio" width="280" height="92">
+      <span class="brand-since"><b>Mais de</b><b>30 anos</b></span>
+    </a>
+    {% set here = path or "" %}
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="{{ '#home' if not here else (root or './') }}"{{ ' class=is-active' if not here }}>Início</a>
+      <a href="{{ root }}#empresa">A Empresa</a>
       <a href="{{ root }}#servicos">Serviços</a>
-      <a href="{{ root }}#como-funciona">Como funciona</a>
-      <a href="{{ root }}baixada-santista/">Cidades</a>
-      <a href="{{ root }}conteudos/">Conteúdos</a>
+      <a href="{{ '#cidades' if not here else root ~ 'baixada-santista/' }}"{{ ' class=is-active' if here.startswith('baixada') or here.startswith('recarga-de') }}>Cidades</a>
+      <a href="{{ root }}conteudos/"{{ ' class=is-active' if here.startswith('conteudos') }}>Conteúdos</a>
+      <a href="#contato">Contato</a>
     </nav>
     <div class="hdr-cta">
-      <a class="hdr-tel" href="tel:{{ PHONE_TEL }}">{{ PHONE_LABEL }}</a>
-      <a class="btn btn-sm" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}WhatsApp</a>
+      <a class="btn btn-primary btn-sm" href="#contato"><span>Solicitar orçamento</span>{{ icon("arrow") }}</a>
+      <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav" data-menu-btn><span></span><span></span><span></span></button>
     </div>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>Menu</button>
   </div>
-  <nav class="menu" id="menu" aria-label="Menu" hidden>
-    <a href="{{ root }}#servicos">Serviços</a>
-    <a href="{{ root }}#como-funciona">Como funciona</a>
-    <a href="{{ root }}baixada-santista/">Cidades</a>
-    <a href="{{ root }}conteudos/">Conteúdos</a>
-  </nav>
 </header>
 
 <main id="conteudo">
@@ -69,12 +79,23 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
 
 <footer class="ftr">
   <div class="wrap ftr-grid">
+    <div class="ftr-about">
+      <a class="ftr-logo" href="{{ root or './' }}"><img src="{{ root }}assets/img/logo.png" alt="Baluarte Extintores de Incêndio" width="280" height="92" loading="lazy"></a>
+      <p>Mais de 30 anos cuidando da prevenção contra incêndio em condomínios, comércios e empresas da Baixada Santista.</p>
+      <div class="ftr-social">
+        <a href="https://www.instagram.com/baluarte.extintores" target="_blank" rel="noopener" aria-label="Instagram">{{ icon("instagram") }}</a>
+        <a href="https://www.facebook.com/baluarteextintores" target="_blank" rel="noopener" aria-label="Facebook">{{ icon("facebook") }}</a>
+        <a href="https://www.youtube.com/channel/UC6zuQS2TfPEjO3gAp07oJUg" target="_blank" rel="noopener" aria-label="YouTube">{{ icon("youtube") }}</a>
+      </div>
+    </div>
     <div>
-      <h2>Contato</h2>
+      <h2>Navegação</h2>
       <ul>
-        <li><a href="{{ wa() }}" target="_blank" rel="noopener">WhatsApp {{ WA_LABEL }}</a></li>
-        <li><a href="tel:{{ PHONE_TEL }}">Telefone {{ PHONE_LABEL }}</a></li>
-        <li><a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a></li>
+        <li><a href="{{ root }}#empresa">A Empresa</a></li>
+        <li><a href="{{ root }}#servicos">Serviços</a></li>
+        <li><a href="{{ root }}#como-funciona">Como funciona</a></li>
+        <li><a href="{{ root }}conteudos/">Conteúdos</a></li>
+        <li><a href="#contato">Contato</a></li>
       </ul>
     </div>
     <div>
@@ -85,27 +106,20 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
       </ul>
     </div>
     <div>
-      <h2>Conteúdos</h2>
+      <h2>Contato</h2>
       <ul>
-        {% for p in posts %}<li><a href="{{ root }}conteudos/{{ p.slug }}/">{{ p.title }}</a></li>{% endfor %}
-      </ul>
-    </div>
-    <div>
-      <h2>Redes</h2>
-      <ul>
-        <li><a href="https://www.instagram.com/baluarte.extintores" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="https://www.facebook.com/baluarteextintores" target="_blank" rel="noopener">Facebook</a></li>
-        <li><a href="https://www.youtube.com/channel/UC6zuQS2TfPEjO3gAp07oJUg" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="{{ wa() }}" target="_blank" rel="noopener">WhatsApp {{ WA_LABEL }}</a></li>
+        <li><a href="tel:{{ PHONE_TEL }}">Telefone {{ PHONE_LABEL }}</a></li>
+        <li><a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a></li>
+        <li class="ftr-txt">Av. Piassaguera, 1189, Guarujá - SP</li>
+        <li class="ftr-txt">R. Dr. Luis Suplicy, 31, Santos - SP</li>
       </ul>
     </div>
   </div>
   <div class="wrap ftr-legal">© {{ year }} Baluarte Extintores de Incêndio · Registro INMETRO de Conformidade de Fornecedor nº 3495/22</div>
 </footer>
 
-<div class="mbar">
-  <a class="btn btn-line" href="tel:{{ PHONE_TEL }}">Ligar</a>
-  <a class="btn" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}WhatsApp</a>
-</div>
+<a class="wa-float" href="{{ wa() }}" target="_blank" rel="noopener" aria-label="Falar pelo WhatsApp">{{ m.icon_wa() }}</a>
 
 <script src="{{ root }}assets/js/site.js" defer></script>
 </body>

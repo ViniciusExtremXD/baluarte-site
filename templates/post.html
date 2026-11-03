@@ -3,9 +3,10 @@
 {% block ogtype %}article{% endblock %}
 {% block content %}
 <article>
-  <header class="page-head">
-    <div class="wrap wrap-text">
+  <header class="band">
+    <div class="wrap band-in band-post">
       <nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <a href="{{ root }}conteudos/">Conteúdos</a></nav>
+      <span class="post-tag">{{ post.category }}</span>
       <h1>{{ post.title }}</h1>
       <p class="meta">Equipe técnica Baluarte · <time datetime="{{ post.date }}">{{ post.date_label }}</time> · {{ post.minutes }} min de leitura</p>
     </div>
@@ -15,12 +16,26 @@
     <div class="post-cta">
       <h2>Precisa de vistoria ou recarga?</h2>
       <p>A vistoria e o orçamento são grátis em toda a Baixada Santista.</p>
-      {{ m.actions(wa("Olá! Li o artigo \"" ~ post.title ~ "\" e quero vistoria e orçamento grátis.")) }}
+      <a class="btn btn-primary" href="{{ wa('Olá! Li o artigo "' ~ post.title ~ '" e quero vistoria e orçamento grátis.') }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
     </div>
-    <h2 class="more-title">Outros conteúdos</h2>
-    <ul class="more">
-      {% for p in related %}<li><a href="{{ root }}conteudos/{{ p.slug }}/">{{ p.title }}</a></li>{% endfor %}
-    </ul>
   </div>
 </article>
+<section class="section blog">
+  <div class="wrap">
+    {{ m.head("Continue lendo", "Outros <em>conteúdos</em>.") }}
+    <div class="post-grid post-grid-2">
+      {% for p in related %}
+      <article class="post-card glow reveal">
+        <div class="post-media"><img src="{{ root }}assets/img/{{ p.image }}" alt="" loading="lazy" decoding="async"><span class="post-tag">{{ p.category }}</span></div>
+        <div class="post-body">
+          <h2><a href="{{ root }}conteudos/{{ p.slug }}/">{{ p.title }}</a></h2>
+          <p>{{ p.excerpt }}</p>
+          <div class="post-foot"><span>{{ p.minutes }} min de leitura</span><span class="link">Ler {{ icon("arrow") }}</span></div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{{ m.contact("Solicite um <em>orçamento</em>.") }}
 {% endblock %}

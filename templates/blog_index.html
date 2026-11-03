@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 {% import "macros.html" as m with context %}
 {% block content %}
-<section class="page-head">
-  <div class="wrap wrap-text">
-    <h1>Conteúdos</h1>
-    <p class="lead">Normas, prazos e cuidados com extintores e mangueiras, explicados pela equipe técnica da Baluarte.</p>
+<section class="band">
+  <div class="wrap band-in">
+    <nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <span aria-current="page">Conteúdos</span></nav>
+    <h1>Conteúdos <em>técnicos</em></h1>
+    <p>Normas, prazos e cuidados com extintores e mangueiras, explicados pela equipe técnica da Baluarte.</p>
   </div>
 </section>
-<section class="sec sec-first">
-  <div class="wrap wrap-text">
-    <ul class="post-list">
-      {% for p in posts %}
-      <li>
+<section class="section blog">
+  <div class="wrap post-grid">
+    {% for p in posts %}
+    <article class="post-card glow reveal">
+      <div class="post-media"><img src="{{ root }}assets/img/{{ p.image }}" alt="" loading="lazy" decoding="async"><span class="post-tag">{{ p.category }}</span></div>
+      <div class="post-body">
         <h2><a href="{{ root }}conteudos/{{ p.slug }}/">{{ p.title }}</a></h2>
         <p>{{ p.excerpt }}</p>
-        <p class="meta">{{ p.date_label }} · {{ p.minutes }} min de leitura</p>
-      </li>
-      {% endfor %}
-    </ul>
+        <div class="post-foot"><span>{{ p.date_label }} · {{ p.minutes }} min</span><span class="link">Ler {{ icon("arrow") }}</span></div>
+      </div>
+    </article>
+    {% endfor %}
   </div>
 </section>
-{{ m.contact("Peça sua vistoria grátis", wa()) }}
+{{ m.cta_band("Peça sua vistoria grátis", "Um técnico avalia tudo no local e você recebe o orçamento sem compromisso.", wa("Olá! Quero agendar uma vistoria grátis.")) }}
+{{ m.contact("Solicite um <em>orçamento</em>.") }}
 {% endblock %}

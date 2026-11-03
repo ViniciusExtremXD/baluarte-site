@@ -21,7 +21,7 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 - O Google Tag Manager `GTM-58MG5F9P` já está no `<head>` de todas as páginas. Ele **só carrega no domínio oficial**, para a prévia não sujar os dados do GA4 e do Google Ads.
 - Os botões de WhatsApp usam `https://wa.me/5513997401621?...` e os de telefone usam `tel:+551333522500`. Os acionadores do GTM já reconhecem esses formatos e registram as conversões no GA4 e no Ads.
-- O site novo não tem formulário: todo pedido vai pelo WhatsApp ou pelo telefone.
+- O formulário de orçamento não grava dados: ele abre o WhatsApp com a mensagem pronta, por um clique em link `wa.me`. Ao publicar, confira no Tag Assistant quais conversões esse envio dispara.
 
 ## Ao publicar em produção
 
@@ -44,7 +44,7 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 **Jeito recomendado** (precisa de Python com `jinja2`):
 1. Crie `data/posts/<slug-do-artigo>.html` só com o corpo do texto. Use `<h2>`, `<p>`, `<ul>` e, se quiser, os blocos `post-answer`, `post-tip` e `post-table`. Os artigos que já existem servem de exemplo.
-2. Adicione o artigo no **início** de `data/posts.json`, com título, descrição, data, categoria, tempo de leitura e resumo.
+2. Adicione o artigo no **início** de `data/posts.json`, com título, descrição, data, categoria, tempo de leitura e resumo. Para escolher a foto do cartão, informe `"image"` com o nome de um arquivo de `assets/img/`.
 3. Rode `python build.py producao` e suba a pasta `dist/`. A listagem, o rodapé, o sitemap e o `llms.txt` se atualizam sozinhos.
 
 **Jeito manual** (sem Python):
@@ -54,9 +54,9 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 ## Animações
 
-Entrada da primeira dobra, itens que aparecem ao rolar, números que contam, foto que acompanha a rolagem, rolagem suave no computador e troca suave de página.
+Carrossel na primeira dobra, itens que aparecem ao rolar, números que contam, faixa de clientes, foto que acompanha a rolagem, rolagem suave no computador e troca suave de página.
 
-Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desligado), ficam só os fades. Para ver tudo mesmo assim, abra o site com `?motion=full` no fim do endereço. A escolha fica salva no navegador, e `?motion=auto` volta ao normal.
+Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desligado), ficam os fades, a troca do carrossel e a faixa de clientes. Para ver tudo mesmo assim, abra o site com `?motion=full` no fim do endereço. A escolha fica salva no navegador, e `?motion=auto` volta ao normal.
 
 ## Estrutura do código
 

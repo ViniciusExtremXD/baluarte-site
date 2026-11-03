@@ -2,57 +2,57 @@
 {% import "macros.html" as m with context %}
 {% block content %}
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <a href="{{ root }}baixada-santista/">Baixada Santista</a> / <span aria-current="page">{{ city.name }}</span></nav>
-      <h1>{{ city.h1 }}</h1>
-      <p class="lead">{{ city.lead }}</p>
-      {{ m.actions(city.wa) }}
-      {{ m.proof() }}
-    </div>
-    {{ m.hero_photo() }}
-  </div>
-</section>
+{% call m.page_hero(city.h1_html, city.lead, city.wa, city.img, city.img_alt) %}
+<nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <a href="{{ root }}baixada-santista/">Baixada Santista</a> / <span aria-current="page">{{ city.name }}</span></nav>
+{% endcall %}
 
-<section class="sec" id="atendimento-local">
-  <div class="wrap row">
-    <h2>{{ city.local_h2 }}</h2>
+<section class="section local" id="atendimento-local">
+  <div class="wrap local-grid">
     <div>
-      <div class="text">
+      {{ m.head(city.name, city.local_h2) }}
+      <div class="text reveal">
         {% for p in city.local_ps %}<p>{{ p }}</p>{% endfor %}
       </div>
-      <h3 class="inc-title">Quem atendemos</h3>
-      <ul class="inc">
-        {% for w in city.who %}<li>{{ w }}</li>{% endfor %}
+      <h3 class="sub reveal">Quem atendemos</h3>
+      <ul class="checks reveal">
+        {% for w in city.who %}<li>{{ icon("check") }}{{ w }}</li>{% endfor %}
       </ul>
-      <h3 class="inc-title">{{ city.bairros_title }}</h3>
-      <p>{{ city.bairros|join(", ") }}.{% if city.bairros_note %} {{ city.bairros_note }}{% endif %}</p>
+    </div>
+    <aside class="local-card reveal reveal-r">
+      <h3>{{ city.bairros_title }}</h3>
+      <ul class="bairros">
+        {% for b in city.bairros %}<li>{{ b }}</li>{% endfor %}
+      </ul>
+      {% if city.bairros_note %}<p class="local-note">{{ city.bairros_note }}</p>{% endif %}
       {% if city.addr_title %}
-      <h3 class="inc-title">{{ city.addr_title }}</h3>
-      <p>{{ city.addr_lines|join(" · ") }}{% if city.map %}<br><a href="{{ city.map }}" target="_blank" rel="noopener">Ver no mapa</a>{% endif %}</p>
+      <div class="local-addr">
+        <span class="info-icon">{{ icon("pin") }}</span>
+        <div>
+          <b>{{ city.addr_title }}</b>
+          <span>{{ city.addr_lines|join(" · ") }}</span>
+          {% if city.map %}<br><a href="{{ city.map }}" target="_blank" rel="noopener">Ver no mapa {{ icon("arrow") }}</a>{% endif %}
+        </div>
+      </div>
       {% endif %}
-    </div>
+    </aside>
   </div>
 </section>
 
-{{ m.services() }}
+{{ m.services(city.name) }}
 
-{{ m.how() }}
+{{ m.how(city.wa) }}
 
-{{ m.faq_list(faq) }}
+{{ m.faq_list(faq, city.wa, "Dúvidas em <em>" ~ city.name ~ "</em>.") }}
 
-<section class="sec" id="cidades">
-  <div class="wrap row">
-    <h2>Outras cidades</h2>
-    <div>
-      <ul class="cities">
-        {% for c in others %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}
-      </ul>
-      <p class="also">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}. <a href="{{ root }}baixada-santista/">Ver toda a região</a></p>
-    </div>
+<section class="section cidades" id="cidades">
+  <div class="wrap">
+    {{ m.head("Outras cidades", "Atendemos toda a <em>Baixada Santista</em>.") }}
+    {{ m.city_cards(others) }}
+    <p class="also reveal">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}. <a href="{{ root }}baixada-santista/">Ver toda a região</a></p>
   </div>
 </section>
 
-{{ m.contact(city.final_h2 or "Peça sua vistoria grátis", city.wa) }}
+{{ m.cta_band(city.final_h2 or "Peça sua vistoria grátis", "Um técnico avalia tudo no local e você recebe o orçamento sem compromisso.", city.wa) }}
+
+{{ m.contact("Solicite um <em>orçamento</em>.", city.name) }}
 {% endblock %}

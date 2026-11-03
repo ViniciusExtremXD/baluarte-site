@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% import "macros.html" as m with context %}
 {% block content %}
-<section class="page-head page-404">
-  <div class="wrap wrap-text">
-    <h1>Página não encontrada</h1>
-    <p class="lead">Volte para o início ou fale com a gente.</p>
-    <div class="actions">
-      <a class="btn" href="{{ root }}">Ir para o início</a>
-      <a class="btn btn-line" href="tel:{{ PHONE_TEL }}">{{ PHONE_LABEL }}</a>
+<section class="band band-404">
+  <div class="wrap band-in">
+    <h1>Página não <em>encontrada</em></h1>
+    <p>Volte para o início ou fale com a gente.</p>
+    <div class="slide-ctas">
+      <a class="btn btn-primary" href="{{ root }}"><span>Ir para o início</span>{{ icon("arrow") }}</a>
+      <a class="btn btn-ghost" href="tel:{{ PHONE_TEL }}">{{ icon("phone") }}<span>{{ PHONE_LABEL }}</span></a>
     </div>
   </div>
 </section>

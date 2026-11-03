@@ -2,47 +2,37 @@
 {% import "macros.html" as m with context %}
 {% block content %}
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <span aria-current="page">Baixada Santista</span></nav>
-      <h1>{{ reg.h1 }}</h1>
-      <p class="lead">{{ reg.lead }}</p>
-      {{ m.actions(wa()) }}
-      {{ m.proof() }}
-    </div>
-    {{ m.hero_photo() }}
+{% call m.page_hero(reg.h1_html, reg.lead, wa(), "sede-guaruja.webp", "Fachada da sede da Baluarte Extintores em Guarujá") %}
+<nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <span aria-current="page">Baixada Santista</span></nav>
+{% endcall %}
+
+<section class="section cidades" id="cidades">
+  <div class="wrap">
+    {{ m.head("Cidades atendidas", "Escolha a <em>sua cidade</em>.", "Retirada e entrega grátis, de Peruíbe à Riviera de São Lourenço.") }}
+    {{ m.route() }}
+    {{ m.city_cards(cities) }}
+    <p class="also reveal">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}, com retirada e entrega grátis.</p>
   </div>
 </section>
 
-<section class="sec" id="cidades">
-  <div class="wrap row">
-    <h2>Escolha a sua cidade</h2>
+<section class="section local unidades" id="unidades">
+  <div class="wrap empresa-grid">
     <div>
-      <ul class="cities">
-        {% for c in cities %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}
-      </ul>
-      <p class="also">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}, com retirada e entrega grátis.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="unidades">
-  <div class="wrap row">
-    <h2>Onde estamos</h2>
-    <div>
-      <div class="text">
+      {{ m.head("Onde estamos", "Sede em Guarujá,<br class='d-br'> escritório em <em>Santos</em>.") }}
+      <div class="text reveal">
         <p>A oficina de recarga fica na nossa sede própria, em Guarujá. De lá saem as equipes que retiram e entregam os extintores em todas as cidades da Baixada, sem custo de deslocamento.</p>
         <p>O escritório comercial em Santos atende síndicos, administradoras e empresas que preferem conversar pessoalmente.</p>
       </div>
-      {{ m.photos() }}
     </div>
+    {{ m.photos_fig() }}
   </div>
 </section>
 
 {{ m.services() }}
 
-{{ m.faq_list(faq) }}
+{{ m.how(wa("Olá! Quero agendar uma vistoria grátis.")) }}
 
-{{ m.contact("Peça sua vistoria grátis", wa()) }}
+{{ m.faq_list(faq, wa("Olá! Tenho uma dúvida sobre extintores.")) }}
+
+{{ m.contact("Solicite um <em>orçamento</em>.", map=True) }}
 {% endblock %}

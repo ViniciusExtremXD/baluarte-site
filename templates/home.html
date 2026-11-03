@@ -2,83 +2,173 @@
 {% import "macros.html" as m with context %}
 {% block content %}
 
-<section class="hero hero-home">
-  <div class="wrap hero-grid">
-    <div>
-      <h1>Recarga e manutenção de extintores na Baixada Santista</h1>
-      <p class="lead">Retiramos seus extintores, deixamos reservas no lugar e devolvemos em até 7 dias úteis, com selo do INMETRO. Vistoria e orçamento grátis.</p>
-      {{ m.actions(wa()) }}
-      {{ m.proof() }}
+<section class="hero" id="home">
+  <div class="hero-slider" role="group" aria-roledescription="carrossel" aria-label="Destaques da Baluarte">
+
+    <article class="slide is-active">
+      <div class="slide-bg"><img src="{{ root }}assets/img/hero-tecnico.webp" alt="Técnico segurando um extintor de incêndio" fetchpriority="high"></div>
+      <div class="slide-panel" aria-hidden="true"></div>
+      <div class="wrap slide-content">
+        <p class="slide-kicker"><span class="dot"></span>Mais de 30 anos · Registro INMETRO nº 3495/22</p>
+        <h1 class="slide-title">
+          <span class="h-line"><span>Recarga e manutenção</span></span>
+          <span class="h-line"><span>de extintores na</span></span>
+          <span class="h-line"><span><em>Baixada Santista</em>.</span></span>
+        </h1>
+        <p class="slide-text">Retiramos seus extintores, deixamos reservas no lugar e devolvemos em até 7 dias úteis, com selo do INMETRO. Vistoria e orçamento grátis.</p>
+        <div class="slide-ctas">
+          <a class="btn btn-primary" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
+          <a class="btn btn-ghost" href="#servicos"><span>Conheça os serviços</span></a>
+        </div>
+      </div>
+      <div class="slide-proof">
+        <img src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO nº 3495/22" width="58" height="58">
+        <div><b>5,0 {{ m.stars() }}</b><span>704 avaliações no Google</span></div>
+      </div>
+    </article>
+
+    <article class="slide slide-red">
+      <div class="slide-bg"><img src="{{ root }}assets/img/hero-valvula.webp" alt="Detalhe do manômetro e da válvula de um extintor" loading="lazy" decoding="async"></div>
+      <div class="slide-panel" aria-hidden="true"></div>
+      <div class="wrap slide-content">
+        <p class="slide-kicker"><span class="dot"></span>Prazo garantido por escrito</p>
+        <h2 class="slide-title">
+          <span class="h-line"><span>Devolução em até</span></span>
+          <span class="h-line"><span><em>7 dias úteis</em>, ou 20%</span></span>
+          <span class="h-line"><span>de desconto.</span></span>
+        </h2>
+        <p class="slide-text">Se não cumprirmos o prazo, você ganha 20% de desconto no próximo serviço. E o imóvel fica com extintores reservas durante toda a recarga.</p>
+        <div class="slide-ctas">
+          <a class="btn btn-light" href="{{ wa('Olá! Quero agendar uma vistoria grátis.') }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Agendar vistoria grátis</span></a>
+          <a class="btn btn-ghost" href="tel:{{ PHONE_TEL }}">{{ icon("phone") }}<span>{{ PHONE_LABEL }}</span></a>
+        </div>
+      </div>
+      <div class="slide-proof">
+        <span class="proof-icon">{{ icon("shield") }}</span>
+        <div><b>Vistoria grátis</b><span>Sem custo e sem compromisso</span></div>
+      </div>
+    </article>
+
+    <article class="slide slide-light">
+      <div class="slide-art">
+        <span class="art-ring" aria-hidden="true"></span>
+        <img class="art-photo" src="{{ root }}assets/img/sede-circulo.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" loading="lazy" decoding="async">
+        <span class="art-badge"><b>+30</b>anos de<br>mercado</span>
+        <img class="art-seal" src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO nº 3495/22" width="100" height="100" loading="lazy">
+      </div>
+      <div class="slide-panel" aria-hidden="true"></div>
+      <div class="wrap slide-content">
+        <p class="slide-kicker"><span class="dot"></span>Sede própria em Guarujá · Escritório em Santos</p>
+        <h2 class="slide-title">
+          <span class="h-line"><span>Mais de <em>14.000</em></span></span>
+          <span class="h-line"><span>clientes atendidos,</span></span>
+          <span class="h-line"><span>em toda a região.</span></span>
+        </h2>
+        <p class="slide-text">De condomínios residenciais a grandes empresas, com oficina própria e equipe técnica na Baixada Santista.</p>
+        <div class="slide-ctas">
+          <a class="btn btn-primary" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
+          <a class="btn btn-outline" href="#empresa"><span>Conheça a empresa</span></a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="hero-ui">
+    <div class="wrap hero-dots">
+      <button class="hero-dot is-active" type="button" aria-label="Ir para o destaque 1" aria-current="true"><i>01</i><b><s></s></b></button>
+      <button class="hero-dot" type="button" aria-label="Ir para o destaque 2"><i>02</i><b><s></s></b></button>
+      <button class="hero-dot" type="button" aria-label="Ir para o destaque 3"><i>03</i><b><s></s></b></button>
+      <button class="hero-pause" type="button" aria-label="Pausar a troca automática" aria-pressed="false">
+        <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
+        <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+      </button>
     </div>
-    {{ m.hero_photo() }}
   </div>
 </section>
 
-<section class="stats-sec" aria-label="A Baluarte em números">
-  <ul class="wrap stats">
-    <li><strong>+<span data-n="30">30</span> anos</strong><span>de mercado</span></li>
-    <li><strong>+<span data-n="14000">14.000</span></strong><span>clientes atendidos</span></li>
-    <li><strong>+1 milhão</strong><span>de extintores recarregados</span></li>
-    <li><strong>5,0<span class="stars" role="img" aria-label="5 estrelas">{% for _ in range(5) %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.5l-6 3.3 1.3-6.7-5-4.6 6.8-.8z"/></svg>{% endfor %}</span></strong><span>704 avaliações no Google</span></li>
-  </ul>
+<section class="clients" aria-label="Clientes da Baluarte">
+  <p class="clients-head reveal">Quem confia na Baluarte para proteger o que importa</p>
+  <div class="marquee">
+    <div class="marquee-track">
+      {% for group in [0, 1] %}
+      <div class="marquee-group"{{ ' aria-hidden=true' if group }}>
+        {% for c in clientes %}<img src="{{ root }}assets/img/clientes/{{ c.file }}" alt="{{ c.name if not group }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy" decoding="async">{% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section empresa" id="empresa">
+  <div class="wrap">
+    <div class="empresa-grid">
+      <div>
+        {{ m.head("A empresa", "Mais de <em>30 anos</em><br class='d-br'> cuidando da sua segurança.", "Prevenção contra incêndio na Baixada Santista, com sede própria e oficina em Guarujá e escritório comercial em Santos.") }}
+        <ul class="stats reveal">
+          <li><b>+<span data-n="30">30</span> anos</b><span>de mercado</span></li>
+          <li><b>+<span data-n="14000">14.000</span></b><span>clientes atendidos</span></li>
+          <li><b>+1 milhão</b><span>de extintores recarregados</span></li>
+          <li><b>5,0 {{ m.stars() }}</b><span>704 avaliações no Google</span></li>
+        </ul>
+      </div>
+      {{ m.photos_fig() }}
+    </div>
+    <div class="beneficios">
+      <article class="beneficio glow reveal">
+        <span class="beneficio-icon">{{ icon("shield") }}</span>
+        <h3>Registro no INMETRO</h3>
+        <p>Cada extintor recarregado sai com o selo que o Corpo de Bombeiros confere na vistoria.</p>
+        <span class="tag">Nº 3495/22</span>
+      </article>
+      <article class="beneficio glow reveal">
+        <span class="beneficio-icon">{{ icon("calendar") }}</span>
+        <h3>Prazo garantido por escrito</h3>
+        <p>Devolução em até 7 dias úteis. Se não cumprirmos, você ganha 20% de desconto no próximo serviço.</p>
+        <span class="tag">Até 7 dias úteis</span>
+      </article>
+      <article class="beneficio glow reveal">
+        <span class="beneficio-icon">{{ icon("truck") }}</span>
+        <h3>Retirada, entrega e reservas</h3>
+        <p>Buscamos e devolvemos no seu imóvel e deixamos extintores reservas durante a recarga.</p>
+        <span class="tag">Sem custo de deslocamento</span>
+      </article>
+    </div>
+  </div>
 </section>
 
 {{ m.services() }}
 
-{{ m.how() }}
+{{ m.how(wa("Olá! Quero agendar uma vistoria grátis.")) }}
 
-<section class="sec" id="clientes">
-  <div class="wrap row">
-    <h2>Clientes</h2>
-    <div>
-      <p class="sec-lead">Mais de 14.000 clientes atendidos, de condomínios a grandes empresas. Alguns deles:</p>
-      <ul class="logos">
-        {% for c in clientes %}<li><img src="{{ root }}assets/img/clientes/{{ c.file }}" alt="{{ c.name }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy"></li>{% endfor %}
-      </ul>
-    </div>
+<section class="section cidades" id="cidades">
+  <div class="wrap">
+    {{ m.head("Cidades atendidas", "Presente em toda a <em>Baixada Santista</em>.", "Retirada e entrega grátis, de Peruíbe à Riviera de São Lourenço. Escolha a sua cidade.") }}
+    {{ m.route() }}
+    {{ m.city_cards(cities) }}
+    <p class="also reveal">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}.</p>
   </div>
 </section>
 
-<section class="sec" id="empresa">
-  <div class="wrap row">
-    <h2>A empresa</h2>
-    <div>
-      <p class="sec-lead">Mais de 30 anos cuidando da prevenção contra incêndio na Baixada Santista, com sede própria e oficina em Guarujá e escritório comercial em Santos.</p>
-      {{ m.photos() }}
-      <div class="seal">
-        <img src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO de Conformidade de Fornecedor nº 3495/22" width="72" height="72" loading="lazy">
-        <p>Registro INMETRO de Conformidade de Fornecedor nº 3495/22. Cada extintor recarregado sai com o selo que o Corpo de Bombeiros confere.</p>
+{{ m.cta_band("Peça sua vistoria grátis", "Um técnico avalia tudo no local e você recebe o orçamento sem compromisso.", wa("Olá! Quero agendar uma vistoria grátis.")) }}
+
+<section class="section avaliacoes" id="avaliacoes">
+  <div class="wrap">
+    {{ m.head("Avaliações", "Nota <em>5,0</em> de quem já contratou.") }}
+    <div class="reviews">
+      <div class="review-score reveal">
+        <b>5,0</b>
+        {{ m.stars() }}
+        <span>704 avaliações no Google</span>
+        <a href="{{ REVIEWS_URL }}" target="_blank" rel="noopener">Ver no Google {{ icon("arrow") }}</a>
       </div>
+      {% for r in reviews %}
+      <blockquote class="review glow reveal">{{ m.stars() }}<p>{{ r }}</p></blockquote>
+      {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="sec" id="avaliacoes">
-  <div class="wrap row">
-    <h2>Avaliações</h2>
-    <div>
-      <p class="sec-lead">Nota 5,0 em 704 avaliações no Google. <a href="{{ REVIEWS_URL }}" target="_blank" rel="noopener">Ver no Google</a></p>
-      <div class="quotes">
-        {% for r in reviews %}<blockquote>{{ r }}</blockquote>{% endfor %}
-      </div>
-    </div>
-  </div>
-</section>
+{{ m.faq_list(faq, wa("Olá! Tenho uma dúvida sobre extintores.")) }}
 
-<section class="sec" id="cidades">
-  <div class="wrap row">
-    <h2>Cidades atendidas</h2>
-    <div>
-      <p class="sec-lead">Retirada e entrega grátis em toda a Baixada Santista.</p>
-      <ul class="cities">
-        {% for c in cities %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}
-      </ul>
-      <p class="also">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}.</p>
-    </div>
-  </div>
-</section>
-
-{{ m.faq_list(faq) }}
-
-{{ m.contact("Peça sua vistoria grátis", wa()) }}
+{{ m.contact("Solicite um <em>orçamento</em>.", map=True) }}
 {% endblock %}
