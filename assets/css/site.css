@@ -541,10 +541,11 @@ html.js.motion [data-hero-visual]>*,html.js.motion [data-hero-title]{opacity:0}
   .score{width:100%}
   .clients-head{flex-direction:column;gap:8px}
 }
+.motion-toggle{background:none;border:0;padding:0;color:var(--muted-d);font-size:13px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.motion-toggle:hover{color:#fff}
+.motion-lite .marquee,.motion-lite .rev-row,.motion-lite .steps-rail{overflow-x:auto;scrollbar-width:thin}
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-  .g-needle{transform:rotate(45deg)}
-  .g-arc,.g-dial-arc{stroke-dashoffset:0}
-  .marquee,.rev-row{overflow-x:auto}
-  .steps-rail{overflow-x:auto}
+  html:not(.motion-full) *,html:not(.motion-full) *::before,html:not(.motion-full) *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  html:not(.js) .g-needle{transform:rotate(45deg)}
+  html:not(.js) .g-arc,html:not(.js) .g-dial-arc{stroke-dashoffset:0}
 }

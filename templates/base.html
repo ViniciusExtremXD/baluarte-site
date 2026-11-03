@@ -25,7 +25,10 @@
 <link rel="stylesheet" href="{{ root }}assets/css/site.css">
 <script>
 (function(d){var h=d.documentElement;h.classList.add('js');
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches)h.classList.add('motion');
+var pref=null;try{var q=new URLSearchParams(location.search).get('motion');if(q==='full'||q==='lite')localStorage.setItem('blt-motion',q);pref=localStorage.getItem('blt-motion');}catch(e){}
+h.classList.add('motion');
+if(pref==='full')h.classList.add('motion-full');
+else if(pref==='lite'||matchMedia('(prefers-reduced-motion: reduce)').matches)h.classList.add('motion-lite');
 setTimeout(function(){if(!window.gsap){h.classList.remove('motion');var l=d.querySelector('[data-loader]');if(l)l.classList.remove('is-on');}},4500);
 })(document);
 </script>
@@ -47,7 +50,7 @@ setTimeout(function(){if(!window.gsap){h.classList.remove('motion');var l=d.quer
     <div class="loader-bar"><i></i></div>
   </div>
 </div>
-<script>try{if(document.documentElement.classList.contains('motion')&&!sessionStorage.getItem('blt-seen'))document.querySelector('[data-loader]').classList.add('is-on');}catch(e){}</script>
+<script>try{var c=document.documentElement.classList;if(c.contains('motion')&&!c.contains('motion-lite')&&!sessionStorage.getItem('blt-seen'))document.querySelector('[data-loader]').classList.add('is-on');}catch(e){}</script>
 <div class="curtain" aria-hidden="true" data-curtain><span></span><span></span></div>
 <div class="cursor" aria-hidden="true" data-cursor></div>
 
@@ -134,7 +137,7 @@ setTimeout(function(){if(!window.gsap){h.classList.remove('motion');var l=d.quer
       </div>
     </div>
   </div>
-  <div class="wrap ftr-legal"><span>© {{ year }} Baluarte Extintores de Incêndio</span><span>Registro INMETRO nº 3495/22</span></div>
+  <div class="wrap ftr-legal"><span>© {{ year }} Baluarte Extintores de Incêndio</span><button type="button" class="motion-toggle" data-motion-toggle>Animações</button><span>Registro INMETRO nº 3495/22</span></div>
 </footer>
 
 <a class="wa-float" href="{{ wa() }}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" data-wa-float>{{ m.icon("wa") }}<span class="wa-ring" aria-hidden="true"></span></a>
