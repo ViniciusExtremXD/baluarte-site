@@ -353,7 +353,8 @@
       tl.to(o, { v: to, duration: 2, ease: 'power3.out', onUpdate: function () { el.textContent = fmt(o.v, dec, suf); } }, .8);
     });
     // parallax do hero ao rolar
-    G.to(hero.querySelector('.hero-in'), { yPercent: 8, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+    var heroIn = hero.querySelector('.hero-in');
+    if (heroIn) G.to(heroIn, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
   }
 
   safe(function preloader() {

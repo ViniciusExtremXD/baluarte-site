@@ -52,6 +52,12 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 2. Em `conteudos/index.html`, duplique um card (`<a class="post-card">`) e aponte para a pasta nova.
 3. Adicione a URL nova no `sitemap.xml`.
 
+## Animações
+
+- **Completo:** padrão para todo mundo.
+- **Leve:** só fades, sem parallax, sem rolagem presa e sem letreiros em movimento. Liga sozinho quando o sistema pede "reduzir movimento". No Windows, isso acontece com "Efeitos de animação" desligado.
+- **Botão no rodapé** ou `?motion=full` / `?motion=lite` na URL: troca o modo, e a escolha fica salva no navegador.
+
 ## Estrutura do código
 
 - `build.py`: gera as páginas a partir dos templates e dos dados.
