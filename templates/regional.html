@@ -18,7 +18,7 @@
 <section class="sec" id="cidades">
   <div class="wrap row">
     <h2>Escolha a sua cidade</h2>
-    <div class="reveal">
+    <div>
       <ul class="cities">
         {% for c in cities %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}
       </ul>
@@ -30,15 +30,12 @@
 <section class="sec" id="unidades">
   <div class="wrap row">
     <h2>Onde estamos</h2>
-    <div class="reveal">
+    <div>
       <div class="text">
         <p>A oficina de recarga fica na nossa sede própria, em Guarujá. De lá saem as equipes que retiram e entregam os extintores em todas as cidades da Baixada, sem custo de deslocamento.</p>
         <p>O escritório comercial em Santos atende síndicos, administradoras e empresas que preferem conversar pessoalmente.</p>
       </div>
-      <div class="photos">
-        <figure><img src="{{ root }}assets/img/fachada-sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="376" height="314" loading="lazy"><figcaption>Sede em Guarujá</figcaption></figure>
-        <figure><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="418" height="314" loading="lazy"><figcaption>Oficina de recarga</figcaption></figure>
-      </div>
+      {{ m.photos() }}
     </div>
   </div>
 </section>

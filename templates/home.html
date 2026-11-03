@@ -2,7 +2,7 @@
 {% import "macros.html" as m with context %}
 {% block content %}
 
-<section class="hero">
+<section class="hero hero-home">
   <div class="wrap hero-grid">
     <div>
       <h1>Recarga e manutenção de extintores na Baixada Santista</h1>
@@ -14,6 +14,15 @@
   </div>
 </section>
 
+<section class="stats-sec" aria-label="A Baluarte em números">
+  <ul class="wrap stats">
+    <li><strong>+<span data-n="30">30</span> anos</strong><span>de mercado</span></li>
+    <li><strong>+<span data-n="14000">14.000</span></strong><span>clientes atendidos</span></li>
+    <li><strong>+1 milhão</strong><span>de extintores recarregados</span></li>
+    <li><strong>5,0<span class="stars" role="img" aria-label="5 estrelas">{% for _ in range(5) %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.5l-6 3.3 1.3-6.7-5-4.6 6.8-.8z"/></svg>{% endfor %}</span></strong><span>704 avaliações no Google</span></li>
+  </ul>
+</section>
+
 {{ m.services() }}
 
 {{ m.how() }}
@@ -21,7 +30,7 @@
 <section class="sec" id="clientes">
   <div class="wrap row">
     <h2>Clientes</h2>
-    <div class="reveal">
+    <div>
       <p class="sec-lead">Mais de 14.000 clientes atendidos, de condomínios a grandes empresas. Alguns deles:</p>
       <ul class="logos">
         {% for c in clientes %}<li><img src="{{ root }}assets/img/clientes/{{ c.file }}" alt="{{ c.name }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy"></li>{% endfor %}
@@ -33,17 +42,9 @@
 <section class="sec" id="empresa">
   <div class="wrap row">
     <h2>A empresa</h2>
-    <div class="reveal">
+    <div>
       <p class="sec-lead">Mais de 30 anos cuidando da prevenção contra incêndio na Baixada Santista, com sede própria e oficina em Guarujá e escritório comercial em Santos.</p>
-      <ul class="facts">
-        <li><strong>+30 anos</strong> de mercado</li>
-        <li><strong>+14.000</strong> clientes atendidos</li>
-        <li><strong>+1 milhão</strong> de extintores recarregados</li>
-      </ul>
-      <div class="photos">
-        <figure><img src="{{ root }}assets/img/fachada-sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="376" height="314" loading="lazy"><figcaption>Sede em Guarujá</figcaption></figure>
-        <figure><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="418" height="314" loading="lazy"><figcaption>Oficina de recarga</figcaption></figure>
-      </div>
+      {{ m.photos() }}
       <div class="seal">
         <img src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO de Conformidade de Fornecedor nº 3495/22" width="72" height="72" loading="lazy">
         <p>Registro INMETRO de Conformidade de Fornecedor nº 3495/22. Cada extintor recarregado sai com o selo que o Corpo de Bombeiros confere.</p>
@@ -55,7 +56,7 @@
 <section class="sec" id="avaliacoes">
   <div class="wrap row">
     <h2>Avaliações</h2>
-    <div class="reveal">
+    <div>
       <p class="sec-lead">Nota 5,0 em 704 avaliações no Google. <a href="{{ REVIEWS_URL }}" target="_blank" rel="noopener">Ver no Google</a></p>
       <div class="quotes">
         {% for r in reviews %}<blockquote>{{ r }}</blockquote>{% endfor %}
@@ -67,7 +68,7 @@
 <section class="sec" id="cidades">
   <div class="wrap row">
     <h2>Cidades atendidas</h2>
-    <div class="reveal">
+    <div>
       <p class="sec-lead">Retirada e entrega grátis em toda a Baixada Santista.</p>
       <ul class="cities">
         {% for c in cities %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}

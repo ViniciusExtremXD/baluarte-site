@@ -18,7 +18,7 @@
 <section class="sec" id="atendimento-local">
   <div class="wrap row">
     <h2>{{ city.local_h2 }}</h2>
-    <div class="reveal">
+    <div>
       <div class="text">
         {% for p in city.local_ps %}<p>{{ p }}</p>{% endfor %}
       </div>
@@ -45,7 +45,7 @@
 <section class="sec" id="cidades">
   <div class="wrap row">
     <h2>Outras cidades</h2>
-    <div class="reveal">
+    <div>
       <ul class="cities">
         {% for c in others %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}
       </ul>

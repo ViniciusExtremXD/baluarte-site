@@ -14,14 +14,14 @@
 {%- endmacro %}
 
 {% macro hero_photo() -%}
-<img class="hero-img" src="{{ root }}assets/img/foto-tecnico.webp" alt="Técnico da área de manutenção segurando um extintor de incêndio" width="820" height="615">
+<div class="hero-fig plx"><img class="hero-img" fetchpriority="high" src="{{ root }}assets/img/foto-tecnico.webp" alt="Técnico da área de manutenção segurando um extintor de incêndio" width="820" height="615"></div>
 {%- endmacro %}
 
 {% macro services() -%}
 <section class="sec" id="servicos">
   <div class="wrap row">
     <h2>Serviços</h2>
-    <ul class="svc reveal">
+    <ul class="svc">
       {% for s in SERVICES %}
       <li>
         <h3>{{ s.title }}</h3>
@@ -33,11 +33,18 @@
 </section>
 {%- endmacro %}
 
+{% macro photos() -%}
+<div class="photos">
+  <figure><div class="plx"><img src="{{ root }}assets/img/fachada-sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="376" height="314" loading="lazy" decoding="async"></div><figcaption>Sede em Guarujá</figcaption></figure>
+  <figure><div class="plx"><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="418" height="314" loading="lazy" decoding="async"></div><figcaption>Oficina de recarga</figcaption></figure>
+</div>
+{%- endmacro %}
+
 {% macro how() -%}
 <section class="sec" id="como-funciona">
   <div class="wrap row">
     <h2>Como funciona</h2>
-    <div class="reveal">
+    <div>
       <ol class="steps">
         {% for t, d in STEPS %}
         <li><h3>{{ t }}</h3><p>{{ d }}</p></li>
@@ -57,7 +64,7 @@
 <section class="sec" id="duvidas">
   <div class="wrap row">
     <h2>Dúvidas frequentes</h2>
-    <div class="faq reveal">
+    <div class="faq">
       {% for i in items %}
       <details><summary>{{ i.q }}</summary><p>{{ i.a }}</p></details>
       {% endfor %}
@@ -70,7 +77,7 @@
 <section class="sec sec-contact" id="contato">
   <div class="wrap row">
     <h2>{{ title }}</h2>
-    <div class="reveal">
+    <div>
       <p class="contact-lead">Se puder, mande a foto da etiqueta de um extintor. O orçamento sai mais rápido.</p>
       {{ actions(href) }}
       <dl class="contact-info">

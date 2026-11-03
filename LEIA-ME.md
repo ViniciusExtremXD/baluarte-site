@@ -52,10 +52,17 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 2. Em `conteudos/index.html`, duplique um item da lista (`<li>`) e aponte para a pasta nova.
 3. Adicione a URL nova no `sitemap.xml`.
 
+## Animações
+
+Entrada da primeira dobra, itens que aparecem ao rolar, números que contam, foto que acompanha a rolagem, rolagem suave no computador e troca suave de página.
+
+Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desligado), ficam só os fades. Para ver tudo mesmo assim, abra o site com `?motion=full` no fim do endereço. A escolha fica salva no navegador, e `?motion=auto` volta ao normal.
+
 ## Estrutura do código
 
 - `build.py`: gera as páginas a partir dos templates e dos dados.
 - `templates/`: HTML com Jinja2.
 - `data/content.json`: textos das cidades, da região e da página inicial.
 - `data/posts.json` e `data/posts/`: blog.
-- `assets/css/site.css` e `assets/js/site.js`: visual, menu do celular e um fade discreto ao rolar. Nenhuma biblioteca externa de animação.
+- `assets/css/site.css` e `assets/js/site.js`: visual, menu do celular e animações.
+- `assets/js/lenis.min.js`: rolagem suave no computador (Lenis 1.1.13, licença MIT).
