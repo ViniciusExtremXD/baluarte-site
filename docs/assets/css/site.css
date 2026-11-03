@@ -150,7 +150,7 @@ a.topbar-item:hover{color:#fff}
 .art-ring{position:absolute;left:66%;top:50%;width:calc(min(62vh,470px) + 70px);aspect-ratio:1;translate:-50% -50%;border-radius:50%;border:1.5px dashed rgba(255,255,255,.28)}
 .art-badge{position:absolute;left:calc(66% - min(31vh,235px) - 6px);top:calc(50% - min(31vh,235px) - 6px);width:128px;height:128px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font:600 12.5px/1.2 var(--head);color:#fff;background:linear-gradient(135deg,var(--red-light),var(--red-dark));box-shadow:var(--sh-md)}
 .art-badge b{font-size:36px;font-weight:800;line-height:1}
-.art-seal{position:absolute;left:calc(66% + min(24vh,180px));top:calc(50% + min(22vh,165px));width:100px;height:100px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}
+.art-seal{position:absolute;left:calc(66% + min(21vh,160px));top:calc(50% - min(31vh,235px) - 6px);width:100px;height:100px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35))}
 .slide-light .slide-panel{--a:60%;--b:46%}
 .slide-light .slide-panel::after{background:url(../img/facetas-escura.svg) left center/560px,linear-gradient(135deg,#fff,var(--s100))}
 .slide-light .slide-kicker{color:var(--red-dark)}
