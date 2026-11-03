@@ -1,33 +1,24 @@
 {% extends "base.html" %}
 {% import "macros.html" as m with context %}
-{% block bodyclass %}page-blog{% endblock %}
 {% block content %}
-<section class="hero hero-blog" data-hero>
-  <div class="hero-grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Você está em" data-hero-in><a href="{{ root }}">Início</a><span>/</span><span aria-current="page">Conteúdos</span></nav>
-    <p class="eyebrow eyebrow-live" data-hero-in><span class="dot"></span>Escrito pela equipe técnica da Baluarte</p>
-    <h1 class="h1" data-hero-title>Conteúdos sobre extintores e prevenção contra incêndio</h1>
-    <p class="lead" data-hero-in>Normas, prazos, vistoria do Corpo de Bombeiros e cuidados com os equipamentos, explicados sem complicação para síndicos, administradoras e empresas.</p>
+<section class="page-head">
+  <div class="wrap wrap-text">
+    <h1>Conteúdos</h1>
+    <p class="lead">Normas, prazos e cuidados com extintores e mangueiras, explicados pela equipe técnica da Baluarte.</p>
   </div>
 </section>
-
-<section class="sec blog-list">
-  <div class="wrap">
-    <div class="post-grid post-grid-lg" data-stagger>
+<section class="sec sec-first">
+  <div class="wrap wrap-text">
+    <ul class="post-list">
       {% for p in posts %}
-      <a class="post-card" href="{{ root }}conteudos/{{ p.slug }}/" data-spot>
-        <span class="post-cat">{{ p.category }} · {{ p.minutes }} min de leitura</span>
-        <h2>{{ p.title }}</h2>
+      <li>
+        <h2><a href="{{ root }}conteudos/{{ p.slug }}/">{{ p.title }}</a></h2>
         <p>{{ p.excerpt }}</p>
-        <span class="post-meta">{{ p.date_label }}</span>
-        <span class="post-go">Ler artigo {{ m.icon("arrow") }}</span>
-      </a>
+        <p class="meta">{{ p.date_label }} · {{ p.minutes }} min de leitura</p>
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </div>
 </section>
-
-{% set final_title = "Ficou com alguma dúvida? A vistoria é grátis" %}
-{% include "final_cta.html" %}
+{{ m.contact("Peça sua vistoria grátis", wa()) }}
 {% endblock %}

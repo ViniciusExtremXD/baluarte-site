@@ -1,168 +1,58 @@
 {% extends "base.html" %}
 {% import "macros.html" as m with context %}
-{% block bodyclass %}page-city{% endblock %}
 {% block content %}
 
-<section class="hero hero-city" data-hero>
-  <canvas class="embers" data-embers aria-hidden="true"></canvas>
-  <div class="hero-grid-bg" aria-hidden="true"></div>
-  <div class="wrap hero-in">
-    <div class="hero-copy">
-      <nav class="crumbs" aria-label="Você está em" data-hero-in><a href="{{ root }}">Início</a><span>/</span><a href="{{ root }}baixada-santista/">Baixada Santista</a><span>/</span><span aria-current="page">{{ city.name }}</span></nav>
-      <p class="eyebrow eyebrow-live" data-hero-in><span class="dot"></span>{{ city.eyebrow }}</p>
-      <h1 class="h1" data-hero-title>{{ city.h1 }}</h1>
-      <p class="lead" data-hero-in>{{ city.lead }}</p>
-      <div class="hero-actions" data-hero-in>
-        {{ m.btn_wa(city.wa, "Quero vistoria e orçamento grátis", "btn-lg") }}
-        {{ m.btn_tel(cls="btn-lg") }}
-      </div>
-      <p class="micro" data-hero-in>Sem compromisso. Chame no WhatsApp <b class="tnum">{{ WA_LABEL }}</b> e envie a foto da etiqueta de um extintor.</p>
-      <div data-hero-in>{{ m.proofbar() }}</div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <a href="{{ root }}baixada-santista/">Baixada Santista</a> / <span aria-current="page">{{ city.name }}</span></nav>
+      <h1>{{ city.h1 }}</h1>
+      <p class="lead">{{ city.lead }}</p>
+      {{ m.actions(city.wa) }}
+      {{ m.proof() }}
     </div>
-    <div class="hero-visual" data-hero-visual>
-      <div class="city-word" aria-hidden="true" data-city-word>{{ city.name }}</div>
-      <div class="hero-gauge" data-gauge>{{ m.gauge() }}</div>
-      {{ m.ficha(city.name, city.nearest[0] if city.nearest else None) }}
-    </div>
+    {{ m.hero_photo() }}
   </div>
 </section>
 
-{{ m.marquee_clients("Quem já confiou na Baluarte") }}
-
-<section class="sec local" id="atendimento-local">
-  <div class="wrap local-grid">
-    <div class="local-copy">
-      <p class="eyebrow" data-reveal>Atendimento local</p>
-      <h2 class="h2" data-split>{{ city.local_h2 }}</h2>
-      {% for p in city.local_ps %}<p class="muted" data-reveal>{{ p }}</p>{% endfor %}
-      <ul class="who" data-stagger>
-        {% for w in city.who %}<li>{{ m.icon("check") }}{{ w }}</li>{% endfor %}
-      </ul>
-    </div>
-    <div class="local-card" data-reveal>
-      <h3>{{ city.bairros_title }}</h3>
-      <ul class="chips" data-chips>{% for b in city.bairros %}<li>{{ b }}</li>{% endfor %}</ul>
-      {% if city.bairros_note %}<p class="chips-note">{{ city.bairros_note }}</p>{% endif %}
-      {% if city.addr_title %}
-      <div class="addr">
-        <b>{{ m.icon("pin") }}{{ city.addr_title }}</b>
-        {% for l in city.addr_lines %}<span>{{ l }}</span>{% endfor %}
-        {% if city.map %}<a href="{{ city.map }}" target="_blank" rel="noopener">Ver no mapa {{ m.icon("arrow") }}</a>{% endif %}
+<section class="sec" id="atendimento-local">
+  <div class="wrap row">
+    <h2>{{ city.local_h2 }}</h2>
+    <div class="reveal">
+      <div class="text">
+        {% for p in city.local_ps %}<p>{{ p }}</p>{% endfor %}
       </div>
+      <h3 class="inc-title">Quem atendemos</h3>
+      <ul class="inc">
+        {% for w in city.who %}<li>{{ w }}</li>{% endfor %}
+      </ul>
+      <h3 class="inc-title">{{ city.bairros_title }}</h3>
+      <p>{{ city.bairros|join(", ") }}.{% if city.bairros_note %} {{ city.bairros_note }}{% endif %}</p>
+      {% if city.addr_title %}
+      <h3 class="inc-title">{{ city.addr_title }}</h3>
+      <p>{{ city.addr_lines|join(" · ") }}{% if city.map %}<br><a href="{{ city.map }}" target="_blank" rel="noopener">Ver no mapa</a>{% endif %}</p>
       {% endif %}
     </div>
   </div>
 </section>
 
-<section class="sec included included-compact" id="incluso">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow" data-reveal>O que está incluso em {{ city.name }}</p>
-      <h2 class="h2" data-split>Você contrata a recarga. A Baluarte cuida de todo o resto</h2>
-    </div>
-    <ol class="inc-list inc-list-grid">
-      {% for t, d, tag in INCLUDED %}
-      <li class="inc" data-inc>
-        <span class="inc-check">{{ m.icon("check") }}</span>
-        <div><h3>{{ t }}</h3><p>{{ d }}</p></div>
-        <b class="inc-tag {{ 'is-free' if tag == 'Grátis' else '' }}">{{ tag }}</b>
-      </li>
-      {% endfor %}
-    </ol>
-  </div>
-</section>
+{{ m.services() }}
 
-<section class="steps" id="como-funciona" data-steps>
-  <div class="steps-pin">
-    <div class="wrap steps-head">
-      <p class="eyebrow" data-reveal>Como funciona</p>
-      <h2 class="h2" data-split>Do primeiro contato ao extintor de volta na parede</h2>
-    </div>
-    <div class="steps-rail">
-      <div class="steps-line" aria-hidden="true"><i data-steps-line></i></div>
-      <ol class="steps-track" data-steps-track>
-        {% for when, t, d in STEPS %}
-        <li class="step"><span class="step-n">{{ loop.index }}</span><span class="step-when">{{ when }}</span><h3>{{ t }}</h3><p>{{ d }}</p></li>
-        {% endfor %}
-        <li class="step step-end"><p class="step-end-k">Atendimento em {{ city.name }}</p>{{ m.btn_wa(city.wa, "Chamar no WhatsApp") }}</li>
-      </ol>
+{{ m.how() }}
+
+{{ m.faq_list(faq) }}
+
+<section class="sec" id="cidades">
+  <div class="wrap row">
+    <h2>Outras cidades</h2>
+    <div class="reveal">
+      <ul class="cities">
+        {% for c in others %}<li><a href="{{ root }}{{ c.slug }}/">{{ c.name }}</a><span>{{ c.short }}</span></li>{% endfor %}
+      </ul>
+      <p class="also">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}. <a href="{{ root }}baixada-santista/">Ver toda a região</a></p>
     </div>
   </div>
 </section>
 
-<section class="guarantee" id="garantia">
-  <div class="wrap guarantee-in">
-    <div class="g-dial" data-dial aria-hidden="true">
-      <svg viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10"/>
-        <circle class="g-dial-arc" cx="100" cy="100" r="88" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" pathLength="100" transform="rotate(-90 100 100)"/>
-        {% for i in range(7) %}<line x1="100" y1="6" x2="100" y2="20" stroke="#fff" stroke-width="3" transform="rotate({{ i * 360 / 7 }} 100 100)"/>{% endfor %}
-      </svg>
-      <div class="g-dial-num"><b class="tnum" data-dial-num>7</b><span>dias úteis</span></div>
-    </div>
-    <div class="guarantee-copy">
-      <p class="eyebrow eyebrow-light" data-reveal>Garantia de prazo, por escrito</p>
-      <h2 class="h2" data-split>Até 7 dias úteis ou 20% de desconto no próximo serviço</h2>
-      <p data-reveal>Se não devolvermos seus extintores em até 7 dias úteis, você ganha 20% de desconto no próximo serviço. E durante esse tempo, os extintores reservas continuam no lugar.</p>
-      <div data-reveal>{{ m.btn_wa(city.wa, "Quero meus extintores em dia", "btn-light") }}</div>
-    </div>
-    <div class="g-big" aria-hidden="true" data-g-big>20%</div>
-  </div>
-</section>
-
-<section class="sec services" id="servicos">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow" data-reveal>Serviços em {{ city.name }}</p>
-      <h2 class="h2" data-split>Prevenção contra incêndio num só fornecedor</h2>
-    </div>
-    <div class="svc-grid" data-stagger>
-      {% for s in SERVICES %}
-      <a class="svc" href="{{ wa(s.msg ~ ' Sou de ' ~ city.name ~ '.') }}" target="_blank" rel="noopener" data-spot data-tilt>
-        <span class="svc-ico">{{ m.icon(s.icon, "ico-lg") }}</span>
-        <h3>{{ s.title }}</h3>
-        <p>{{ s.text }}</p>
-        <span class="svc-foot"><b>{{ s.tag }}</b><span class="svc-go">Pedir orçamento {{ m.icon("arrow") }}</span></span>
-      </a>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="sec reviews reviews-compact" id="avaliacoes">
-  <div class="wrap reviews-head">
-    <div><p class="eyebrow" data-reveal>Avaliações</p><h2 class="h2" data-split>Nota máxima de quem já é cliente</h2></div>
-    <a class="score" href="{{ REVIEWS_URL }}" target="_blank" rel="noopener" data-reveal>
-      <b class="tnum">5,0</b><span class="score-stars" data-stars>{% for i in range(5) %}{{ m.icon("star", "st") }}{% endfor %}</span><span class="score-k">704 avaliações no Google {{ m.icon("arrow") }}</span>
-    </a>
-  </div>
-  <div class="wrap rev-grid" data-stagger>
-    {% for r in reviews[:3] %}
-    <figure class="rev"><span class="rev-stars" aria-label="5 estrelas">★★★★★</span><blockquote>{{ r }}</blockquote><figcaption>Avaliação no Google</figcaption></figure>
-    {% endfor %}
-  </div>
-</section>
-
-{{ m.faq_list(faq, city.faq_h2) }}
-
-<section class="sec cities cities-other">
-  <div class="wrap">
-    <div class="sec-head"><p class="eyebrow" data-reveal>Área de atendimento</p><h2 class="h2" data-split>Atendemos também</h2></div>
-    <div class="city-grid" data-stagger>
-      {% for c in others %}
-      <a class="city" href="{{ root }}{{ c.slug }}/" data-spot>
-        <span class="city-k">{{ m.icon("pin") }}{{ c.nearest[0] if c.nearest else '' }}</span>
-        <h3>{{ c.name }}</h3><p>{{ c.short }}</p><span class="city-go">Ver atendimento {{ m.icon("arrow") }}</span>
-      </a>
-      {% endfor %}
-      <a class="city city-all" href="{{ root }}baixada-santista/" data-spot>
-        <span class="city-k">{{ m.icon("pin") }}Duas unidades</span><h3>Toda a Baixada</h3><p>Também atendemos {{ OTHER_CITIES|join(", ") }}, com retirada e entrega grátis.</p><span class="city-go">Ver a região {{ m.icon("arrow") }}</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-{% set final_title = city.final_h2 %}
-{% set final_city = city.name %}
-{% include "final_cta.html" %}
+{{ m.contact(city.final_h2 or "Peça sua vistoria grátis", city.wa) }}
 {% endblock %}

@@ -54,43 +54,24 @@ for c in cities:
 OTHER_CITIES = ["Cubatão", "Mongaguá", "Itanhaém", "Peruíbe"]
 
 SERVICES = [
-    {"icon": "extintor", "title": "Recarga e manutenção de extintores", "text": "Recarga, manutenção e vistoria de extintores de todos os tipos, com selo de conformidade do INMETRO.", "tag": "Obrigatória a cada 12 meses", "msg": "Olá! Quero orçamento de recarga de extintores."},
-    {"icon": "mangueira", "title": "Teste hidrostático de mangueiras", "text": "Feito no seu condomínio com equipamento automático, nas pressões exigidas pelas normas. O treinamento básico de uso é gratuito.", "tag": "Obrigatório todo ano", "msg": "Olá! Quero orçamento de teste hidrostático de mangueiras."},
-    {"icon": "placa", "title": "Sinalização de emergência", "text": "Placas de rota de fuga, saída e equipamentos, instaladas conforme Instrução Técnica do Corpo de Bombeiros.", "tag": "Exigida na vistoria dos Bombeiros", "msg": "Olá! Quero orçamento de sinalização de emergência."},
-    {"icon": "porta", "title": "Porta corta-fogo", "text": "Manutenção e regulagem de portas corta-fogo para que fechem e vedem como a norma exige.", "tag": "Item de rota de fuga", "msg": "Olá! Quero orçamento de manutenção de porta corta-fogo."},
-    {"icon": "vistoria", "title": "Vistoria de segurança", "text": "Levantamento completo dos equipamentos de combate a incêndio do imóvel, sem custo e sem compromisso.", "tag": "Grátis", "msg": "Olá! Quero agendar uma vistoria de segurança grátis."},
-    {"icon": "carrinho", "title": "Venda de extintores e equipamentos", "text": "Extintores novos e equipamentos de combate a incêndio, com orientação sobre o tipo e a quantidade certos para o seu imóvel.", "tag": "Obra nova ou reposição", "msg": "Olá! Quero orçamento de extintores novos."},
+    {"title": "Recarga e manutenção de extintores", "text": "Todos os tipos, com selo do INMETRO. Obrigatória a cada 12 meses."},
+    {"title": "Teste hidrostático de mangueiras", "text": "Feito no seu prédio, com equipamento automático. Obrigatório todo ano."},
+    {"title": "Sinalização de emergência", "text": "Placas de rota de fuga, saída e equipamentos, conforme o Corpo de Bombeiros."},
+    {"title": "Porta corta-fogo", "text": "Manutenção e regulagem para fechar e vedar como a norma exige."},
+    {"title": "Vistoria de segurança", "text": "Levantamento dos equipamentos do imóvel, sem custo e sem compromisso."},
+    {"title": "Venda de extintores e equipamentos", "text": "Novos, com orientação sobre o tipo e a quantidade certos."},
 ]
-for s in SERVICES:
-    s["wa"] = wa(s["msg"])
-
-INCLUDED = [
-    ("Vistoria técnica e orçamento", "Um técnico confere extintores, mangueiras e sinalização e diz exatamente o que precisa ser feito.", "Grátis"),
-    ("Retirada e entrega", "Buscamos os extintores no seu endereço e devolvemos prontos. Ninguém do prédio precisa carregar nada.", "Grátis"),
-    ("Extintores reservas", "Deixamos extintores no lugar dos seus durante a recarga. O imóvel continua protegido.", "Incluso"),
-    ("Teste de mangueiras no local", "O teste hidrostático é feito no seu prédio. As mangueiras não saem de lá.", "Incluso"),
-    ("Lembrete de vencimento", "Avisamos no WhatsApp quando a próxima manutenção estiver chegando. Você não precisa controlar datas.", "Grátis"),
-    ("Treinamento básico de mangueiras", "Ensinamos síndico, zelador e funcionários a usar as mangueiras de incêndio do prédio.", "Grátis"),
-]
+INCLUDED = ["Vistoria técnica e orçamento", "Retirada e entrega", "Extintores reservas durante a recarga", "Teste de mangueiras no local", "Lembrete de vencimento no WhatsApp", "Treinamento básico de mangueiras"]
 
 STEPS = [
-    ("Hoje", "Chame no WhatsApp", "Diga onde fica o imóvel e, se puder, mande a foto da etiqueta de um extintor."),
-    ("Na data que você escolher", "Vistoria e orçamento grátis", "Nosso técnico avalia tudo no local e você recebe o orçamento sem compromisso."),
-    ("No dia combinado", "Retirada com reserva", "Levamos seus extintores, deixamos os reservas e testamos as mangueiras no próprio prédio."),
-    ("Em até 7 dias úteis", "Devolução e lembrete", "Extintores voltam recarregados, com selo do INMETRO. Daqui a 12 meses, avisamos você."),
+    ("Chame no WhatsApp", "Diga onde fica o imóvel e, se puder, mande a foto da etiqueta de um extintor."),
+    ("Vistoria e orçamento grátis", "Nosso técnico avalia tudo no local e você recebe o orçamento sem compromisso."),
+    ("Retirada com reserva", "Levamos seus extintores, deixamos os reservas e testamos as mangueiras no prédio."),
+    ("Devolução em até 7 dias úteis", "Os extintores voltam recarregados, com selo do INMETRO. Em 12 meses, avisamos você."),
 ]
 
-RISKS = [
-    ("AVCB ou CLCB travado", "Extintores e mangueiras vencidos estão entre os itens conferidos na vistoria do Corpo de Bombeiros."),
-    ("Autuação e multa", "Equipamentos fora das exigências dos Bombeiros podem gerar autuação e multa, conforme a legislação estadual."),
-    ("Problema com o seguro", "Em caso de sinistro, a seguradora pode questionar a indenização se os equipamentos estiverem irregulares."),
-    ("Responsabilidade sua", "O síndico ou o responsável pelo imóvel responde pela manutenção dos equipamentos de segurança."),
-]
-
-AUDIENCE = ["Síndicos", "Administradoras", "Comércios", "Construção civil", "Empresas e indústrias", "Clínicas e escolas", "Restaurantes", "Galpões"]
-
-reviews = content["home"]["reviews"]
-home_faq = content["home"]["faq"]
+reviews = content["home"]["reviews"][:3]
+home_faq = [content["home"]["faq"][i] for i in (0, 1, 3, 4, 5, 7)]
 
 ORG_SCHEMA = {
     "@type": "LocalBusiness",
@@ -136,7 +117,7 @@ env.globals.update(
     wa=wa, PHONE_TEL=PHONE_TEL, PHONE_LABEL=PHONE_LABEL, WA_LABEL=WA_LABEL, EMAIL=EMAIL, HOURS=HOURS,
     REVIEWS_URL=REVIEWS_URL, GTM_ID=GTM_ID, PREVIEW=(MODE == "preview"), SITE_URL=SITE_URL,
     cities=cities, OTHER_CITIES=OTHER_CITIES, SERVICES=SERVICES, INCLUDED=INCLUDED, STEPS=STEPS,
-    RISKS=RISKS, AUDIENCE=AUDIENCE, reviews=reviews, clientes=clientes, posts=posts, year=date.today().year,
+    reviews=reviews, clientes=clientes[:12], posts=posts, year=date.today().year,
 )
 
 

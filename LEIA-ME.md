@@ -1,6 +1,6 @@
 # Site Baluarte Extintores
 
-Site estático (HTML, CSS e JS puros). Não precisa de PHP nem de banco de dados.
+Site estático (HTML, CSS e um JS pequeno). Não precisa de PHP nem de banco de dados.
 
 - **Prévia (GitHub Pages):** pasta `docs/`, com `noindex`. O Google não indexa a prévia.
 - **Produção:** rode `python build.py producao`. O resultado sai na pasta `dist/`, que vai inteira para a raiz de `www.baluarteextintores.com.br`.
@@ -21,7 +21,7 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 - O Google Tag Manager `GTM-58MG5F9P` já está no `<head>` de todas as páginas. Ele **só carrega no domínio oficial**, para a prévia não sujar os dados do GA4 e do Google Ads.
 - Os botões de WhatsApp usam `https://wa.me/5513997401621?...` e os de telefone usam `tel:+551333522500`. Os acionadores do GTM já reconhecem esses formatos e registram as conversões no GA4 e no Ads.
-- O site novo não tem formulário: todo pedido vai pelo WhatsApp ou pelo telefone. O "Orçamento rápido" monta a mensagem e abre o WhatsApp, e conta como conversão de Contato.
+- O site novo não tem formulário: todo pedido vai pelo WhatsApp ou pelo telefone.
 
 ## Ao publicar em produção
 
@@ -49,14 +49,8 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 **Jeito manual** (sem Python):
 1. Copie uma pasta de artigo dentro de `conteudos/`, troque o nome da pasta e edite o título, a descrição e o texto no `index.html`.
-2. Em `conteudos/index.html`, duplique um card (`<a class="post-card">`) e aponte para a pasta nova.
+2. Em `conteudos/index.html`, duplique um item da lista (`<li>`) e aponte para a pasta nova.
 3. Adicione a URL nova no `sitemap.xml`.
-
-## Animações
-
-- **Completo:** padrão para todo mundo.
-- **Leve:** só fades, sem parallax, sem rolagem presa e sem letreiros em movimento. Liga sozinho quando o sistema pede "reduzir movimento". No Windows, isso acontece com "Efeitos de animação" desligado.
-- **Botão no rodapé** ou `?motion=full` / `?motion=lite` na URL: troca o modo, e a escolha fica salva no navegador.
 
 ## Estrutura do código
 
@@ -64,4 +58,4 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 - `templates/`: HTML com Jinja2.
 - `data/content.json`: textos das cidades, da região e da página inicial.
 - `data/posts.json` e `data/posts/`: blog.
-- `assets/css/site.css` e `assets/js/site.js`: visual e animações. As animações usam GSAP, ScrollTrigger e Lenis via CDN e respeitam a opção "reduzir movimento" do sistema.
+- `assets/css/site.css` e `assets/js/site.js`: visual, menu do celular e um fade discreto ao rolar. Nenhuma biblioteca externa de animação.

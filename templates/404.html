@@ -1,17 +1,13 @@
 {% extends "base.html" %}
 {% import "macros.html" as m with context %}
-{% block bodyclass %}page-404{% endblock %}
 {% block content %}
-<section class="hero hero-404" data-hero>
-  <canvas class="embers" data-embers aria-hidden="true"></canvas>
-  <div class="hero-grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <p class="eyebrow eyebrow-live" data-hero-in><span class="dot"></span>Erro 404</p>
-    <h1 class="h1" data-hero-title>Essa página não existe, mas o seu extintor pode estar vencendo</h1>
-    <p class="lead" data-hero-in>Volte para o início ou fale direto com a gente.</p>
-    <div class="hero-actions" data-hero-in>
-      <a class="btn btn-ghost btn-lg" href="{{ root }}">Ir para o início</a>
-      {{ m.btn_wa(wa(), "Falar no WhatsApp", "btn-lg") }}
+<section class="page-head page-404">
+  <div class="wrap wrap-text">
+    <h1>Página não encontrada</h1>
+    <p class="lead">Volte para o início ou fale com a gente.</p>
+    <div class="actions">
+      <a class="btn" href="{{ root }}">Ir para o início</a>
+      <a class="btn btn-line" href="tel:{{ PHONE_TEL }}">{{ PHONE_LABEL }}</a>
     </div>
   </div>
 </section>
