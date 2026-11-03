@@ -570,3 +570,23 @@ html.js.motion [data-hero-visual]>*,html.js.motion [data-hero-title]{opacity:0}
 @media (max-width:1100px){.city-all,.page-city .city-all{grid-column:auto}}
 @media (max-width:900px){.hero-in{grid-template-columns:1fr}.page-regional .city-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.page-regional .city-grid{grid-template-columns:1fr}}
+.ftr-grid>*{min-width:0}
+.ftr-list a{overflow-wrap:anywhere}
+.hdr .btn-sm span{white-space:nowrap}
+@media (max-width:900px){
+  .hero-visual{min-height:620px}
+  .hero-photo{inset:0 0 auto 0;height:300px;clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+  .hero-gauge{top:14px;left:14px;width:176px;padding:12px 12px 10px}
+  .ficha{right:0;left:0;bottom:0;width:auto}
+  .stamp{right:8px;top:-46px}
+  .hero-city .hero-visual{min-height:560px}
+  .hero-city .hero-gauge{top:20px;left:0}
+}
+@media (max-width:600px){
+  .logo img{width:112px}
+  .hdr-cta{gap:8px}
+  .hdr .btn-sm{min-height:42px;padding:0 12px;font-size:13px}
+  .btn{padding:0 16px}
+  .btn-lg{padding:0 18px;font-size:16px}
+  .ftr-grid{grid-template-columns:1fr}
+}
