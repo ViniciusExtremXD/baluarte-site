@@ -549,3 +549,24 @@ html.js.motion [data-hero-visual]>*,html.js.motion [data-hero-title]{opacity:0}
   html:not(.js) .g-needle{transform:rotate(45deg)}
   html:not(.js) .g-arc,html:not(.js) .g-dial-arc{stroke-dashoffset:0}
 }
+
+/* ajustes pós-QA */
+.hero .eyebrow,.included .eyebrow,.steps .eyebrow,.reviews .eyebrow,.final .eyebrow{color:var(--flame)}
+.hero{padding-top:calc(var(--hdr) + clamp(24px,4vh,56px))}
+.hero-in{grid-template-columns:1.16fr .84fr}
+.page-home .h1,.page-city .h1,.page-regional .h1{font-size:clamp(38px,min(5.2vw,8.2vh),78px)}
+.proofbar li{padding-right:16px;margin-right:16px}
+.hero-actions{margin-top:26px}
+.proofbar{margin-top:26px;padding-top:18px}
+.cursor{mix-blend-mode:normal;box-shadow:0 0 0 2px rgba(255,255,255,.75)}
+.cursor.is-hover{background:rgba(238,132,33,.14);box-shadow:0 0 0 2px var(--flame)}
+.included{padding-bottom:clamp(50px,6vw,80px)}
+.steps-pin{padding-top:clamp(50px,6vw,90px)}
+.cities+.blog-teaser,.blog-teaser+.faq,.services+.cities{padding-top:0}
+.city-all{grid-column:span 2}
+.page-city .city-all{grid-column:span 2}
+.page-regional .city-grid{grid-template-columns:repeat(3,1fr)}
+.stat dd{font-size:clamp(34px,3.7vw,54px);white-space:nowrap}
+@media (max-width:1100px){.city-all,.page-city .city-all{grid-column:auto}}
+@media (max-width:900px){.hero-in{grid-template-columns:1fr}.page-regional .city-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.page-regional .city-grid{grid-template-columns:1fr}}
