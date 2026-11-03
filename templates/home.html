@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% import "macros.html" as m with context %}
+{% block bodyclass %}page-home{% endblock %}
+{% block content %}
+
+<section class="hero" data-hero>
+  <canvas class="embers" data-embers aria-hidden="true"></canvas>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow eyebrow-live" data-hero-in><span class="dot"></span>Condomínios, comércios e empresas · Baixada Santista</p>
+      <h1 class="h1" data-hero-title>Seus extintores <em>em dia</em> e o prédio pronto para a vistoria dos Bombeiros</h1>
+      <p class="lead" data-hero-in>A Baluarte busca, recarrega e devolve seus extintores em até 7 dias úteis, deixa extintores reservas no lugar e testa as mangueiras aí mesmo, no seu prédio. Você não carrega nada e não fica um dia desprotegido.</p>
+      <div class="hero-actions" data-hero-in>
+        {{ m.btn_wa(wa(), "Quero vistoria e orçamento grátis", "btn-lg") }}
+        {{ m.btn_tel(cls="btn-lg") }}
+      </div>
+      <p class="micro" data-hero-in>Sem compromisso. Chame no WhatsApp <b class="tnum">{{ WA_LABEL }}</b> e envie a foto da etiqueta de um extintor.</p>
+      <div data-hero-in>{{ m.proofbar() }}</div>
+    </div>
+    <div class="hero-visual" data-hero-visual>
+      <figure class="hero-photo" data-parallax="-8">
+        <img src="{{ root }}assets/img/foto-valvula.webp" alt="Válvula e manômetro de um extintor de incêndio" width="840" height="630" fetchpriority="high">
+      </figure>
+      <div class="hero-gauge" data-gauge>{{ m.gauge() }}</div>
+      {{ m.ficha("Seu imóvel") }}
+    </div>
+  </div>
+  <a class="scroll-cue" href="#clientes" aria-label="Rolar para o conteúdo"><span></span></a>
+</section>
+
+<div id="clientes">{{ m.marquee_clients() }}</div>
+
+<section class="audience" aria-label="Para quem atendemos">
+  <div class="kinetic" data-kinetic>
+    <div class="kinetic-row">
+      {% for rep in range(3) %}{% for a in AUDIENCE %}<span>{{ a }}</span><i aria-hidden="true">✦</i>{% endfor %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec risks" id="riscos">
+  <div class="wrap risks-grid">
+    <div class="risks-head" data-pin-head>
+      <p class="eyebrow" data-reveal>Por que não dá para deixar para depois</p>
+      <h2 class="h2" data-split>Extintor vencido só aparece quando já é tarde</h2>
+      <p class="muted" data-reveal>A manutenção dos extintores é obrigatória a cada 12 meses e o teste das mangueiras também. Quando isso atrasa, quem responde é você.</p>
+      <div class="label-demo" data-label-demo aria-hidden="true">
+        <div class="label-tag">
+          <span class="lt-k">Próxima manutenção</span>
+          <span class="lt-v tnum" data-label-date>08/2025</span>
+        </div>
+        <span class="label-stamp">VENCIDO</span>
+      </div>
+    </div>
+    <div class="risk-cards">
+      {% for t, d in RISKS %}
+      <article class="risk" data-risk>
+        <span class="risk-n tnum">0{{ loop.index }}</span>
+        <h3>{{ t }}</h3>
+        <p>{{ d }}</p>
+      </article>
+      {% endfor %}
+      <div class="risk-cta" data-reveal>
+        <p>Não sabe quando foi a última recarga? Mande a foto da etiqueta de um extintor e dizemos se está vencido.</p>
+        {{ m.btn_wa(wa("Olá! Quero saber se meus extintores estão vencidos. Vou mandar a foto da etiqueta."), "Enviar foto da etiqueta", "btn-sm") }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec included" id="incluso">
+  <div class="wrap included-grid">
+    <div class="included-head">
+      <p class="eyebrow" data-reveal>O que está incluso</p>
+      <h2 class="h2" data-split>Você contrata a recarga. A Baluarte cuida de todo o resto</h2>
+      <p class="muted" data-reveal>Em vez de só recarregar extintores, resolvemos a segurança contra incêndio do imóvel de ponta a ponta, sem custo extra pelos itens ao lado.</p>
+      <figure class="included-photo" data-reveal="clip">
+        <img src="{{ root }}assets/img/foto-tecnico.webp" alt="Técnico manuseando um extintor de incêndio" width="860" height="630" loading="lazy" data-parallax="6">
+      </figure>
+      {{ m.btn_wa(wa("Olá! Quero agendar uma vistoria grátis."), "Agendar vistoria grátis") }}
+    </div>
+    <ol class="inc-list">
+      {% for t, d, tag in INCLUDED %}
+      <li class="inc" data-inc>
+        <span class="inc-check">{{ m.icon("check") }}</span>
+        <div><h3>{{ t }}</h3><p>{{ d }}</p></div>
+        <b class="inc-tag {{ 'is-free' if tag == 'Grátis' else '' }}">{{ tag }}</b>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="steps" id="como-funciona" data-steps>
+  <div class="steps-pin">
+    <div class="wrap steps-head">
+      <p class="eyebrow" data-reveal>Como funciona</p>
+      <h2 class="h2" data-split>Do primeiro contato ao extintor de volta na parede</h2>
+    </div>
+    <div class="steps-rail">
+      <div class="steps-line" aria-hidden="true"><i data-steps-line></i></div>
+      <ol class="steps-track" data-steps-track>
+        {% for when, t, d in STEPS %}
+        <li class="step">
+          <span class="step-n">{{ loop.index }}</span>
+          <span class="step-when">{{ when }}</span>
+          <h3>{{ t }}</h3>
+          <p>{{ d }}</p>
+        </li>
+        {% endfor %}
+        <li class="step step-end">
+          <p class="step-end-k">Pronto para começar?</p>
+          {{ m.btn_wa(wa(), "Chamar no WhatsApp") }}
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="guarantee" id="garantia">
+  <div class="wrap guarantee-in">
+    <div class="g-dial" data-dial aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10"/>
+        <circle class="g-dial-arc" cx="100" cy="100" r="88" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" pathLength="100" transform="rotate(-90 100 100)"/>
+        {% for i in range(7) %}<line x1="100" y1="6" x2="100" y2="20" stroke="#fff" stroke-width="3" transform="rotate({{ i * 360 / 7 }} 100 100)"/>{% endfor %}
+      </svg>
+      <div class="g-dial-num"><b class="tnum" data-dial-num>7</b><span>dias úteis</span></div>
+    </div>
+    <div class="guarantee-copy">
+      <p class="eyebrow eyebrow-light" data-reveal>Garantia de prazo, por escrito</p>
+      <h2 class="h2" data-split>Até 7 dias úteis ou 20% de desconto no próximo serviço</h2>
+      <p data-reveal>Prazo de recarga é o que mais preocupa quem cuida de um prédio. Por isso a Baluarte assume o compromisso por escrito: se não devolvermos seus extintores em até 7 dias úteis, você ganha 20% de desconto no próximo serviço. E durante esse tempo, os extintores reservas continuam no lugar.</p>
+      <div data-reveal>{{ m.btn_wa(wa(), "Quero meus extintores em dia", "btn-light") }}</div>
+    </div>
+    <div class="g-big" aria-hidden="true" data-g-big>20%</div>
+  </div>
+</section>
+
+<section class="sec services" id="servicos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>Serviços</p>
+      <h2 class="h2" data-split>Tudo que o seu imóvel precisa num só fornecedor</h2>
+      <p class="muted" data-reveal>Menos empresas para coordenar, um só contato para resolver a parte de prevenção contra incêndio.</p>
+    </div>
+    <div class="svc-grid" data-stagger>
+      {% for s in SERVICES %}
+      <a class="svc" href="{{ s.wa }}" target="_blank" rel="noopener" data-spot data-tilt>
+        <span class="svc-ico">{{ m.icon(s.icon, "ico-lg") }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.text }}</p>
+        <span class="svc-foot"><b>{{ s.tag }}</b><span class="svc-go">Pedir orçamento {{ m.icon("arrow") }}</span></span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec numbers" id="sobre">
+  <div class="wrap numbers-grid">
+    <div class="numbers-copy">
+      <p class="eyebrow" data-reveal>Quem cuida do seu imóvel</p>
+      <h2 class="h2" data-split>Mais de 30 anos protegendo a Baixada Santista</h2>
+      <p class="muted" data-reveal>São mais de 30 anos e mais de 14.000 clientes atendidos, de condomínios residenciais a construções civis, setor automotivo, comércios e indústrias.</p>
+      <div class="seal-row" data-reveal>
+        <img src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO de Conformidade de Fornecedor nº 3495/22" width="96" height="96" loading="lazy" data-spin>
+        <p><b>Registro de Conformidade de Fornecedor nº 3495/22.</b> Cada extintor recarregado sai com o selo do INMETRO, que é o que o Corpo de Bombeiros confere.</p>
+      </div>
+    </div>
+    <dl class="stats">
+      <div class="stat" data-stat><dt>anos de mercado</dt><dd class="tnum">+<span data-count="30">30</span></dd></div>
+      <div class="stat" data-stat><dt>clientes atendidos</dt><dd class="tnum">+<span data-count="14000">14.000</span></dd></div>
+      <div class="stat" data-stat><dt>extintores recarregados</dt><dd class="tnum">+<span data-count="1" data-suffix=" milhão">1 milhão</span></dd></div>
+      <div class="stat" data-stat><dt>no Google, 704 avaliações</dt><dd class="tnum"><span data-count="5" data-decimals="1">5,0</span><span class="stat-star">★</span></dd></div>
+    </dl>
+    <div class="place">
+      <figure class="place-fig" data-reveal="clip"><img src="{{ root }}assets/img/fachada-sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="376" height="314" loading="lazy"><figcaption>Sede própria em Guarujá</figcaption></figure>
+      <figure class="place-fig" data-reveal="clip"><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="418" height="314" loading="lazy"><figcaption>Nossa oficina de recarga</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec reviews" id="avaliacoes">
+  <div class="wrap reviews-head">
+    <div>
+      <p class="eyebrow" data-reveal>Avaliações</p>
+      <h2 class="h2" data-split>Nota máxima de quem já é cliente</h2>
+    </div>
+    <a class="score" href="{{ REVIEWS_URL }}" target="_blank" rel="noopener" data-reveal>
+      <b class="tnum">5,0</b>
+      <span class="score-stars" data-stars>{% for i in range(5) %}{{ m.icon("star", "st") }}{% endfor %}</span>
+      <span class="score-k">704 avaliações no Google {{ m.icon("arrow") }}</span>
+    </a>
+  </div>
+  <div class="rev-marquee" data-rev-marquee>
+    {% for row in [reviews[:4], reviews[4:]] %}
+    <div class="rev-row {{ 'rev-row-rev' if loop.index == 2 }}">
+      <div class="rev-track">
+        {% for rep in range(2) %}
+        {% for r in row %}
+        <figure class="rev" {% if rep %}aria-hidden="true"{% endif %}>
+          <span class="rev-stars" aria-label="5 estrelas">★★★★★</span>
+          <blockquote>{{ r }}</blockquote>
+          <figcaption>Avaliação no Google</figcaption>
+        </figure>
+        {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="sec cities" id="cidades">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>Área de atendimento</p>
+      <h2 class="h2" data-split>Atendemos toda a Baixada Santista</h2>
+      <p class="muted" data-reveal>Retirada e entrega grátis em todos estes locais. Se o seu imóvel fica em outra cidade, chame mesmo assim e confirmamos.</p>
+    </div>
+    <div class="city-grid" data-stagger>
+      {% for c in cities %}
+      <a class="city" href="{{ root }}{{ c.slug }}/" data-spot>
+        <span class="city-k">{{ m.icon("pin") }}{{ c.nearest[0] if c.nearest else '' }}</span>
+        <h3>{{ c.name }}</h3>
+        <p>{{ c.short }}</p>
+        <span class="city-go">Ver atendimento {{ m.icon("arrow") }}</span>
+      </a>
+      {% endfor %}
+      <a class="city city-all" href="{{ root }}baixada-santista/" data-spot>
+        <span class="city-k">{{ m.icon("pin") }}Duas unidades</span>
+        <h3>Toda a Baixada</h3>
+        <p>Também atendemos {{ OTHER_CITIES|join(", ") }}, com retirada e entrega grátis.</p>
+        <span class="city-go">Ver a região {{ m.icon("arrow") }}</span>
+      </a>
+    </div>
+    <div class="units" data-stagger>
+      <div class="unit"><b>Guarujá · sede própria</b><span>Av. Piassaguera, 1189 · CEP 11454-630</span></div>
+      <div class="unit"><b>Santos · escritório comercial</b><span>R. Dr. Luis Suplicy, 31 · CEP 11055-330</span></div>
+      <div class="unit"><b>Horário de atendimento</b><span>{{ HOURS }}</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec blog-teaser" id="conteudos">
+  <div class="wrap">
+    <div class="sec-head sec-head-row">
+      <div>
+        <p class="eyebrow" data-reveal>Conteúdos</p>
+        <h2 class="h2" data-split>Entenda antes de contratar</h2>
+      </div>
+      <a class="link-arrow" href="{{ root }}conteudos/" data-reveal>Ver todos os conteúdos {{ m.icon("arrow") }}</a>
+    </div>
+    <div class="post-grid" data-stagger>
+      {% for p in posts %}
+      <a class="post-card" href="{{ root }}conteudos/{{ p.slug }}/" data-spot>
+        <span class="post-cat">{{ p.category }} · {{ p.minutes }} min</span>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.excerpt }}</p>
+        <span class="post-go">Ler artigo {{ m.icon("arrow") }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{{ m.faq_list(faq, "Antes de chamar, talvez você queira saber") }}
+
+{% include "final_cta.html" %}
+{% endblock %}

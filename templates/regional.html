@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% import "macros.html" as m with context %}
+{% block bodyclass %}page-regional{% endblock %}
+{% block content %}
+
+<section class="hero hero-city" data-hero>
+  <canvas class="embers" data-embers aria-hidden="true"></canvas>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <nav class="crumbs" aria-label="Você está em" data-hero-in><a href="{{ root }}">Início</a><span>/</span><span aria-current="page">Baixada Santista</span></nav>
+      <p class="eyebrow eyebrow-live" data-hero-in><span class="dot"></span>{{ reg.eyebrow }}</p>
+      <h1 class="h1" data-hero-title>{{ reg.h1 }}</h1>
+      <p class="lead" data-hero-in>{{ reg.lead }}</p>
+      <div class="hero-actions" data-hero-in>
+        {{ m.btn_wa(wa(), "Quero vistoria e orçamento grátis", "btn-lg") }}
+        {{ m.btn_tel(cls="btn-lg") }}
+      </div>
+      <div data-hero-in>{{ m.proofbar() }}</div>
+    </div>
+    <div class="hero-visual hero-visual-route" data-hero-visual>
+      <ol class="route" data-route aria-label="Cidades atendidas">
+        {% for c in cities %}<li><a href="{{ root }}{{ c.slug }}/"><span class="route-dot"></span>{{ c.name }}<small>{{ c.nearest[0] if c.nearest else '' }}</small></a></li>{% endfor %}
+        {% for o in OTHER_CITIES %}<li class="route-other"><span><span class="route-dot"></span>{{ o }}</span></li>{% endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="sec cities" id="cidades">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>Área de atendimento</p>
+      <h2 class="h2" data-split>Escolha a sua cidade</h2>
+      <p class="muted" data-reveal>Retirada e entrega grátis em todos estes locais. Também atendemos {{ OTHER_CITIES|join(", ") }}.</p>
+    </div>
+    <div class="city-grid" data-stagger>
+      {% for c in cities %}
+      <a class="city" href="{{ root }}{{ c.slug }}/" data-spot>
+        <span class="city-k">{{ m.icon("pin") }}{{ c.nearest[0] if c.nearest else '' }}</span>
+        <h3>{{ c.name }}</h3><p>{{ c.short }}</p><span class="city-go">Ver atendimento {{ m.icon("arrow") }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sec numbers" id="unidades">
+  <div class="wrap numbers-grid">
+    <div class="numbers-copy">
+      <p class="eyebrow" data-reveal>Onde estamos</p>
+      <h2 class="h2" data-split>Sede em Guarujá, escritório em Santos</h2>
+      <p class="muted" data-reveal>A oficina de recarga fica na nossa sede própria, em Guarujá. De lá saem as equipes que retiram e entregam os extintores em todas as cidades da Baixada, sem custo de deslocamento para o cliente.</p>
+      <p class="muted" data-reveal>O escritório comercial em Santos atende síndicos, administradoras e empresas que preferem conversar pessoalmente. Em qualquer cidade, a vistoria e o orçamento são grátis.</p>
+    </div>
+    <div class="units units-col" data-stagger>
+      <div class="unit"><b>{{ m.icon("pin") }}Sede própria em Guarujá</b><span>Av. Piassaguera, 1189 · Guarujá - SP · CEP 11454-630</span><span class="muted">{{ HOURS }}</span><a href="https://www.google.com/maps/search/?api=1&query=Av.+Piassaguera,+1189,+Guaruj%C3%A1+-+SP" target="_blank" rel="noopener">Ver no mapa {{ m.icon("arrow") }}</a></div>
+      <div class="unit"><b>{{ m.icon("pin") }}Escritório comercial em Santos</b><span>R. Dr. Luis Suplicy, 31 · Santos - SP · CEP 11055-330</span><span class="muted">{{ HOURS }}</span><a href="https://www.google.com/maps/search/?api=1&query=R.+Dr.+Luis+Suplicy,+31,+Santos+-+SP,+11055-330" target="_blank" rel="noopener">Ver no mapa {{ m.icon("arrow") }}</a></div>
+    </div>
+    <div class="place">
+      <figure class="place-fig" data-reveal="clip"><img src="{{ root }}assets/img/fachada-sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="376" height="314" loading="lazy"><figcaption>Sede própria em Guarujá</figcaption></figure>
+      <figure class="place-fig" data-reveal="clip"><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="418" height="314" loading="lazy"><figcaption>Nossa oficina de recarga</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+{{ m.marquee_clients() }}
+
+<section class="sec services" id="servicos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>Serviços</p>
+      <h2 class="h2" data-split>Prevenção contra incêndio na Baixada Santista, num só fornecedor</h2>
+    </div>
+    <div class="svc-grid" data-stagger>
+      {% for s in SERVICES %}
+      <a class="svc" href="{{ s.wa }}" target="_blank" rel="noopener" data-spot data-tilt>
+        <span class="svc-ico">{{ m.icon(s.icon, "ico-lg") }}</span><h3>{{ s.title }}</h3><p>{{ s.text }}</p>
+        <span class="svc-foot"><b>{{ s.tag }}</b><span class="svc-go">Pedir orçamento {{ m.icon("arrow") }}</span></span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{{ m.faq_list(faq, "Atendimento na Baixada Santista: dúvidas comuns") }}
+
+{% set final_title = "Peça a vistoria grátis na sua cidade" %}
+{% include "final_cta.html" %}
+{% endblock %}

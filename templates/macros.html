@@ -1,0 +1,146 @@
+{% macro icon(name, cls="ico") -%}
+{%- if name == "wa" -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm0 18.1c-1.5 0-3-.4-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3a8.2 8.2 0 1 1 7 3.9Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3Z"/></svg>
+{%- elif name == "tel" -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3.5h3l1.6 4.2-2 1.3a11 11 0 0 0 7.4 7.4l1.3-2 4.2 1.6v3a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 3 5.7a2 2 0 0 1 2-2.2Z"/></svg>
+{%- elif name == "arrow" -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+{%- elif name == "check" -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true"><path class="ck" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.2 4.2L19 7"/></svg>
+{%- elif name == "pin" -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+{%- elif name == "star" -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 2.8 2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9L12 2.8Z"/></svg>
+{%- elif name == "extintor" -%}
+<svg class="{{ cls }}" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect class="draw" x="15" y="16" width="14" height="27" rx="5"/><path class="draw" d="M19 16v-4h6v4M25 10l8-3M22 12V8h8M29 8c5 1 7 5 7 10"/><circle class="draw" cx="22" cy="27" r="3.4"/><path class="draw" d="M22 27l1.6-1.6"/></g></svg>
+{%- elif name == "mangueira" -%}
+<svg class="{{ cls }}" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle class="draw" cx="20" cy="24" r="13"/><circle class="draw" cx="20" cy="24" r="8"/><circle class="draw" cx="20" cy="24" r="3"/><path class="draw" d="M33 24h6l3-3M39 24l3 3"/></g></svg>
+{%- elif name == "placa" -%}
+<svg class="{{ cls }}" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect class="draw" x="6" y="12" width="36" height="22" rx="3"/><path class="draw" d="M24 34v8M15 23h12m-4-4 4 4-4 4M31 18v10"/></g></svg>
+{%- elif name == "porta" -%}
+<svg class="{{ cls }}" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="draw" d="M12 42V7h24v35M8 42h32"/><path class="draw" d="M12 7l14 4v31M22 26v2"/></g></svg>
+{%- elif name == "vistoria" -%}
+<svg class="{{ cls }}" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect class="draw" x="10" y="8" width="26" height="34" rx="3"/><path class="draw" d="M17 8V5h12v3M16 20l3 3 6-6M16 31h14"/><circle class="draw" cx="35" cy="34" r="6"/><path class="draw" d="m39.5 38.5 4 4"/></g></svg>
+{%- elif name == "carrinho" -%}
+<svg class="{{ cls }}" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="draw" d="M5 8h6l4 22h22l4-15H13"/><circle class="draw" cx="18" cy="38" r="3"/><circle class="draw" cx="34" cy="38" r="3"/></g></svg>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro btn_wa(href, label, cls="", extra="") -%}
+<a class="btn btn-primary {{ cls }}" href="{{ href }}" target="_blank" rel="noopener" data-magnetic {{ extra|safe }}><span class="btn-shine" aria-hidden="true"></span>{{ icon("wa") }}<span>{{ label }}</span></a>
+{%- endmacro %}
+
+{% macro btn_tel(label=None, cls="") -%}
+<a class="btn btn-ghost {{ cls }}" href="tel:{{ PHONE_TEL }}" data-magnetic>{{ icon("tel") }}<span class="tnum">{{ label or PHONE_LABEL }}</span></a>
+{%- endmacro %}
+
+{% macro gauge() -%}
+<div class="gauge" aria-hidden="true">
+  <svg viewBox="0 0 220 140">
+    <defs>
+      <linearGradient id="gz" x1="0" x2="1">
+        <stop offset="0" stop-color="#E31930"/><stop offset=".45" stop-color="#EE8421"/><stop offset=".62" stop-color="#17B26A"/><stop offset="1" stop-color="#17B26A"/>
+      </linearGradient>
+    </defs>
+    <path class="g-track" d="M20 120a90 90 0 0 1 180 0" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="14" stroke-linecap="round"/>
+    <path class="g-arc" d="M20 120a90 90 0 0 1 180 0" fill="none" stroke="url(#gz)" stroke-width="14" stroke-linecap="round" pathLength="100"/>
+    <g class="g-ticks" stroke="rgba(255,255,255,.35)" stroke-width="2">
+      {% for i in range(11) %}{% set a = 180 - i * 18 %}
+      <line x1="110" y1="38" x2="110" y2="46" transform="rotate({{ 90 - a }} 110 120)"/>
+      {% endfor %}
+    </g>
+    <g class="g-needle"><path d="M110 120 L106 118 L110 44 L114 118 Z" fill="#fff"/><circle cx="110" cy="120" r="9" fill="#fff"/><circle cx="110" cy="120" r="4" fill="#E31930"/></g>
+  </svg>
+  <div class="g-label"><span class="g-k">Manômetro</span><strong class="g-v">Pressão OK</strong></div>
+</div>
+{%- endmacro %}
+
+{% macro ficha(sub, unit=None) -%}
+<aside class="ficha" aria-label="O que está incluso no atendimento" data-ficha>
+  <p class="ficha-k">Ficha de atendimento</p>
+  <p class="ficha-t">{{ sub }}</p>
+  <ul>
+    <li><span>Vistoria e orçamento</span><b>Grátis</b></li>
+    <li><span>Retirada e entrega</span><b>Grátis</b></li>
+    <li><span>Extintores reservas</span><b>Incluso</b></li>
+    <li><span>Teste de mangueiras</span><b>No local</b></li>
+    {% if unit %}<li><span>Unidade mais próxima</span><b class="plain">{{ unit }}</b></li>{% else %}<li><span>Selo de conformidade</span><b>INMETRO</b></li>{% endif %}
+  </ul>
+  <p class="ficha-foot">Prazo: até 7 dias úteis</p>
+  <div class="stamp" aria-label="Prazo garantido ou 20% de desconto">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="sc" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><text><textPath href="#sc">PRAZO GARANTIDO · PRAZO GARANTIDO · </textPath></text></svg>
+    <b>20%<small>OFF se atrasarmos</small></b>
+  </div>
+</aside>
+{%- endmacro %}
+
+{% macro proofbar() -%}
+<ul class="proofbar">
+  <li><strong class="tnum"><span data-count="5" data-decimals="1">5,0</span> <span class="stars" aria-hidden="true">★★★★★</span></strong><span><span data-count="704">704</span> avaliações no Google</span></li>
+  <li><strong>+<span data-count="30">30</span> anos</strong><span>de mercado</span></li>
+  <li><strong class="tnum">+<span data-count="14000">14.000</span></strong><span>clientes atendidos</span></li>
+  <li class="pb-seal"><img src="{{ root }}assets/img/selo-inmetro.webp" alt="" width="44" height="44" loading="lazy"><span><strong>INMETRO</strong>Registro nº 3495/22</span></li>
+</ul>
+{%- endmacro %}
+
+{% macro marquee_clients(title="Já confiaram na Baluarte") -%}
+<section class="clients" aria-label="Clientes">
+  <div class="wrap clients-head"><p class="eyebrow">{{ title }}</p><p class="clients-sub">Órgãos públicos, empresas e instituições entre os nossos <b>+14.000 clientes</b>.</p></div>
+  <div class="marquee" data-marquee>
+    <div class="marquee-track">
+      {% for rep in range(2) %}
+      <ul class="marquee-group" {% if rep %}aria-hidden="true"{% endif %}>
+        {% for c in clientes %}<li><img src="{{ root }}assets/img/clientes/{{ c.file }}" alt="{{ '' if rep else c.name }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy"></li>{% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{%- endmacro %}
+
+{% macro faq_list(items, title, eyebrow="Dúvidas frequentes") -%}
+<section class="faq sec" id="duvidas">
+  <div class="wrap faq-grid">
+    <div class="faq-side">
+      <p class="eyebrow" data-reveal>{{ eyebrow }}</p>
+      <h2 class="h2" data-split>{{ title }}</h2>
+      <p class="muted" data-reveal>Não achou sua dúvida? Fale com a gente no WhatsApp, respondemos rápido.</p>
+      {{ btn_wa(wa("Olá! Tenho uma dúvida sobre extintores."), "Tirar dúvida no WhatsApp", "btn-sm") }}
+    </div>
+    <div class="faq-list" data-stagger>
+      {% for i in items %}
+      <details class="faq-item"><summary><span>{{ i.q }}</span><i aria-hidden="true"></i></summary><div class="faq-a"><p>{{ i.a }}</p></div></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{%- endmacro %}
+
+{% macro quote_builder(city_name=None) -%}
+<form class="qb" data-qb onsubmit="return false" aria-label="Montar pedido de orçamento pelo WhatsApp">
+  <p class="qb-k">Orçamento rápido · 20 segundos</p>
+  <div class="qb-row">
+    <label>Cidade
+      <select name="cidade">
+        {% for c in cities %}<option{% if city_name == c.name %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+        {% for o in OTHER_CITIES %}<option{% if city_name == o %} selected{% endif %}>{{ o }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Tipo de imóvel
+      <select name="imovel"><option>Condomínio</option><option>Comércio</option><option>Empresa ou indústria</option><option>Obra</option><option>Casa</option></select>
+    </label>
+  </div>
+  <fieldset class="qb-chips"><legend>O que você precisa?</legend>
+    <label><input type="checkbox" name="s" value="recarga de extintores" checked><span>Recarga</span></label>
+    <label><input type="checkbox" name="s" value="teste de mangueiras"><span>Mangueiras</span></label>
+    <label><input type="checkbox" name="s" value="sinalização"><span>Sinalização</span></label>
+    <label><input type="checkbox" name="s" value="porta corta-fogo"><span>Porta corta-fogo</span></label>
+    <label><input type="checkbox" name="s" value="extintores novos"><span>Extintores novos</span></label>
+  </fieldset>
+  <label class="qb-qty">Quantos extintores, mais ou menos? <output>10</output>
+    <input type="range" name="qtd" min="1" max="100" value="10">
+  </label>
+  <a class="btn btn-primary btn-block" data-qb-link href="{{ wa() }}" target="_blank" rel="noopener" data-magnetic><span class="btn-shine" aria-hidden="true"></span>{{ icon("wa") }}<span>Enviar pedido no WhatsApp</span></a>
+  <p class="qb-note">Abre o WhatsApp com a mensagem pronta. Sem compromisso.</p>
+</form>
+{%- endmacro %}

@@ -1,0 +1,146 @@
+[
+ {
+  "name": "Corpo de Bombeiros",
+  "file": "corpo-de-bombeiros.webp",
+  "w": 139,
+  "h": 141
+ },
+ {
+  "name": "Prefeitura de Santos",
+  "file": "prefeitura-de-santos.webp",
+  "w": 134,
+  "h": 132
+ },
+ {
+  "name": "Prefeitura de Guarujá",
+  "file": "prefeitura-de-guaruja.webp",
+  "w": 110,
+  "h": 150
+ },
+ {
+  "name": "Santa Casa de Santos",
+  "file": "santa-casa-de-santos.webp",
+  "w": 118,
+  "h": 150
+ },
+ {
+  "name": "Transpetro",
+  "file": "transpetro.webp",
+  "w": 137,
+  "h": 64
+ },
+ {
+  "name": "SENAI",
+  "file": "senai.webp",
+  "w": 147,
+  "h": 142
+ },
+ {
+  "name": "Banco do Brasil",
+  "file": "banco-do-brasil.webp",
+  "w": 140,
+  "h": 110
+ },
+ {
+  "name": "Itaú",
+  "file": "itau.webp",
+  "w": 117,
+  "h": 115
+ },
+ {
+  "name": "Bradesco",
+  "file": "bradesco.webp",
+  "w": 147,
+  "h": 111
+ },
+ {
+  "name": "Santander",
+  "file": "santander.webp",
+  "w": 147,
+  "h": 41
+ },
+ {
+  "name": "Ipiranga",
+  "file": "ipiranga.webp",
+  "w": 300,
+  "h": 92
+ },
+ {
+  "name": "Copersucar",
+  "file": "copersucar.webp",
+  "w": 147,
+  "h": 46
+ },
+ {
+  "name": "Cutrale",
+  "file": "cutrale.webp",
+  "w": 147,
+  "h": 98
+ },
+ {
+  "name": "UNAERP",
+  "file": "unaerp.webp",
+  "w": 147,
+  "h": 49
+ },
+ {
+  "name": "Objetivo",
+  "file": "objetivo.webp",
+  "w": 129,
+  "h": 56
+ },
+ {
+  "name": "Clube Internacional de Regatas",
+  "file": "clube-internacional-de-regatas.webp",
+  "w": 137,
+  "h": 138
+ },
+ {
+  "name": "Museu Pelé",
+  "file": "museu-pele.webp",
+  "w": 145,
+  "h": 138
+ },
+ {
+  "name": "Instituto de Análises Clínicas de Santos",
+  "file": "instituto-de-analises-clinicas-de-santos.webp",
+  "w": 143,
+  "h": 48
+ },
+ {
+  "name": "Dersa",
+  "file": "dersa.webp",
+  "w": 147,
+  "h": 28
+ },
+ {
+  "name": "S.Magalhães Essemaga",
+  "file": "s-magalhaes-essemaga.webp",
+  "w": 142,
+  "h": 41
+ },
+ {
+  "name": "Cesari",
+  "file": "cesari.webp",
+  "w": 143,
+  "h": 27
+ },
+ {
+  "name": "Conlog",
+  "file": "conlog.webp",
+  "w": 132,
+  "h": 26
+ },
+ {
+  "name": "MCP Yachts",
+  "file": "mcp-yachts.webp",
+  "w": 136,
+  "h": 73
+ },
+ {
+  "name": "Memorial Necrópole Ecumênica",
+  "file": "memorial-necropole-ecumenica.webp",
+  "w": 147,
+  "h": 41
+ }
+]

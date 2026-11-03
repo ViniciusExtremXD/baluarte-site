@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "macros.html" as m with context %}
+{% block ogtype %}article{% endblock %}
+{% block bodyclass %}page-post{% endblock %}
+{% block content %}
+<div class="read-progress" aria-hidden="true"><i data-read-progress></i></div>
+<article class="post">
+  <header class="post-hero" data-hero>
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="wrap wrap-narrow">
+      <nav class="crumbs" aria-label="Você está em" data-hero-in><a href="{{ root }}">Início</a><span>/</span><a href="{{ root }}conteudos/">Conteúdos</a><span>/</span><span aria-current="page">{{ post.category }}</span></nav>
+      <p class="post-cat" data-hero-in>{{ post.category }} · {{ post.minutes }} min de leitura</p>
+      <h1 class="h1 h1-post" data-hero-title>{{ post.title }}</h1>
+      <p class="post-by" data-hero-in>Por Equipe técnica Baluarte · <time datetime="{{ post.date }}">{{ post.date_label }}</time></p>
+    </div>
+  </header>
+  <div class="wrap post-layout">
+    <aside class="post-aside">
+      <div class="post-cta-card">
+        <img src="{{ root }}assets/img/selo-inmetro.webp" alt="" width="64" height="64" loading="lazy">
+        <p><b>Vistoria e orçamento grátis</b> em toda a Baixada Santista.</p>
+        {{ m.btn_wa(wa("Olá! Li o artigo \"" ~ post.title ~ "\" e quero vistoria e orçamento grátis."), "Chamar no WhatsApp", "btn-sm btn-block") }}
+        <a class="post-cta-tel tnum" href="tel:{{ PHONE_TEL }}">ou ligue {{ PHONE_LABEL }}</a>
+      </div>
+    </aside>
+    <div class="post-body prose" data-prose>
+      {{ post.body|safe }}
+      <div class="post-end">
+        <p class="post-end-k">Quer resolver isso de vez?</p>
+        <h2>Deixe os extintores e as mangueiras do seu imóvel com a Baluarte</h2>
+        <p>Retirada grátis, extintores reservas no lugar, teste de mangueiras no local e prazo de até 7 dias úteis garantido.</p>
+        <div class="hero-actions">
+          {{ m.btn_wa(wa("Olá! Li o artigo \"" ~ post.title ~ "\" e quero vistoria e orçamento grátis."), "Quero vistoria grátis") }}
+          {{ m.btn_tel() }}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<section class="sec blog-teaser">
+  <div class="wrap">
+    <div class="sec-head sec-head-row"><div><p class="eyebrow">Continue lendo</p><h2 class="h2">Outros conteúdos</h2></div><a class="link-arrow" href="{{ root }}conteudos/">Ver todos {{ m.icon("arrow") }}</a></div>
+    <div class="post-grid" data-stagger>
+      {% for p in related %}
+      <a class="post-card" href="{{ root }}conteudos/{{ p.slug }}/" data-spot>
+        <span class="post-cat">{{ p.category }} · {{ p.minutes }} min</span><h3>{{ p.title }}</h3><p>{{ p.excerpt }}</p><span class="post-go">Ler artigo {{ m.icon("arrow") }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

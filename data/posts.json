@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "recarga-de-extintor-prazo-obrigatorio",
+    "title": "Recarga de extintor: de quanto em quanto tempo é obrigatória?",
+    "description": "Entenda o prazo da recarga e manutenção de extintores, o teste hidrostático de 5 anos, como ler a etiqueta e o que acontece se atrasar.",
+    "date": "2026-11-03",
+    "date_label": "3 de novembro de 2026",
+    "minutes": 5,
+    "category": "Manutenção",
+    "excerpt": "Manutenção anual, teste hidrostático a cada 5 anos e inspeção visual frequente. Veja como saber se o extintor do seu prédio está vencido."
+  },
+  {
+    "slug": "tipos-de-extintor-de-incendio",
+    "title": "Tipos de extintor de incêndio: qual usar em cada situação",
+    "description": "Água, espuma, pó químico BC e ABC, CO₂ e classe K: veja as classes de incêndio e qual extintor é indicado para cada uma.",
+    "date": "2026-11-03",
+    "date_label": "3 de novembro de 2026",
+    "minutes": 6,
+    "category": "Equipamentos",
+    "excerpt": "Usar o extintor errado pode piorar o incêndio. Entenda as classes A, B, C, D e K e o extintor certo para cada uma."
+  },
+  {
+    "slug": "teste-hidrostatico-mangueira-de-incendio",
+    "title": "Teste hidrostático de mangueira de incêndio: o que é e quando fazer",
+    "description": "O que é o teste hidrostático de mangueiras de incêndio, a frequência pela ABNT NBR 12779 e os cuidados para a mangueira durar mais.",
+    "date": "2026-11-03",
+    "date_label": "3 de novembro de 2026",
+    "minutes": 4,
+    "category": "Mangueiras",
+    "excerpt": "A mangueira do hidrante passa anos parada e precisa funcionar no primeiro uso. Veja como o teste comprova isso e de quanto em quanto tempo fazer."
+  }
+]
