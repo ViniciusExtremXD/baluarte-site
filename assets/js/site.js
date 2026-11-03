@@ -1,4 +1,4 @@
-/* Baluarte Extintores: menu, topo, carrossel, itens que aparecem ao rolar, números, formulário e rolagem suave. */
+/* Baluarte Extintores: menu, topo, carrossel, mapa das unidades, itens que aparecem ao rolar, números, formulário e rolagem suave. */
 (function () {
   var root = document.documentElement;
   var anim = root.classList.contains('anim');
@@ -112,35 +112,147 @@
     });
   }
 
-  // Brilho que segue o mouse nos cartões
-  if (fine) {
-    document.addEventListener('pointermove', function (e) {
-      var c = e.target.closest && e.target.closest('.glow');
-      if (!c) return;
-      var r = c.getBoundingClientRect();
-      c.style.setProperty('--mx', e.clientX - r.left + 'px');
-      c.style.setProperty('--my', e.clientY - r.top + 'px');
-    }, { passive: true });
+  // Mapa das unidades: o primeiro clique mostra a unidade, o segundo abre a página dela
+  var units = document.querySelector('[data-units]');
+  if (units) unitsMap(units);
+
+  function unitsMap(box) {
+    var rows = box.querySelectorAll('.city-row');
+    var wrap = box.querySelector('.map-wrap');
+    var canvas = box.querySelector('.map-canvas');
+    var name = box.querySelector('.map-name');
+    var short = box.querySelector('.map-short');
+    var addr = box.querySelector('.map-addr');
+    var go = box.querySelector('.map-go');
+    var map = null, pins = [], sel = -1;
+
+    function select(i) {
+      if (sel > -1) { rows[sel].classList.remove('is-sel'); pins[sel].getElement().classList.remove('is-sel'); }
+      sel = i;
+      var d = rows[i].dataset;
+      rows[i].classList.add('is-sel');
+      pins[i].getElement().classList.add('is-sel');
+      name.textContent = d.name;
+      short.textContent = d.short;
+      addr.textContent = d.addr;
+      addr.hidden = !d.addr;
+      go.href = rows[i].href;
+      go.querySelector('span').textContent = 'Abrir a página de ' + d.name;
+      wrap.classList.add('has-sel');
+      // No celular o cartão cobre a parte de baixo do mapa: o ponto fica mais acima
+      var center = map.unproject(map.project([+d.lat, +d.lng], 12).add([0, canvas.clientWidth < 600 ? 130 : 0]), 12);
+      if (full) map.flyTo(center, 12, { duration: 0.9 });
+      else map.setView(center, 12);
+    }
+
+    rows.forEach(function (row, i) {
+      row.addEventListener('click', function (e) {
+        if (!map || sel === i) return; // sem mapa ou segundo clique: segue o link
+        e.preventDefault();
+        select(i);
+      });
+    });
+
+    function draw() {
+      map = L.map(canvas, { scrollWheelZoom: false, dragging: fine, tap: false, attributionControl: true });
+      map.fitBounds(L.latLngBounds(Array.prototype.map.call(rows, function (r) { return [+r.dataset.lat, +r.dataset.lng]; })), { padding: [70, 70] });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
+      map.attributionControl.setPrefix(false);
+      rows.forEach(function (row, i) {
+        var d = row.dataset;
+        var html = '<i></i><b>' + d.name + (d.tag ? '<small>' + d.tag + '</small>' : '') + '</b>';
+        var pin = L.marker([+d.lat, +d.lng], {
+          icon: L.divIcon({ className: 'pin pin-' + d.side + (d.tag ? ' pin-unit' : ''), html: html, iconSize: [16, 16], iconAnchor: [8, 8] }),
+          title: d.name, alt: d.name
+        }).addTo(map);
+        pin.getElement().style.setProperty('--n', i);
+        pin.on('click', function () {
+          if (sel === i) location.href = row.href;
+          else select(i);
+        });
+        pins.push(pin);
+      });
+      new IntersectionObserver(function (en, o) {
+        if (en[0].isIntersecting) { canvas.classList.add('on'); o.disconnect(); }
+      }, { threshold: 0.35 }).observe(canvas);
+    }
+
+    function load() {
+      var css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(css);
+      var js = document.createElement('script');
+      js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      js.onload = draw;
+      document.head.appendChild(js);
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en, o) {
+        if (en[0].isIntersecting) { o.disconnect(); load(); }
+      }, { rootMargin: '600px 0px' }).observe(wrap);
+    } else load();
   }
 
   if (full && fine) smoothScroll();
   if (!anim || !('IntersectionObserver' in window)) return;
 
-  // Itens que entram juntos aparecem um depois do outro
-  var io = new IntersectionObserver(function (entries) {
+  // Títulos: cada palavra entra em cascata
+  document.querySelectorAll('.title,.how h2,.cta-band h2').forEach(function (t) {
+    var i = 0;
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 1) { if (n.tagName !== 'BR') walk(n); return; }
+        if (n.nodeType !== 3 || !n.nodeValue.trim()) return;
+        var frag = document.createDocumentFragment();
+        n.nodeValue.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          var w = document.createElement('span');
+          w.className = 'w';
+          w.style.setProperty('--i', i++);
+          w.textContent = part;
+          frag.appendChild(w);
+        });
+        n.parentNode.replaceChild(frag, n);
+      });
+    })(t);
+    t.classList.add('split', 'reveal');
+  });
+
+  // Todo componente aparece ao rolar; itens que entram juntos vêm um depois do outro
+  var kinds = {
+    '': '.clients-head,.marquee,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.city-links>li,.cta-band p,.cta-band .btn,.review,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
+    'reveal-s': '.svc,.svc-inc,.prova,.review-score,.post-card,.local-card,.form,.empresa-mini',
+    'wipe': '.empresa-photo,.map-wrap'
+  };
+  Object.keys(kinds).forEach(function (k) {
+    document.querySelectorAll(kinds[k]).forEach(function (el) {
+      el.classList.add('reveal');
+      if (k) el.classList.add(k);
+    });
+  });
+
+  var show = function (entries, obs) {
     var n = 0;
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
       var el = en.target;
-      el.style.transitionDelay = Math.min(n++, 6) * 80 + 'ms';
+      el.style.transitionDelay = Math.min(n++, 7) * 75 + 'ms';
       el.classList.add('in');
       el.classList.remove('pre');
-      io.unobserve(el);
-      setTimeout(function () { el.classList.remove('in'); el.style.transitionDelay = ''; }, 1500);
+      obs.unobserve(el);
+      setTimeout(function () { el.classList.remove('in'); el.style.transitionDelay = ''; }, 1900);
     });
-  }, { rootMargin: '0px 0px -7% 0px' });
+  };
+  var io = new IntersectionObserver(show, { rootMargin: '0px 0px -7% 0px' });
+  var ioEnd = new IntersectionObserver(show); // o rodapé nunca passa da margem acima: ele é o fim da página
   document.querySelectorAll('.reveal').forEach(function (el) {
-    if (el.getBoundingClientRect().bottom > 0) { el.classList.add('pre'); io.observe(el); }
+    if (el.getBoundingClientRect().bottom > 0) {
+      el.classList.add('pre');
+      (el.closest('.ftr') ? ioEnd : io).observe(el);
+    }
   });
 
   // Números que contam ao aparecer

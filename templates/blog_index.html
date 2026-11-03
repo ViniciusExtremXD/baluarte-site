@@ -11,7 +11,7 @@
 <section class="section blog">
   <div class="wrap post-grid">
     {% for p in posts %}
-    <article class="post-card glow reveal">
+    <article class="post-card">
       <div class="post-media"><img src="{{ root }}assets/img/{{ p.image }}" alt="" loading="lazy" decoding="async"><span class="post-tag">{{ p.category }}</span></div>
       <div class="post-body">
         <h2><a href="{{ root }}conteudos/{{ p.slug }}/">{{ p.title }}</a></h2>

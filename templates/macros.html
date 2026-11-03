@@ -2,14 +2,22 @@
 <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.668-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.875 1.213 3.074.148.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
 {%- endmacro %}
 
+{% macro icon_gmaps() -%}
+<svg class="gmaps-ico" viewBox="0 0 92.3 132.3" aria-hidden="true"><path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z"/><path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z"/><path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3"/><path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3"/><path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63 0-7.7-1.9-14.9-5.2-21.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2"/></svg>
+{%- endmacro %}
+
+{% macro icon_google() -%}
+<svg class="g-ico" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/></svg>
+{%- endmacro %}
+
 {% macro stars() -%}
 <span class="stars" role="img" aria-label="5 estrelas">{% for _ in range(5) %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.5l-6 3.3 1.3-6.7-5-4.6 6.8-.8z"/></svg>{% endfor %}</span>
 {%- endmacro %}
 
 {% macro head(kicker, title, lead=None) -%}
-<p class="kicker reveal">{{ kicker }}</p>
-<h2 class="title reveal">{{ title|safe }}</h2>
-{% if lead %}<p class="lead reveal">{{ lead }}</p>{% endif %}
+<p class="kicker">{{ kicker }}</p>
+<h2 class="title">{{ title|safe }}</h2>
+{% if lead %}<p class="lead">{{ lead }}</p>{% endif %}
 {%- endmacro %}
 
 {% macro page_hero(title, lead, href, img, alt) -%}
@@ -25,9 +33,9 @@
       <a class="btn btn-ghost" href="tel:{{ PHONE_TEL }}">{{ icon("phone") }}<span>{{ PHONE_LABEL }}</span></a>
     </div>
     <ul class="chips">
-      <li>{{ icon("shield") }}INMETRO nº 3495/22</li>
-      <li>{{ icon("truck") }}Retirada e entrega grátis</li>
-      <li>{{ icon("calendar") }}Até 7 dias úteis</li>
+      <li>INMETRO nº 3495/22</li>
+      <li>Retirada e entrega grátis</li>
+      <li>Até 7 dias úteis</li>
     </ul>
   </div>
 </section>
@@ -39,20 +47,19 @@
     {{ head("Serviços", "Da recarga do extintor<br class='d-br'> à <em>porta corta-fogo</em>.") }}
     <div class="svc-grid">
       {% for s in SERVICES %}
-      <article class="svc glow reveal{{ ' svc-featured' if s.featured }}">
+      <article class="svc{{ ' svc-featured' if s.featured }}">
         <div class="svc-media"><img src="{{ root }}assets/img/{{ s.img }}" alt="{{ s.alt }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async"></div>
         <div class="svc-body">
-          <span class="svc-icon">{{ icon(s.icon) }}</span>
           <h3>{{ s.title }}</h3>
           <p>{{ s.text }}</p>
           <a class="link" href="{{ wa(s.msg ~ (' Sou de ' ~ city_name ~ '.' if city_name else '')) }}" target="_blank" rel="noopener">Solicitar orçamento {{ icon("arrow") }}</a>
         </div>
       </article>
       {% endfor %}
-      <article class="svc-inc reveal">
+      <article class="svc-inc">
         <h3>Incluso em todo atendimento</h3>
         <ul>
-          {% for i in INCLUDED %}<li>{{ icon("check") }}{{ i }}</li>{% endfor %}
+          {% for i in INCLUDED %}<li>{{ i }}</li>{% endfor %}
         </ul>
       </article>
     </div>
@@ -61,66 +68,78 @@
 {%- endmacro %}
 
 {% macro how(href) -%}
-<section class="section how-sec" id="como-funciona">
+<section class="section how" id="como-funciona">
   <div class="wrap">
-    <div class="how reveal">
-      <div class="how-copy">
+    <div class="how-copy">
+      <div>
         <p class="kicker kicker-light">Como funciona</p>
         <h2>Seu imóvel <em>não fica sem proteção</em> enquanto recarregamos.</h2>
+      </div>
+      <div class="how-side">
         <p>Prazo garantido por escrito: se não devolvermos em até 7 dias úteis, você ganha 20% de desconto no próximo serviço.</p>
         <a class="btn btn-primary" href="{{ href }}" target="_blank" rel="noopener">{{ icon_wa() }}<span>Agendar vistoria grátis</span></a>
       </div>
-      <ol class="how-steps">
-        {% for t, d in STEPS %}
-        <li><b>{{ "%02d"|format(loop.index) }}</b><h3>{{ t }}</h3><p>{{ d }}</p></li>
-        {% endfor %}
-      </ol>
     </div>
+    <ol class="how-steps">
+      {% for t, d in STEPS %}
+      <li><b>{{ "%02d"|format(loop.index) }}</b><h3>{{ t }}</h3><p>{{ d }}</p></li>
+      {% endfor %}
+    </ol>
   </div>
 </section>
 {%- endmacro %}
 
-{% macro city_cards(items) -%}
-<div class="city-grid">
-  {% for c in items %}
-  <a class="city glow reveal" href="{{ root }}{{ c.slug }}/">
-    <span class="city-pin">{{ icon("pin") }}</span>
-    <span class="city-txt"><b>{{ c.name }}</b><span>{{ c.short }}</span></span>
-    <span class="city-go">{{ icon("arrow") }}</span>
-  </a>
-  {% endfor %}
+{% macro units_map() -%}
+<div class="units" data-units>
+  <ul class="units-list">
+    {% for c in cities %}
+    <li>
+      <a class="city-row" href="{{ root }}{{ c.slug }}/" data-lat="{{ c.lat }}" data-lng="{{ c.lng }}" data-tag="{{ c.tag }}" data-side="{{ c.side }}" data-name="{{ c.name }}" data-short="{{ c.short }}" data-addr="{{ c.addr_lines[0] if c.tag else '' }}">
+        <b>{{ c.name }}{% if c.tag %}<small>{{ c.tag }}</small>{% endif %}</b>
+        <span>{{ c.short }}</span>
+        <em class="city-hint">Clique de novo para abrir a página</em>
+        {{ icon("arrow") }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="map-wrap">
+    <div class="map-canvas" role="application" aria-label="Mapa das cidades atendidas pela Baluarte"></div>
+    <p class="map-tip">Clique em um ponto para ver a unidade</p>
+    <div class="map-card" aria-live="polite">
+      <b class="map-name"></b>
+      <span class="map-short"></span>
+      <span class="map-addr"></span>
+      <a class="btn btn-primary btn-sm map-go" href="#"><span>Abrir a página</span>{{ icon("arrow") }}</a>
+    </div>
+  </div>
 </div>
 {%- endmacro %}
 
-{% macro route() -%}
-<ol class="route reveal" aria-label="Cidades atendidas, na ordem do litoral">
-  <li class="route-line" aria-hidden="true"></li>
-  {% for name, slug, tag in ROUTE %}
-  <li class="stop{{ ' main' if slug }}{{ ' hq' if tag }}">
-    <i aria-hidden="true"></i>
-    {% if slug %}<a href="{{ root }}{{ slug }}/">{{ name }}</a>{% else %}<span>{{ name }}</span>{% endif %}
-    {% if tag %}<small>{{ tag }}</small>{% endif %}
-  </li>
+{% macro city_links(items) -%}
+<ul class="city-links">
+  {% for c in items %}
+  <li><a class="city-row" href="{{ root }}{{ c.slug }}/"><b>{{ c.name }}</b><span>{{ c.short }}</span>{{ icon("arrow") }}</a></li>
   {% endfor %}
-</ol>
+</ul>
 {%- endmacro %}
 
 {% macro photos_fig() -%}
-<figure class="empresa-fig reveal reveal-r">
-  <div class="empresa-photo plx"><img src="{{ root }}assets/img/sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="680" height="560" loading="lazy" decoding="async"></div>
-  <figcaption><b>Registro INMETRO nº 3495/22</b><span>Sede e oficina própria em Guarujá</span></figcaption>
-  <div class="empresa-mini"><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="418" height="314" loading="lazy" decoding="async"><span>Oficina de recarga</span></div>
+<figure class="empresa-fig">
+  <div class="empresa-photo plx"><img src="{{ root }}assets/img/sede-guaruja.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" width="1400" height="1153" loading="lazy" decoding="async"></div>
+  <figcaption><b>Sede própria em Guarujá</b><span>Registro INMETRO nº 3495/22</span></figcaption>
+  <div class="empresa-mini"><img src="{{ root }}assets/img/oficina-recarga.webp" alt="Oficina de recarga da Baluarte com extintores em manutenção" width="1200" height="902" loading="lazy" decoding="async"><span>Oficina de recarga</span></div>
 </figure>
 {%- endmacro %}
 
 {% macro cta_band(title, text, href) -%}
 <section class="cta-band">
   <div class="wrap cta-in">
-    <div class="reveal">
+    <div>
       <h2>{{ title }}</h2>
       <p>{{ text }}</p>
     </div>
-    <a class="btn btn-light btn-lg reveal" href="{{ href }}" target="_blank" rel="noopener">{{ icon_wa() }}<span>Falar com um especialista</span></a>
+    <a class="btn btn-light btn-lg" href="{{ href }}" target="_blank" rel="noopener">{{ icon_wa() }}<span>Falar com um especialista</span></a>
   </div>
 </section>
 {%- endmacro %}
@@ -130,11 +149,11 @@
   <div class="wrap faq-grid">
     <div class="faq-head">
       {{ head("Dúvidas frequentes", title, "Se a sua dúvida não estiver aqui, nossa equipe responde pelo WhatsApp.") }}
-      <a class="btn btn-outline reveal" href="{{ href }}" target="_blank" rel="noopener">{{ icon_wa() }}<span>Falar com um técnico</span></a>
+      <a class="btn btn-outline" href="{{ href }}" target="_blank" rel="noopener">{{ icon_wa() }}<span>Falar com um técnico</span></a>
     </div>
     <div class="accordion">
       {% for i in items %}
-      <details class="faq-item reveal" name="faq">
+      <details class="faq-item" name="faq">
         <summary>{{ i.q }}<span class="faq-icon" aria-hidden="true"></span></summary>
         <p>{{ i.a }}</p>
       </details>
@@ -144,12 +163,12 @@
 </section>
 {%- endmacro %}
 
-{% macro contact(title, city_name=None, map=False) -%}
+{% macro contact(title, city_name=None) -%}
 <section class="section contato" id="contato">
   <div class="wrap">
     {{ head("Contato", title) }}
     <div class="contato-grid">
-      <form class="form reveal" action="https://wa.me/{{ WA_NUMBER }}" method="get" target="_blank" data-wa-form>
+      <form class="form" action="https://wa.me/{{ WA_NUMBER }}" method="get" target="_blank" data-wa-form>
         <input type="hidden" name="text" value="Olá! Vim pelo site e quero um orçamento.">
         <div class="form-row">
           <div class="field"><label for="f-nome">Nome *</label><input id="f-nome" data-l="Nome" required autocomplete="name" placeholder="Seu nome"></div>
@@ -174,24 +193,30 @@
         <button class="btn btn-primary form-submit" type="submit">{{ icon_wa() }}<span>Solicitar orçamento pelo WhatsApp</span></button>
         <p class="form-hint">O WhatsApp abre com a sua mensagem pronta. Se puder, mande também a foto da etiqueta de um extintor.</p>
       </form>
-      <aside class="info-card reveal">
+      <aside class="info-card">
         <h3>Fale com a Baluarte</h3>
         <ul class="info-list">
-          <li><span class="info-icon info-wa">{{ icon_wa() }}</span><div><b>WhatsApp</b><a href="{{ wa() }}" target="_blank" rel="noopener">{{ WA_LABEL }}</a></div></li>
-          <li><span class="info-icon">{{ icon("phone") }}</span><div><b>Telefone</b><a href="tel:{{ PHONE_TEL }}">{{ PHONE_LABEL }}</a></div></li>
-          <li><span class="info-icon">{{ icon("mail") }}</span><div><b>E-mail</b><a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a></div></li>
-          <li><span class="info-icon">{{ icon("pin") }}</span><div><b>Sede e oficina</b><span>Av. Piassaguera, 1189, Guarujá - SP</span></div></li>
-          <li><span class="info-icon">{{ icon("pin") }}</span><div><b>Escritório comercial</b><span>R. Dr. Luis Suplicy, 31, Santos - SP</span></div></li>
-          <li><span class="info-icon">{{ icon("clock") }}</span><div><b>Horário</b><span>{{ HOURS }}</span></div></li>
+          <li><b>WhatsApp</b><a href="{{ wa() }}" target="_blank" rel="noopener">{{ WA_LABEL }}</a></li>
+          <li><b>Telefone</b><a href="tel:{{ PHONE_TEL }}">{{ PHONE_LABEL }}</a></li>
+          <li><b>E-mail</b><a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a></li>
+          <li><b>Sede e oficina</b><span>Av. Piassaguera, 1189, Guarujá - SP</span><a class="gmaps-link" href="{{ REVIEWS_URL }}" target="_blank" rel="noopener">{{ icon_gmaps() }}Ver no Google Maps</a></li>
+          <li><b>Escritório comercial</b><span>R. Dr. Luis Suplicy, 31, Santos - SP</span><a class="gmaps-link" href="https://www.google.com/maps/search/?api=1&amp;query={{ OFFICE_Q }}" target="_blank" rel="noopener">{{ icon_gmaps() }}Ver no Google Maps</a></li>
+          <li><b>Horário</b><span>{{ HOURS }}</span></li>
         </ul>
       </aside>
     </div>
-    {% if map %}
-    <div class="map-band reveal">
-      <iframe title="Mapa da sede da Baluarte em Guarujá" src="https://www.google.com/maps?q=Baluarte%20Extintores%20Guaruj%C3%A1&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <a class="map-link" href="{{ REVIEWS_URL }}" target="_blank" rel="noopener"><span class="info-icon">{{ icon("pin") }}</span><span><b>Como chegar</b><small>Abrir a sede no Google Maps</small></span></a>
-    </div>
-    {% endif %}
+  </div>
+</section>
+{%- endmacro %}
+
+{% macro gmaps_end(kicker, title, addr, q, href) -%}
+<section class="gmaps" id="como-chegar">
+  <iframe title="Mapa: {{ title }}" src="https://www.google.com/maps?q={{ q }}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="wrap gmaps-in">
+    <a class="gmaps-card" href="{{ href }}" target="_blank" rel="noopener">
+      {{ icon_gmaps() }}
+      <span class="gmaps-txt"><small>{{ kicker }}</small><b>{{ title }}</b><span>{{ addr }}</span><em>Abrir no Google Maps {{ icon("arrow") }}</em></span>
+    </a>
   </div>
 </section>
 {%- endmacro %}

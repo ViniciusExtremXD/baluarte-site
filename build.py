@@ -64,19 +64,33 @@ POST_PHOTOS = {"recarga-de-extintor-prazo-obrigatorio": "hero-tecnico.webp", "ti
 for p in posts:
     p.setdefault("image", POST_PHOTOS.get(p["slug"], "hero-tecnico.webp"))
 
-# Paradas da linha da Baixada, na ordem do litoral
-ROUTE = [("Peruíbe", None, ""), ("Itanhaém", None, ""), ("Mongaguá", None, ""),
-         ("Praia Grande", "recarga-de-extintores-praia-grande", ""), ("São Vicente", "recarga-de-extintores-sao-vicente", ""),
-         ("Santos", "recarga-de-extintores-santos", "Escritório"), ("Guarujá", "recarga-de-extintores-guaruja", "Sede"),
-         ("Bertioga", "recarga-de-extintores-bertioga", ""), ("Riviera de São Lourenço", "recarga-de-extintores-riviera-de-sao-lourenco", "")]
+OFFICE_Q = "R.%20Dr.%20Luis%20Suplicy%2C%2031%2C%20Santos%20-%20SP%2C%2011055-330"
+SEDE_Q = "Baluarte%20Extintores%20Guaruj%C3%A1"
+UNITS = {
+    "sede": ("Sede e oficina em Guarujá", "Av. Piassaguera, 1189, Guarujá - SP", SEDE_Q, REVIEWS_URL),
+    "escritorio": ("Escritório comercial em Santos", "R. Dr. Luis Suplicy, 31, Santos - SP", OFFICE_Q, "https://www.google.com/maps/search/?api=1&query=" + OFFICE_Q),
+}
+# lat, lng, etiqueta no mapa, lado do nome no mapa, unidade mais próxima
+CITY_MAP = {
+    "recarga-de-extintores-guaruja": (-23.943314, -46.2801126, "Sede", "right", "sede"),
+    "recarga-de-extintores-santos": (-23.9621043, -46.3297292, "Escritório", "top", "escritorio"),
+    "recarga-de-extintores-sao-vicente": (-23.9631, -46.3919, "", "left", "escritorio"),
+    "recarga-de-extintores-praia-grande": (-24.0084, -46.4128, "", "left", "escritorio"),
+    "recarga-de-extintores-bertioga": (-23.8544, -46.1386, "", "top", "sede"),
+    "recarga-de-extintores-riviera-de-sao-lourenco": (-23.7950, -46.0190, "", "left", "sede"),
+}
+for c in cities:
+    c["lat"], c["lng"], c["tag"], c["side"], unit = CITY_MAP[c["slug"]]
+    c["unit_title"], c["unit_addr"], c["unit_q"], c["unit_href"] = UNITS[unit]
+    c["unit_kicker"] = "Nossa unidade na cidade" if c["tag"] else "Unidade mais próxima"
 
 SERVICES = [
-    {"title": "Recarga e manutenção de extintores", "text": "Todos os tipos, com selo do INMETRO. Retiramos no seu imóvel, deixamos reservas no lugar e devolvemos em até 7 dias úteis. Obrigatória a cada 12 meses.", "msg": "Olá! Quero orçamento de recarga de extintores.", "icon": "refresh", "img": "svc-recarga.webp", "w": 520, "h": 480, "alt": "Técnico manuseando um extintor com selo do INMETRO", "featured": True},
-    {"title": "Teste hidrostático de mangueiras", "text": "Feito no seu prédio, com equipamento automático. Obrigatório todo ano.", "msg": "Olá! Quero orçamento de teste hidrostático de mangueiras.", "icon": "droplets", "img": "svc-mangueira.webp", "w": 640, "h": 191, "alt": "Mangueira de incêndio enrolada"},
-    {"title": "Sinalização de emergência", "text": "Placas de rota de fuga, saída e equipamentos, conforme o Corpo de Bombeiros.", "msg": "Olá! Quero orçamento de sinalização de emergência.", "icon": "exit", "img": "svc-sinalizacao.webp", "w": 640, "h": 191, "alt": "Placa de saída de emergência"},
-    {"title": "Porta corta-fogo", "text": "Manutenção e regulagem para fechar e vedar como a norma exige.", "msg": "Olá! Quero orçamento de manutenção de porta corta-fogo.", "icon": "door", "img": "svc-porta.webp", "w": 640, "h": 191, "alt": "Porta corta-fogo instalada"},
-    {"title": "Vistoria de segurança", "text": "Levantamento dos equipamentos do imóvel, sem custo e sem compromisso.", "msg": "Olá! Quero agendar uma vistoria de segurança grátis.", "icon": "clipboard", "img": "svc-vistoria.webp", "w": 640, "h": 191, "alt": "Manômetro de um extintor sendo conferido"},
-    {"title": "Venda de extintores e equipamentos", "text": "Novos, com orientação sobre o tipo e a quantidade certos para o seu imóvel.", "msg": "Olá! Quero orçamento de extintores novos.", "icon": "extinguisher", "img": "svc-venda.svg", "w": 640, "h": 240, "alt": "Extintores de água, pó ABC e CO2"},
+    {"title": "Recarga e manutenção de extintores", "text": "Todos os tipos, com selo do INMETRO. Retiramos no seu imóvel, deixamos reservas no lugar e devolvemos em até 7 dias úteis. Obrigatória a cada 12 meses.", "msg": "Olá! Quero orçamento de recarga de extintores.", "icon": "refresh", "img": "svc-recarga.webp", "w": 1040, "h": 960, "alt": "Técnico manuseando um extintor com selo do INMETRO", "featured": True},
+    {"title": "Teste hidrostático de mangueiras", "text": "Feito no seu prédio, com equipamento automático. Obrigatório todo ano.", "msg": "Olá! Quero orçamento de teste hidrostático de mangueiras.", "icon": "droplets", "img": "svc-mangueira.webp", "w": 1280, "h": 382, "alt": "Mangueira de incêndio enrolada"},
+    {"title": "Sinalização de emergência", "text": "Placas de rota de fuga, saída e equipamentos, conforme o Corpo de Bombeiros.", "msg": "Olá! Quero orçamento de sinalização de emergência.", "icon": "exit", "img": "svc-sinalizacao.webp", "w": 1280, "h": 382, "alt": "Placa de saída de emergência"},
+    {"title": "Porta corta-fogo", "text": "Manutenção e regulagem para fechar e vedar como a norma exige.", "msg": "Olá! Quero orçamento de manutenção de porta corta-fogo.", "icon": "door", "img": "svc-porta.webp", "w": 1280, "h": 382, "alt": "Porta corta-fogo instalada"},
+    {"title": "Vistoria de segurança", "text": "Levantamento dos equipamentos do imóvel, sem custo e sem compromisso.", "msg": "Olá! Quero agendar uma vistoria de segurança grátis.", "icon": "clipboard", "img": "svc-vistoria.webp", "w": 1280, "h": 382, "alt": "Manômetro de um extintor sendo conferido"},
+    {"title": "Venda de extintores e equipamentos", "text": "Novos, com orientação sobre o tipo e a quantidade certos para o seu imóvel.", "msg": "Olá! Quero orçamento de extintores novos.", "icon": "extinguisher", "img": "svc-venda.webp", "w": 1200, "h": 547, "alt": "Extintor de incêndio novo"},
 ]
 
 ICONS = {
@@ -158,7 +172,7 @@ def ld(*nodes):
 
 env = Environment(loader=FileSystemLoader(os.path.join(ROOT, "templates")), autoescape=select_autoescape(["html"]), trim_blocks=True, lstrip_blocks=True)
 env.globals.update(
-    wa=wa, icon=icon, ROUTE=ROUTE, WA_NUMBER=WA_NUMBER, PHONE_TEL=PHONE_TEL, PHONE_LABEL=PHONE_LABEL, WA_LABEL=WA_LABEL, EMAIL=EMAIL, HOURS=HOURS,
+    wa=wa, icon=icon, OFFICE_Q=OFFICE_Q, WA_NUMBER=WA_NUMBER, PHONE_TEL=PHONE_TEL, PHONE_LABEL=PHONE_LABEL, WA_LABEL=WA_LABEL, EMAIL=EMAIL, HOURS=HOURS,
     REVIEWS_URL=REVIEWS_URL, GTM_ID=GTM_ID, PREVIEW=(MODE == "preview"), SITE_URL=SITE_URL,
     cities=cities, OTHER_CITIES=OTHER_CITIES, SERVICES=SERVICES, INCLUDED=INCLUDED, STEPS=STEPS,
     reviews=reviews, clientes=clientes, posts=posts, year=date.today().year,
@@ -180,6 +194,7 @@ def main():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(OUT, "assets"))
+    shutil.copy(os.path.join(ROOT, "assets", "img", "favicon.ico"), os.path.join(OUT, "favicon.ico"))
     pages = []
 
     pages.append(render(

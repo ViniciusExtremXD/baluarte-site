@@ -54,9 +54,13 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 ## Animações
 
-Carrossel na primeira dobra, itens que aparecem ao rolar, números que contam, faixa de clientes, foto que acompanha a rolagem, rolagem suave no computador e troca suave de página.
+Todo componente aparece ao rolar. O `site.js` marca os itens por seletor (lista `kinds`): componente novo entra nessa lista. Também há carrossel na primeira dobra, títulos palavra por palavra, linhas que se desenham, números que contam, faixa de clientes, foto que acompanha a rolagem, rolagem suave no computador e troca suave de página.
 
-Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desligado), ficam os fades, a troca do carrossel e a faixa de clientes. Para ver tudo mesmo assim, abra o site com `?motion=full` no fim do endereço. A escolha fica salva no navegador, e `?motion=auto` volta ao normal.
+Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desligado), os itens aparecem com deslocamento curto e saem a rolagem suave, os zooms e a foto que acompanha a rolagem. Para ver tudo mesmo assim, abra o site com `?motion=full` no fim do endereço. A escolha fica salva no navegador, e `?motion=auto` volta ao normal.
+
+## Mapa das unidades
+
+Na página inicial e em `/baixada-santista/`, o primeiro clique em um ponto (ou na linha da lista) mostra a unidade e o segundo abre a página dela. No fim de cada página de cidade há o Google Maps da unidade mais próxima. O mapa usa Leaflet (carregado de unpkg.com só quando chega perto da tela) com o mapa do OpenStreetMap. As coordenadas ficam em `CITY_MAP`, no `build.py`.
 
 ## Estrutura do código
 

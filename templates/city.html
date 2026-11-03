@@ -10,15 +10,15 @@
   <div class="wrap local-grid">
     <div>
       {{ m.head(city.name, city.local_h2) }}
-      <div class="text reveal">
+      <div class="text">
         {% for p in city.local_ps %}<p>{{ p }}</p>{% endfor %}
       </div>
-      <h3 class="sub reveal">Quem atendemos</h3>
-      <ul class="checks reveal">
-        {% for w in city.who %}<li>{{ icon("check") }}{{ w }}</li>{% endfor %}
+      <h3 class="sub">Quem atendemos</h3>
+      <ul class="checks">
+        {% for w in city.who %}<li>{{ w }}</li>{% endfor %}
       </ul>
     </div>
-    <aside class="local-card reveal reveal-r">
+    <aside class="local-card">
       <h3>{{ city.bairros_title }}</h3>
       <ul class="bairros">
         {% for b in city.bairros %}<li>{{ b }}</li>{% endfor %}
@@ -26,12 +26,8 @@
       {% if city.bairros_note %}<p class="local-note">{{ city.bairros_note }}</p>{% endif %}
       {% if city.addr_title %}
       <div class="local-addr">
-        <span class="info-icon">{{ icon("pin") }}</span>
-        <div>
-          <b>{{ city.addr_title }}</b>
-          <span>{{ city.addr_lines|join(" · ") }}</span>
-          {% if city.map %}<br><a href="{{ city.map }}" target="_blank" rel="noopener">Ver no mapa {{ icon("arrow") }}</a>{% endif %}
-        </div>
+        <b>{{ city.addr_title }}</b>
+        <span>{{ city.addr_lines|join(" · ") }}</span>
       </div>
       {% endif %}
     </aside>
@@ -47,12 +43,14 @@
 <section class="section cidades" id="cidades">
   <div class="wrap">
     {{ m.head("Outras cidades", "Atendemos toda a <em>Baixada Santista</em>.") }}
-    {{ m.city_cards(others) }}
-    <p class="also reveal">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}. <a href="{{ root }}baixada-santista/">Ver toda a região</a></p>
+    {{ m.city_links(others) }}
+    <p class="also">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}. <a href="{{ root }}baixada-santista/">Ver toda a região</a></p>
   </div>
 </section>
 
 {{ m.cta_band(city.final_h2 or "Peça sua vistoria grátis", "Um técnico avalia tudo no local e você recebe o orçamento sem compromisso.", city.wa) }}
 
 {{ m.contact("Solicite um <em>orçamento</em>.", city.name) }}
+
+{{ m.gmaps_end(city.unit_kicker, city.unit_title, city.unit_addr, city.unit_q, city.unit_href) }}
 {% endblock %}
