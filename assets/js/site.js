@@ -195,6 +195,86 @@
     } else load();
   }
 
+  // Faixa de clientes: anda sozinha, e dá para arrastar e usar as setas nos dois sentidos
+  var strip = document.querySelector('.marquee');
+  if (strip && anim) clientStrip(strip);
+
+  function clientStrip(box) {
+    var shell = box.parentNode;
+    var track = box.querySelector('.marquee-track');
+    var group = track.firstElementChild;
+    var speed = 28, x = 0, v = 0, nudge = 0, resume = 0, hover = false, drag = null, raf = 0, last = 0;
+    var width = group.offsetWidth;
+    addEventListener('resize', function () { width = group.offsetWidth; });
+    box.classList.add('is-live');
+
+    function tick(t) {
+      raf = requestAnimationFrame(tick);
+      var dt = Math.min((t - last) / 1000, 0.05);
+      last = t;
+      if (!drag) {
+        if (Math.abs(nudge) > 0.5) {
+          var step = nudge * Math.min(1, dt * 7);
+          x += step;
+          nudge -= step;
+        } else if (Math.abs(v) > 12) {
+          x += v * dt;
+          v *= Math.pow(0.04, dt);
+        } else if (!hover && t > resume) {
+          x += speed * dt;
+        }
+      }
+      if (width) x = ((x % width) + width) % width;
+      track.style.transform = 'translate3d(' + -x + 'px,0,0)';
+    }
+    function wait() { resume = performance.now() + 2500; }
+    function move(by) { v = 0; nudge += by; wait(); }
+
+    box.addEventListener('pointerdown', function (e) {
+      if (e.button) return;
+      drag = { x: e.clientX, t: e.timeStamp };
+      v = 0;
+      nudge = 0;
+      box.setPointerCapture(e.pointerId);
+      box.classList.add('is-drag');
+    });
+    box.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.x;
+      x -= dx;
+      v = Math.max(-2500, Math.min(2500, -dx / Math.max(e.timeStamp - drag.t, 1) * 1000));
+      drag.x = e.clientX;
+      drag.t = e.timeStamp;
+    });
+    function end(e) {
+      if (!drag) return;
+      if (e.timeStamp - drag.t > 80) v = 0; // parou antes de soltar: sem embalo
+      drag = null;
+      box.classList.remove('is-drag');
+      wait();
+    }
+    box.addEventListener('pointerup', end);
+    box.addEventListener('pointercancel', end);
+    box.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      x += e.deltaX;
+      wait();
+    }, { passive: false });
+
+    shell.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+    shell.addEventListener('pointerleave', function () { hover = false; });
+    shell.querySelector('.mq-prev').addEventListener('click', function () { move(-box.clientWidth * 0.6); });
+    shell.querySelector('.mq-next').addEventListener('click', function () { move(box.clientWidth * 0.6); });
+
+    // Só anima enquanto a faixa está na tela
+    function start() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+    function stop() { cancelAnimationFrame(raf); raf = 0; }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { (en[0].isIntersecting ? start : stop)(); }).observe(box);
+    } else start();
+  }
+
   if (full && fine) smoothScroll();
   if (!anim || !('IntersectionObserver' in window)) return;
 
@@ -223,7 +303,7 @@
 
   // Todo componente aparece ao rolar; itens que entram juntos vêm um depois do outro
   var kinds = {
-    '': '.clients-head,.marquee,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.city-links>li,.cta-band p,.cta-band .btn,.review,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
+    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.city-links>li,.cta-band p,.cta-band .btn,.review,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
     'reveal-s': '.svc,.svc-inc,.prova,.review-score,.post-card,.local-card,.form,.empresa-mini',
     'wipe': '.empresa-photo,.map-wrap'
   };

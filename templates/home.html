@@ -84,14 +84,18 @@
 
 <section class="clients" aria-label="Clientes da Baluarte">
   <p class="clients-head">Quem confia na Baluarte para proteger o que importa</p>
-  <div class="marquee">
-    <div class="marquee-track">
-      {% for group in [0, 1] %}
-      <div class="marquee-group"{{ ' aria-hidden=true' if group }}>
-        {% for c in clientes %}<img src="{{ root }}assets/img/clientes/{{ c.file }}" alt="{{ c.name if not group }}" width="{{ c.w }}" height="{{ c.h }}" loading="lazy" decoding="async">{% endfor %}
+  <div class="marquee-box">
+    <button class="mq-btn mq-prev" type="button" aria-label="Ver clientes anteriores">{{ icon("arrow") }}</button>
+    <div class="marquee">
+      <div class="marquee-track">
+        {% for group in [0, 1] %}
+        <div class="marquee-group"{{ ' aria-hidden=true' if group }}>
+          {% for c in clientes %}<img src="{{ root }}assets/img/clientes/{{ c.file }}" alt="{{ c.name if not group }}" width="{{ c.w }}" height="{{ c.h }}" draggable="false" loading="lazy" decoding="async">{% endfor %}
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
+    <button class="mq-btn mq-next" type="button" aria-label="Ver próximos clientes">{{ icon("arrow") }}</button>
   </div>
 </section>
 
