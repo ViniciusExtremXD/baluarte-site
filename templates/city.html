@@ -42,8 +42,8 @@
 
 <section class="section cidades" id="cidades">
   <div class="wrap">
-    {{ m.head("Outras cidades", "Atendemos toda a <em>Baixada Santista</em>.") }}
-    {{ m.city_links(others) }}
+    {{ m.head("Onde atendemos", "Atendemos toda a <em>Baixada Santista</em>.", city.name ~ " está em destaque no mapa. Clique em outro ponto para ver a unidade e clique de novo para abrir a página dela.") }}
+    {{ m.units_map(city.slug) }}
     <p class="also">Também atendemos {{ OTHER_CITIES[:-1]|join(", ") }} e {{ OTHER_CITIES[-1] }}. <a href="{{ root }}baixada-santista/">Ver toda a região</a></p>
   </div>
 </section>

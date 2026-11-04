@@ -122,9 +122,10 @@
     var short = box.querySelector('.map-short');
     var addr = box.querySelector('.map-addr');
     var go = box.querySelector('.map-go');
-    var map = null, pins = [], sel = -1;
+    var map = null, pins = [], sel = -1, here = -1;
+    rows.forEach(function (r, i) { if (r.dataset.here) here = i; });
 
-    function select(i) {
+    function select(i, stay) {
       if (sel > -1) { rows[sel].classList.remove('is-sel'); pins[sel].getElement().classList.remove('is-sel'); }
       sel = i;
       var d = rows[i].dataset;
@@ -135,7 +136,9 @@
       addr.textContent = d.addr;
       addr.hidden = !d.addr;
       go.href = rows[i].href;
+      go.querySelector('span').textContent = i === here ? 'Como chegar' : 'Abrir a página';
       wrap.classList.add('has-sel');
+      if (stay) return; // a unidade da página aparece em destaque com o mapa inteiro
       // No celular o cartão cobre a parte de baixo do mapa: o ponto fica mais acima
       var center = map.unproject(map.project([+d.lat, +d.lng], 12).add([0, canvas.clientWidth < 600 ? 130 : 0]), 12);
       if (full) map.flyTo(center, 12, { duration: 0.9 });
@@ -152,7 +155,7 @@
 
     function draw() {
       map = L.map(canvas, { scrollWheelZoom: false, dragging: fine, tap: false, attributionControl: true });
-      map.fitBounds(L.latLngBounds(Array.prototype.map.call(rows, function (r) { return [+r.dataset.lat, +r.dataset.lng]; })), { padding: [70, 70] });
+      map.fitBounds(L.latLngBounds(Array.prototype.map.call(rows, function (r) { return [+r.dataset.lat, +r.dataset.lng]; })), canvas.clientWidth < 600 ? { paddingTopLeft: [34, 70], paddingBottomRight: [34, 250] } : { padding: [70, 70] });
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
       map.attributionControl.setPrefix(false);
       rows.forEach(function (row, i) {
@@ -164,11 +167,12 @@
         }).addTo(map);
         pin.getElement().style.setProperty('--n', i);
         pin.on('click', function () {
-          if (sel === i) location.href = row.href;
+          if (sel === i) location.href = row.href; // na unidade da página, leva ao Google Maps no fim dela
           else select(i);
         });
         pins.push(pin);
       });
+      if (here > -1) select(here, true);
       new IntersectionObserver(function (en, o) {
         if (en[0].isIntersecting) { canvas.classList.add('on'); o.disconnect(); }
       }, { threshold: 0.35 }).observe(canvas);
@@ -386,7 +390,7 @@
 
   // Todo componente aparece ao rolar; itens que entram juntos vêm um depois do outro
   var kinds = {
-    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.city-links>li,.cta-band p,.cta-band .btn,.rv,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
+    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.cta-band p,.cta-band .btn,.rv,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
     'reveal-s': '.svc,.svc-inc,.prova,.review-score,.post-card,.local-card,.form,.empresa-mini',
     'wipe': '.empresa-photo,.map-wrap'
   };

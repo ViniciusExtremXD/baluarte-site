@@ -89,15 +89,16 @@
 </section>
 {%- endmacro %}
 
-{% macro units_map() -%}
+{% macro units_map(current=None) -%}
 <div class="units" data-units>
   <ul class="units-list">
     {% for c in cities %}
+    {% set here = c.slug == current %}
     <li>
-      <a class="city-row" href="{{ root }}{{ c.slug }}/" data-lat="{{ c.lat }}" data-lng="{{ c.lng }}" data-tag="{{ c.tag }}" data-side="{{ c.side }}" data-name="{{ c.name }}" data-short="{{ c.short }}" data-addr="{{ c.addr_lines[0] if c.tag else '' }}">
+      <a class="city-row" href="{{ '#como-chegar' if here else root ~ c.slug ~ '/' }}" data-lat="{{ c.lat }}" data-lng="{{ c.lng }}" data-tag="{{ c.tag }}" data-side="{{ c.side }}" data-name="{{ c.name }}" data-short="{{ c.short }}" data-addr="{{ c.addr_lines[0] if c.tag else '' }}"{{ ' data-here=1 aria-current=page' if here }}>
         <b>{{ c.name }}{% if c.tag %}<small>{{ c.tag }}</small>{% endif %}</b>
         <span>{{ c.short }}</span>
-        <em class="city-hint">Clique de novo para abrir a página</em>
+        <em class="city-hint">{{ 'Você está nesta página' if here else 'Clique de novo para abrir a página' }}</em>
         {{ icon("arrow") }}
       </a>
     </li>
@@ -114,14 +115,6 @@
     </div>
   </div>
 </div>
-{%- endmacro %}
-
-{% macro city_links(items) -%}
-<ul class="city-links">
-  {% for c in items %}
-  <li><a class="city-row" href="{{ root }}{{ c.slug }}/"><b>{{ c.name }}</b><span>{{ c.short }}</span>{{ icon("arrow") }}</a></li>
-  {% endfor %}
-</ul>
 {%- endmacro %}
 
 {% macro photos_fig() -%}

@@ -68,7 +68,7 @@ O carrossel usa `data/reviews.json`: avaliações reais e públicas da ficha da 
 
 ## Mapa das unidades
 
-Na página inicial e em `/baixada-santista/`, o primeiro clique em um ponto (ou na linha da lista) mostra a unidade e o segundo abre a página dela. No fim de cada página de cidade há o Google Maps da unidade mais próxima. O mapa usa Leaflet (carregado de unpkg.com só quando chega perto da tela) com o mapa do OpenStreetMap. As coordenadas ficam em `CITY_MAP`, no `build.py`.
+Na página inicial, em `/baixada-santista/` e nas páginas de cidade, o primeiro clique em um ponto (ou na linha da lista) mostra a unidade e o segundo abre a página dela. Na página de uma cidade, ela já abre em destaque, e clicar nela leva ao Google Maps da unidade mais próxima, no fim da página. O mapa usa Leaflet (carregado de unpkg.com só quando chega perto da tela) com o mapa do OpenStreetMap. As coordenadas ficam em `CITY_MAP`, no `build.py`.
 
 ## Estrutura do código
 

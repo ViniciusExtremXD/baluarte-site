@@ -220,10 +220,9 @@ def main():
     ))
 
     for c in cities:
-        others = [o for o in cities if o["slug"] != c["slug"]]
         pages.append(render(
             "city.html", c["slug"] + "/",
-            title=c["title"], description=c["description"], city=c, others=others, faq=c["faq"],
+            title=c["title"], description=c["description"], city=c, faq=c["faq"],
             schema=ld(
                 ORG_SCHEMA,
                 {"@type": "Service", "name": "Recarga de extintores em " + c["name"], "serviceType": "Recarga e manutenção de extintores", "provider": {"@id": SITE_URL + "/#empresa"}, "areaServed": {"@type": "City", "name": c["name"]}},
