@@ -59,12 +59,20 @@
     var slides = box.querySelectorAll('.slide');
     var dots = box.querySelectorAll('.hero-dot');
     var pause = box.querySelector('.hero-pause');
-    var dur = 6500, cur = 0, timer = null, paused = false;
+    var dur = 6500, cur = 0, timer = null, paused = false, leaving = null;
     function go(i) {
-      slides[cur].classList.remove('is-active');
+      i = (i + slides.length) % slides.length;
+      if (i === cur) { schedule(); return; }
+      // O destaque que sai fica por baixo até o novo cobrir a tela
+      slides.forEach(function (s) { s.classList.remove('was-active'); });
+      var out = slides[cur];
+      out.classList.remove('is-active');
+      out.classList.add('was-active');
+      clearTimeout(leaving);
+      leaving = setTimeout(function () { out.classList.remove('was-active'); }, 1300);
       dots[cur].classList.remove('is-active');
       dots[cur].removeAttribute('aria-current');
-      cur = (i + slides.length) % slides.length;
+      cur = i;
       slides[cur].classList.add('is-active');
       dots[cur].classList.add('is-active');
       dots[cur].setAttribute('aria-current', 'true');

@@ -21,10 +21,6 @@
           <a class="btn btn-ghost" href="#servicos"><span>Conheça os serviços</span></a>
         </div>
       </div>
-      <div class="slide-proof">
-        <img src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO nº 3495/22" width="58" height="58">
-        <div><b>5,0 {{ m.stars() }}</b><span>704 avaliações no Google</span></div>
-      </div>
     </article>
 
     <article class="slide slide-red">
@@ -50,7 +46,6 @@
         <span class="art-ring" aria-hidden="true"></span>
         <img class="art-photo" src="{{ root }}assets/img/sede-circulo.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" loading="lazy" decoding="async">
         <span class="art-badge"><b>+30</b>anos de<br>mercado</span>
-        <img class="art-seal" src="{{ root }}assets/img/selo-inmetro.webp" alt="Selo Registro INMETRO nº 3495/22" width="100" height="100" loading="lazy">
       </div>
       <div class="slide-panel" aria-hidden="true"></div>
       <div class="wrap slide-content">
@@ -68,6 +63,11 @@
       </div>
     </article>
   </div>
+
+  <a class="hero-google" href="{{ REVIEWS_URL }}" target="_blank" rel="noopener" aria-label="Nota 5,0 no Google, com 704 avaliações">
+    {{ m.icon_google() }}
+    <span class="hg-txt"><b>5,0 {{ m.stars() }}</b><span>704 avaliações no Google</span></span>
+  </a>
 
   <div class="hero-ui">
     <div class="wrap hero-dots">
