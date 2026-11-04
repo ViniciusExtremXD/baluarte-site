@@ -135,7 +135,10 @@
       short.textContent = d.short;
       addr.textContent = d.addr;
       addr.hidden = !d.addr;
-      go.href = rows[i].href;
+      // Na cidade da página, o botão leva ao Google Maps; nas outras, à página da cidade
+      go.href = i === here ? d.maps : rows[i].href;
+      if (i === here) { go.target = '_blank'; go.rel = 'noopener'; }
+      else { go.removeAttribute('target'); go.removeAttribute('rel'); }
       go.querySelector('span').textContent = i === here ? 'Como chegar' : 'Abrir a página';
       wrap.classList.add('has-sel');
       if (stay) return; // a unidade da página aparece em destaque com o mapa inteiro
@@ -167,7 +170,7 @@
         }).addTo(map);
         pin.getElement().style.setProperty('--n', i);
         pin.on('click', function () {
-          if (sel === i) location.href = row.href; // na unidade da página, leva ao Google Maps no fim dela
+          if (sel === i) location.href = row.href; // na cidade da página, leva ao endereço dela
           else select(i);
         });
         pins.push(pin);
@@ -362,6 +365,54 @@
     }, 5500);
   }
 
+  // Bairros: o nome em destaque troca sozinho, e escolher um bairro já prepara o pedido no WhatsApp
+  var bb = document.querySelector('[data-bairros]');
+  if (bb && anim) bairros(bb);
+
+  function bairros(box) {
+    var chips = box.querySelectorAll('.bairros button');
+    var names = box.querySelectorAll('.bairro-now span');
+    var cta = box.querySelector('.bairro-cta');
+    var label = cta.querySelector('span');
+    var base = cta.href.split('?')[0];
+    var msg = decodeURIComponent(cta.href.split('text=')[1] || '');
+    var cur = 0, hover = false, until = 0, inView = !('IntersectionObserver' in window);
+
+    function paint() {
+      var n = chips[cur].textContent;
+      label.textContent = 'Orçamento: ' + n;
+      cta.href = base + '?text=' + encodeURIComponent(msg + ' Local: ' + n + '.');
+    }
+    function show(i) {
+      if (i === cur) return;
+      var out = names[cur];
+      out.classList.remove('on');
+      out.classList.add('was');
+      setTimeout(function () { out.classList.remove('was'); }, 650);
+      chips[cur].classList.remove('on');
+      cur = i;
+      names[cur].classList.remove('was');
+      names[cur].classList.add('on');
+      chips[cur].classList.add('on');
+      paint();
+    }
+    chips.forEach(function (chip, i) {
+      chip.addEventListener('click', function () { until = performance.now() + 8000; show(i); });
+      chip.addEventListener('focus', function () { until = performance.now() + 8000; show(i); });
+      chip.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') show(i); });
+    });
+    box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+    box.addEventListener('pointerleave', function () { hover = false; until = performance.now() + 1500; });
+    if (!inView) {
+      new IntersectionObserver(function (en) { inView = en[0].isIntersecting; }, { threshold: 0.3 }).observe(box);
+    }
+    paint();
+    setInterval(function () {
+      if (hover || !inView || document.hidden || performance.now() < until) return;
+      show((cur + 1) % chips.length);
+    }, 2400);
+  }
+
   if (full && fine) smoothScroll();
   if (!anim || !('IntersectionObserver' in window)) return;
 
@@ -390,7 +441,7 @@
 
   // Todo componente aparece ao rolar; itens que entram juntos vêm um depois do outro
   var kinds = {
-    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.cta-band p,.cta-band .btn,.rv,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
+    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.cta-band p,.cta-band .btn,.rv,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.bairros-box>h3,.bairro-now,.bairro-cta,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.how .kicker,.how h2',
     'reveal-s': '.svc,.svc-inc,.prova,.review-score,.post-card,.local-card,.form,.empresa-mini',
     'wipe': '.empresa-photo,.map-wrap'
   };

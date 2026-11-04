@@ -2,7 +2,7 @@
 {% import "macros.html" as m with context %}
 {% block content %}
 
-{% call m.page_hero(city.h1_html, city.lead, city.wa, city.img, city.img_alt) %}
+{% call m.page_hero(city.h1_html, city.lead, city.wa, city.img, city.img_alt, city.unit_line, city.unit.href) %}
 <nav class="crumbs" aria-label="Você está em"><a href="{{ root }}">Início</a> / <a href="{{ root }}baixada-santista/">Baixada Santista</a> / <span aria-current="page">{{ city.name }}</span></nav>
 {% endcall %}
 
@@ -19,17 +19,26 @@
       </ul>
     </div>
     <aside class="local-card">
-      <h3>{{ city.bairros_title }}</h3>
-      <ul class="bairros">
-        {% for b in city.bairros %}<li>{{ b }}</li>{% endfor %}
-      </ul>
-      {% if city.bairros_note %}<p class="local-note">{{ city.bairros_note }}</p>{% endif %}
-      {% if city.addr_title %}
-      <div class="local-addr">
-        <b>{{ city.addr_title }}</b>
-        <span>{{ city.addr_lines|join(" · ") }}</span>
+      <div class="local-addr" id="endereco">
+        <small>{{ city.unit.label if city.tag else "Unidade mais próxima" }}</small>
+        <b>{{ city.unit.street }}</b>
+        {% if not city.tag %}<span>{{ city.unit.label }}</span>{% endif %}
+        <span>{{ city.unit.town }} · {{ city.unit.cep }}</span>
+        <span>{{ HOURS }}</span>
+        {% if not city.tag %}<p>{{ city.in_name }}, o atendimento é no seu endereço, com retirada e entrega grátis.</p>{% endif %}
+        <a class="gmaps-link" href="{{ city.unit.href }}" target="_blank" rel="noopener">{{ m.icon_gmaps() }}Ver no Google Maps</a>
       </div>
-      {% endif %}
+      <div class="bairros-box" data-bairros>
+        <h3>{{ city.bairros_title }}</h3>
+        <div class="bairro-now" aria-hidden="true">
+          {% for b in city.bairros %}<span{{ ' class=on' if loop.first }}>{{ b }}</span>{% endfor %}
+        </div>
+        <ul class="bairros">
+          {% for b in city.bairros %}<li><button type="button"{{ ' class=on' if loop.first }}>{{ b }}</button></li>{% endfor %}
+        </ul>
+        {% if city.bairros_note %}<p class="local-note">{{ city.bairros_note }}</p>{% endif %}
+        <a class="btn btn-primary bairro-cta" href="{{ city.wa }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
+      </div>
     </aside>
   </div>
 </section>
@@ -52,5 +61,4 @@
 
 {{ m.contact("Solicite um <em>orçamento</em>.", city.name) }}
 
-{{ m.gmaps_end(city.unit_kicker, city.unit_title, city.unit_addr, city.unit_q, city.unit_href) }}
 {% endblock %}

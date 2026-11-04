@@ -20,7 +20,7 @@
 {% if lead %}<p class="lead">{{ lead }}</p>{% endif %}
 {%- endmacro %}
 
-{% macro page_hero(title, lead, href, img, alt) -%}
+{% macro page_hero(title, lead, href, img, alt, addr=None, addr_href=None) -%}
 <section class="hero-page">
   <div class="slide-bg"><img src="{{ root }}assets/img/{{ img }}" alt="{{ alt }}" fetchpriority="high"></div>
   <div class="slide-panel" aria-hidden="true"></div>
@@ -32,6 +32,7 @@
       <a class="btn btn-primary" href="{{ href }}" target="_blank" rel="noopener">{{ icon_wa() }}<span>Solicitar orçamento</span></a>
       <a class="btn btn-ghost" href="tel:{{ PHONE_TEL }}">{{ icon("phone") }}<span>{{ PHONE_LABEL }}</span></a>
     </div>
+    {% if addr %}<a class="hero-addr" href="{{ addr_href }}" target="_blank" rel="noopener">{{ icon_gmaps() }}<span>{{ addr }}</span></a>{% endif %}
     <ul class="chips">
       <li>INMETRO nº 3495/22</li>
       <li>Retirada e entrega grátis</li>
@@ -95,7 +96,7 @@
     {% for c in cities %}
     {% set here = c.slug == current %}
     <li>
-      <a class="city-row" href="{{ '#como-chegar' if here else root ~ c.slug ~ '/' }}" data-lat="{{ c.lat }}" data-lng="{{ c.lng }}" data-tag="{{ c.tag }}" data-side="{{ c.side }}" data-name="{{ c.name }}" data-short="{{ c.short }}" data-addr="{{ c.addr_lines[0] if c.tag else '' }}"{{ ' data-here=1 aria-current=page' if here }}>
+      <a class="city-row" href="{{ '#endereco' if here else root ~ c.slug ~ '/' }}" data-lat="{{ c.lat }}" data-lng="{{ c.lng }}" data-tag="{{ c.tag }}" data-side="{{ c.side }}" data-name="{{ c.name }}" data-short="{{ c.short }}" data-addr="{{ c.unit_line }}" data-maps="{{ c.unit.href }}"{{ ' data-here=1 aria-current=page' if here }}>
         <b>{{ c.name }}{% if c.tag %}<small>{{ c.tag }}</small>{% endif %}</b>
         <span>{{ c.short }}</span>
         <em class="city-hint">{{ 'Você está nesta página' if here else 'Clique de novo para abrir a página' }}</em>
@@ -202,14 +203,3 @@
 </section>
 {%- endmacro %}
 
-{% macro gmaps_end(kicker, title, addr, q, href) -%}
-<section class="gmaps" id="como-chegar">
-  <iframe title="Mapa: {{ title }}" src="https://www.google.com/maps?q={{ q }}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <div class="wrap gmaps-in">
-    <a class="gmaps-card" href="{{ href }}" target="_blank" rel="noopener">
-      {{ icon_gmaps() }}
-      <span class="gmaps-txt"><small>{{ kicker }}</small><b>{{ title }}</b><span>{{ addr }}</span><em>Abrir no Google Maps {{ icon("arrow") }}</em></span>
-    </a>
-  </div>
-</section>
-{%- endmacro %}

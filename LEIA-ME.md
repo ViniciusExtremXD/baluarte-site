@@ -66,9 +66,13 @@ As fotos vêm do site antigo da Baluarte, ampliadas por IA. A exceção é a do 
 
 O carrossel usa `data/reviews.json`: avaliações reais e públicas da ficha da Baluarte no Google, copiadas sem alterar o texto. O nome mostra os dois primeiros nomes da pessoa, e a foto vem direto do Google (se a pessoa trocar ou apagar, aparece a inicial do nome). Não invente nem edite avaliações. Antes de publicar no domínio, veja com o cliente a autorização para usar nome e foto.
 
+## Endereços
+
+Cada página de cidade mostra o endereço da unidade que a atende (`UNITS` e `CITY_MAP`, no `build.py`). Hoje só existem duas unidades reais, Guarujá e Santos: as outras cidades mostram "Unidade mais próxima". Para dar endereço próprio a uma cidade, adicione a unidade em `UNITS`, aponte a cidade para ela em `CITY_MAP` e preencha a etiqueta. Não publique endereço onde a empresa não está: isso pode derrubar a ficha no Google.
+
 ## Mapa das unidades
 
-Na página inicial, em `/baixada-santista/` e nas páginas de cidade, o primeiro clique em um ponto (ou na linha da lista) mostra a unidade e o segundo abre a página dela. Na página de uma cidade, ela já abre em destaque, e clicar nela leva ao Google Maps da unidade mais próxima, no fim da página. O mapa usa Leaflet (carregado de unpkg.com só quando chega perto da tela) com o mapa do OpenStreetMap. As coordenadas ficam em `CITY_MAP`, no `build.py`.
+Na página inicial, em `/baixada-santista/` e nas páginas de cidade, o primeiro clique em um ponto (ou na linha da lista) mostra a unidade e o segundo abre a página dela. Na página de uma cidade, ela já abre em destaque, e o botão "Como chegar" abre o Google Maps da unidade. O mapa usa Leaflet (carregado de unpkg.com só quando chega perto da tela) com o mapa do OpenStreetMap. As coordenadas ficam em `CITY_MAP`, no `build.py`.
 
 ## Estrutura do código
 

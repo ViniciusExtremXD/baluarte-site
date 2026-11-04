@@ -66,10 +66,11 @@ for p in posts:
     p.setdefault("image", POST_PHOTOS.get(p["slug"], "hero-tecnico.webp"))
 
 OFFICE_Q = "R.%20Dr.%20Luis%20Suplicy%2C%2031%2C%20Santos%20-%20SP%2C%2011055-330"
-SEDE_Q = "Baluarte%20Extintores%20Guaruj%C3%A1"
+# Endereços reais da Baluarte. Para dar endereço próprio a uma cidade, adicione a unidade aqui,
+# aponte a cidade para ela em CITY_MAP e preencha a etiqueta (terceiro campo).
 UNITS = {
-    "sede": ("Sede e oficina em Guarujá", "Av. Piassaguera, 1189, Guarujá - SP", SEDE_Q, REVIEWS_URL),
-    "escritorio": ("Escritório comercial em Santos", "R. Dr. Luis Suplicy, 31, Santos - SP", OFFICE_Q, "https://www.google.com/maps/search/?api=1&query=" + OFFICE_Q),
+    "sede": {"label": "Sede e oficina em Guarujá", "street": "Av. Piassaguera, 1189", "town": "Guarujá - SP", "cep": "CEP 11454-630", "href": REVIEWS_URL},
+    "escritorio": {"label": "Escritório comercial em Santos", "street": "R. Dr. Luis Suplicy, 31", "town": "Santos - SP", "cep": "CEP 11055-330", "href": "https://www.google.com/maps/search/?api=1&query=" + OFFICE_Q},
 }
 # lat, lng, etiqueta no mapa, lado do nome no mapa, unidade mais próxima
 CITY_MAP = {
@@ -82,8 +83,10 @@ CITY_MAP = {
 }
 for c in cities:
     c["lat"], c["lng"], c["tag"], c["side"], unit = CITY_MAP[c["slug"]]
-    c["unit_title"], c["unit_addr"], c["unit_q"], c["unit_href"] = UNITS[unit]
-    c["unit_kicker"] = "Nossa unidade na cidade" if c["tag"] else "Unidade mais próxima"
+    u = c["unit"] = UNITS[unit]
+    c["unit_line"] = ("" if c["tag"] else "Unidade mais próxima: ") + u["street"] + " · " + u["town"]
+    in_name = c["h1"].split("extintores ")[1]  # "em Santos", "na Riviera de São Lourenço"
+    c["in_name"] = in_name[0].upper() + in_name[1:]
 
 SERVICES = [
     {"title": "Recarga e manutenção de extintores", "text": "Todos os tipos, com selo do INMETRO. Retiramos no seu imóvel, deixamos reservas no lugar e devolvemos em até 7 dias úteis. Obrigatória a cada 12 meses.", "msg": "Olá! Quero orçamento de recarga de extintores.", "icon": "refresh", "img": "svc-recarga.webp", "w": 1040, "h": 960, "alt": "Técnico manuseando um extintor com selo do INMETRO", "featured": True},
