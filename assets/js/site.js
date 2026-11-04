@@ -274,6 +274,92 @@
     } else start();
   }
 
+  // Avaliações: desliza com o dedo, arrasta com o mouse, usa as setas e avança sozinho
+  var rv = document.querySelector('[data-rv]');
+  if (rv) reviewsCarousel(rv);
+
+  function reviewsCarousel(box) {
+    var track = box.querySelector('.rv-track');
+    var items = track.children;
+    var bar = box.querySelector('.rv-bar span');
+    var count = box.querySelector('.rv-count');
+    var total = items.length;
+    var pauseUntil = 0, hover = false, inView = true, drag = null;
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var step = function () { return total > 1 ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth; };
+    var visible = function () {
+      var s = step();
+      return Math.max(1, Math.round((track.clientWidth + s - items[0].offsetWidth) / s));
+    };
+    var cur = function () { return Math.round(track.scrollLeft / step()); };
+    var wait = function (ms) { pauseUntil = performance.now() + ms; };
+
+    function go(i, behavior) {
+      var last = total - visible();
+      if (i < 0) i = last;
+      if (i > last) i = 0;
+      track.scrollTo({ left: i * step(), behavior: behavior || 'smooth' });
+    }
+    function paint() {
+      var i = cur(), vis = visible();
+      bar.style.transform = 'scaleX(' + Math.min(1, (i + vis) / total) + ')';
+      count.textContent = pad(Math.min(total, i + vis)) + ' / ' + pad(total);
+    }
+    track.addEventListener('scroll', function () { requestAnimationFrame(paint); }, { passive: true });
+    addEventListener('resize', paint);
+    paint();
+
+    box.querySelector('.rv-prev').addEventListener('click', function () { wait(9000); go(cur() - 1); });
+    box.querySelector('.rv-next').addEventListener('click', function () { wait(9000); go(cur() + 1); });
+    box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+    box.addEventListener('pointerleave', function () { hover = false; });
+    track.addEventListener('touchstart', function () { wait(9000); }, { passive: true });
+    box.querySelectorAll('.rv-photo').forEach(function (img) {
+      img.addEventListener('error', function () {
+        var s = document.createElement('span');
+        s.className = 'rv-photo rv-ini';
+        s.textContent = img.dataset.ini;
+        img.replaceWith(s);
+      });
+    });
+
+    // Arrastar com o mouse (no toque, a própria rolagem do aparelho já desliza)
+    if (fine) {
+      track.classList.add('is-mouse');
+      track.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button) return;
+        drag = { x: e.clientX, left: track.scrollLeft, start: e.clientX };
+        track.setPointerCapture(e.pointerId);
+        track.classList.add('is-drag');
+        wait(9000);
+      });
+      track.addEventListener('pointermove', function (e) {
+        if (drag) track.scrollLeft = drag.left - (e.clientX - drag.x);
+      });
+      var endDrag = function (e) {
+        if (!drag) return;
+        var moved = drag.start - e.clientX, i = cur();
+        // Um arraste curto já conta como trocar de avaliação
+        if (Math.abs(moved) > 40 && Math.round(drag.left / step()) === i) i += moved > 0 ? 1 : -1;
+        drag = null;
+        i = Math.max(0, Math.min(total - visible(), i));
+        track.scrollTo({ left: i * step(), behavior: 'smooth' });
+        setTimeout(function () { track.classList.remove('is-drag'); }, 450);
+        wait(9000);
+      };
+      track.addEventListener('pointerup', endDrag);
+      track.addEventListener('pointercancel', endDrag);
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { inView = en[0].isIntersecting; }, { threshold: 0.3 }).observe(box);
+    }
+    setInterval(function () {
+      if (hover || drag || !inView || document.hidden || performance.now() < pauseUntil) return;
+      go(cur() + 1);
+    }, 5500);
+  }
+
   if (full && fine) smoothScroll();
   if (!anim || !('IntersectionObserver' in window)) return;
 
@@ -302,7 +388,7 @@
 
   // Todo componente aparece ao rolar; itens que entram juntos vêm um depois do outro
   var kinds = {
-    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.city-links>li,.cta-band p,.cta-band .btn,.review,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
+    '': '.clients-head,.marquee,.mq-btn,.kicker,.lead,.stats>li,.text>p,.sub,.checks>li,.how-side>*,.how-steps>li,.svc-inc h3,.svc-inc li,.units-list>li,.also,.city-links>li,.cta-band p,.cta-band .btn,.rv,.faq-head .btn,.faq-item,.field,.form-submit,.form-hint,.info-card h3,.info-list>li,.bairros>li,.local-card>h3,.local-note,.local-addr,.prose>*,.post-cta>*,.ftr-grid>div,.ftr-legal,.gmaps-card,.how .kicker,.how h2',
     'reveal-s': '.svc,.svc-inc,.prova,.review-score,.post-card,.local-card,.form,.empresa-mini',
     'wipe': '.empresa-photo,.map-wrap'
   };

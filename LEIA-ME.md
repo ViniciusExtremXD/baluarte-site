@@ -62,6 +62,10 @@ Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desl
 
 As fotos vêm do site antigo da Baluarte, ampliadas por IA. A exceção é a do cartão de porta corta-fogo (`svc-porta.webp`), de banco livre, licença CC0: https://wordpress.org/photos/photo/20167f4a8b/. Troque por uma foto real assim que houver.
 
+## Avaliações
+
+O carrossel usa `data/reviews.json`: avaliações reais e públicas da ficha da Baluarte no Google, copiadas sem alterar o texto. O nome mostra os dois primeiros nomes da pessoa, e a foto vem direto do Google (se a pessoa trocar ou apagar, aparece a inicial do nome). Não invente nem edite avaliações. Antes de publicar no domínio, veja com o cliente a autorização para usar nome e foto.
+
 ## Mapa das unidades
 
 Na página inicial e em `/baixada-santista/`, o primeiro clique em um ponto (ou na linha da lista) mostra a unidade e o segundo abre a página dela. No fim de cada página de cidade há o Google Maps da unidade mais próxima. O mapa usa Leaflet (carregado de unpkg.com só quando chega perto da tela) com o mapa do OpenStreetMap. As coordenadas ficam em `CITY_MAP`, no `build.py`.

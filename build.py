@@ -4,6 +4,7 @@ Uso:
   python build.py preview   -> docs/  (GitHub Pages: noindex, sem noscript do GTM)
   python build.py producao  -> dist/  (para subir em www.baluarteextintores.com.br)
 """
+import hashlib
 import json
 import os
 import shutil
@@ -128,7 +129,7 @@ STEPS = [
     ("Devolução em até 7 dias úteis", "Os extintores voltam recarregados, com selo do INMETRO. Em 12 meses, avisamos você."),
 ]
 
-reviews = content["home"]["reviews"][:3]
+reviews = json.load(open(os.path.join(ROOT, "data", "reviews.json"), encoding="utf-8"))
 home_faq = [content["home"]["faq"][i] for i in (0, 1, 3, 4, 5, 7)]
 
 ORG_SCHEMA = {
@@ -170,9 +171,15 @@ def ld(*nodes):
     return json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False)
 
 
+# Muda o endereço do CSS e do JS a cada alteração, para o navegador não ficar com a versão antiga
+_h = hashlib.md5()
+for _f in ("site.css", "site.js"):
+    _h.update(open(os.path.join(ROOT, "assets", "css" if _f.endswith("css") else "js", _f), "rb").read())
+ASSET_V = _h.hexdigest()[:8]
+
 env = Environment(loader=FileSystemLoader(os.path.join(ROOT, "templates")), autoescape=select_autoescape(["html"]), trim_blocks=True, lstrip_blocks=True)
 env.globals.update(
-    wa=wa, icon=icon, OFFICE_Q=OFFICE_Q, WA_NUMBER=WA_NUMBER, PHONE_TEL=PHONE_TEL, PHONE_LABEL=PHONE_LABEL, WA_LABEL=WA_LABEL, EMAIL=EMAIL, HOURS=HOURS,
+    wa=wa, icon=icon, ASSET_V=ASSET_V, OFFICE_Q=OFFICE_Q, WA_NUMBER=WA_NUMBER, PHONE_TEL=PHONE_TEL, PHONE_LABEL=PHONE_LABEL, WA_LABEL=WA_LABEL, EMAIL=EMAIL, HOURS=HOURS,
     REVIEWS_URL=REVIEWS_URL, GTM_ID=GTM_ID, PREVIEW=(MODE == "preview"), SITE_URL=SITE_URL,
     cities=cities, OTHER_CITIES=OTHER_CITIES, SERVICES=SERVICES, INCLUDED=INCLUDED, STEPS=STEPS,
     reviews=reviews, clientes=clientes, posts=posts, year=date.today().year,

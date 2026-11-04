@@ -158,9 +158,26 @@
         <span>704 avaliações</span>
         <em>Ver no Google {{ icon("arrow") }}</em>
       </a>
-      {% for r in reviews %}
-      <blockquote class="review">{{ m.stars() }}<p>{{ r }}</p></blockquote>
-      {% endfor %}
+      <div class="rv" data-rv role="group" aria-roledescription="carrossel" aria-label="Avaliações de clientes no Google">
+        <ul class="rv-track">
+          {% for r in reviews %}
+          <li class="review">
+            <div class="rv-who">
+              <img class="rv-photo" src="{{ r.photo }}=s96-c" alt="" width="48" height="48" referrerpolicy="no-referrer" loading="lazy" decoding="async" draggable="false" data-ini="{{ r.name[0] }}">
+              <span><b>{{ r.name }}</b><small>{{ m.icon_google() }}Avaliação no Google</small></span>
+            </div>
+            {{ m.stars() }}
+            <p>{{ r.text }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="rv-nav">
+          <div class="rv-bar" aria-hidden="true"><span></span></div>
+          <span class="rv-count" aria-live="polite">01 / {{ "%02d"|format(reviews|length) }}</span>
+          <button class="rv-btn rv-prev" type="button" aria-label="Avaliações anteriores">{{ icon("arrow") }}</button>
+          <button class="rv-btn rv-next" type="button" aria-label="Próximas avaliações">{{ icon("arrow") }}</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
