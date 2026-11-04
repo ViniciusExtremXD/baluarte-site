@@ -58,8 +58,7 @@
   function slider(box) {
     var slides = box.querySelectorAll('.slide');
     var dots = box.querySelectorAll('.hero-dot');
-    var pause = box.querySelector('.hero-pause');
-    var dur = 6500, cur = 0, timer = null, paused = false, leaving = null;
+    var dur = 6500, cur = 0, timer = null, leaving = null;
     function go(i) {
       i = (i + slides.length) % slides.length;
       if (i === cur) { schedule(); return; }
@@ -81,18 +80,9 @@
     }
     function schedule() {
       clearTimeout(timer);
-      if (!paused && !document.hidden) timer = setTimeout(function () { go(cur + 1); }, dur);
-    }
-    function setPaused(on) {
-      paused = on;
-      box.classList.toggle('is-paused', on);
-      pause.classList.toggle('is-paused', on);
-      pause.setAttribute('aria-pressed', on ? 'true' : 'false');
-      pause.setAttribute('aria-label', on ? 'Retomar a troca automática' : 'Pausar a troca automática');
-      schedule();
+      if (!document.hidden) timer = setTimeout(function () { go(cur + 1); }, dur);
     }
     dots.forEach(function (d, i) { d.addEventListener('click', function () { go(i); }); });
-    pause.addEventListener('click', function () { setPaused(!paused); });
     document.addEventListener('visibilitychange', schedule);
     var startX = null;
     box.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });

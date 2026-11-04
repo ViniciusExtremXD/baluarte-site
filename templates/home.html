@@ -2,19 +2,42 @@
 {% import "macros.html" as m with context %}
 {% block content %}
 
-<section class="hero" id="home">
+<section class="hero on-light" id="home">
+  <h1 class="sr-only">Recarga e manutenção de extintores na Baixada Santista</h1>
   <div class="hero-slider" role="group" aria-roledescription="carrossel" aria-label="Destaques da Baluarte">
 
-    <article class="slide is-active">
-      <div class="slide-bg"><img src="{{ root }}assets/img/hero-tecnico.webp" alt="Técnico segurando um extintor de incêndio" fetchpriority="high"></div>
+    <article class="slide slide-light is-active">
+      <div class="slide-art">
+        <span class="art-ring" aria-hidden="true"></span>
+        <img class="art-photo" src="{{ root }}assets/img/sede-circulo.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" fetchpriority="high">
+        <span class="art-badge"><b>+30</b>anos de<br>mercado</span>
+      </div>
+      <div class="slide-panel" aria-hidden="true"></div>
+      <div class="wrap slide-content">
+        <p class="slide-kicker"><span class="dot"></span>Sede própria em Guarujá · Escritório em Santos</p>
+        <h2 class="slide-title">
+          <span class="h-line"><span>Mais de <em>14.000</em></span></span>
+          <span class="h-line"><span>clientes atendidos,</span></span>
+          <span class="h-line"><span>em toda a região.</span></span>
+        </h2>
+        <p class="slide-text">De condomínios residenciais a grandes empresas, com oficina própria e equipe técnica na Baixada Santista.</p>
+        <div class="slide-ctas">
+          <a class="btn btn-primary" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
+          <a class="btn btn-outline" href="#empresa"><span>Conheça a empresa</span></a>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-bg"><img src="{{ root }}assets/img/hero-tecnico.webp" alt="Técnico segurando um extintor de incêndio" loading="lazy" decoding="async"></div>
       <div class="slide-panel" aria-hidden="true"></div>
       <div class="wrap slide-content">
         <p class="slide-kicker"><span class="dot"></span>Mais de 30 anos · Registro INMETRO nº 3495/22</p>
-        <h1 class="slide-title">
+        <h2 class="slide-title">
           <span class="h-line"><span>Recarga e manutenção</span></span>
           <span class="h-line"><span>de extintores na</span></span>
           <span class="h-line"><span><em>Baixada Santista</em>.</span></span>
-        </h1>
+        </h2>
         <p class="slide-text">Retiramos seus extintores, deixamos reservas no lugar e devolvemos em até 7 dias úteis, com selo do INMETRO. Vistoria e orçamento grátis.</p>
         <div class="slide-ctas">
           <a class="btn btn-primary" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
@@ -40,28 +63,6 @@
         </div>
       </div>
     </article>
-
-    <article class="slide slide-light">
-      <div class="slide-art">
-        <span class="art-ring" aria-hidden="true"></span>
-        <img class="art-photo" src="{{ root }}assets/img/sede-circulo.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" loading="lazy" decoding="async">
-        <span class="art-badge"><b>+30</b>anos de<br>mercado</span>
-      </div>
-      <div class="slide-panel" aria-hidden="true"></div>
-      <div class="wrap slide-content">
-        <p class="slide-kicker"><span class="dot"></span>Sede própria em Guarujá · Escritório em Santos</p>
-        <h2 class="slide-title">
-          <span class="h-line"><span>Mais de <em>14.000</em></span></span>
-          <span class="h-line"><span>clientes atendidos,</span></span>
-          <span class="h-line"><span>em toda a região.</span></span>
-        </h2>
-        <p class="slide-text">De condomínios residenciais a grandes empresas, com oficina própria e equipe técnica na Baixada Santista.</p>
-        <div class="slide-ctas">
-          <a class="btn btn-primary" href="{{ wa() }}" target="_blank" rel="noopener">{{ m.icon_wa() }}<span>Solicitar orçamento</span></a>
-          <a class="btn btn-outline" href="#empresa"><span>Conheça a empresa</span></a>
-        </div>
-      </div>
-    </article>
   </div>
 
   <a class="hero-google" href="{{ REVIEWS_URL }}" target="_blank" rel="noopener" aria-label="Nota 5,0 no Google, com 704 avaliações">
@@ -74,10 +75,6 @@
       <button class="hero-dot is-active" type="button" aria-label="Ir para o destaque 1" aria-current="true"><i>01</i><b><s></s></b></button>
       <button class="hero-dot" type="button" aria-label="Ir para o destaque 2"><i>02</i><b><s></s></b></button>
       <button class="hero-dot" type="button" aria-label="Ir para o destaque 3"><i>03</i><b><s></s></b></button>
-      <button class="hero-pause" type="button" aria-label="Pausar a troca automática" aria-pressed="false">
-        <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
-        <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
-      </button>
     </div>
   </div>
 </section>

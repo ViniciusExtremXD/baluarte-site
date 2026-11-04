@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="assets/css/site.css?v=1bd7e98d">
+<link rel="stylesheet" href="assets/css/site.css?v=21341184">
 <script>
 /* Liga as animações. Quem pede menos movimento no sistema fica só com os fades; ?motion=full mostra tudo e fica salvo no navegador, ?motion=auto volta ao normal. */
 (function(d,l){var f,m=/[?&]motion=(\w+)/.exec(l.search);try{if(m)localStorage.setItem('motion',m[1]);f=localStorage.getItem('motion')==='full'}catch(e){}
@@ -73,19 +73,42 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
 
 <main id="conteudo">
 
-<section class="hero" id="home">
+<section class="hero on-light" id="home">
+  <h1 class="sr-only">Recarga e manutenção de extintores na Baixada Santista</h1>
   <div class="hero-slider" role="group" aria-roledescription="carrossel" aria-label="Destaques da Baluarte">
 
-    <article class="slide is-active">
-      <div class="slide-bg"><img src="assets/img/hero-tecnico.webp" alt="Técnico segurando um extintor de incêndio" fetchpriority="high"></div>
+    <article class="slide slide-light is-active">
+      <div class="slide-art">
+        <span class="art-ring" aria-hidden="true"></span>
+        <img class="art-photo" src="assets/img/sede-circulo.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" fetchpriority="high">
+        <span class="art-badge"><b>+30</b>anos de<br>mercado</span>
+      </div>
+      <div class="slide-panel" aria-hidden="true"></div>
+      <div class="wrap slide-content">
+        <p class="slide-kicker"><span class="dot"></span>Sede própria em Guarujá · Escritório em Santos</p>
+        <h2 class="slide-title">
+          <span class="h-line"><span>Mais de <em>14.000</em></span></span>
+          <span class="h-line"><span>clientes atendidos,</span></span>
+          <span class="h-line"><span>em toda a região.</span></span>
+        </h2>
+        <p class="slide-text">De condomínios residenciais a grandes empresas, com oficina própria e equipe técnica na Baixada Santista.</p>
+        <div class="slide-ctas">
+          <a class="btn btn-primary" href="https://wa.me/5513997401621?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20quero%20vistoria%20e%20or%C3%A7amento%20gr%C3%A1tis." target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.668-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.875 1.213 3.074.148.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg><span>Solicitar orçamento</span></a>
+          <a class="btn btn-outline" href="#empresa"><span>Conheça a empresa</span></a>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-bg"><img src="assets/img/hero-tecnico.webp" alt="Técnico segurando um extintor de incêndio" loading="lazy" decoding="async"></div>
       <div class="slide-panel" aria-hidden="true"></div>
       <div class="wrap slide-content">
         <p class="slide-kicker"><span class="dot"></span>Mais de 30 anos · Registro INMETRO nº 3495/22</p>
-        <h1 class="slide-title">
+        <h2 class="slide-title">
           <span class="h-line"><span>Recarga e manutenção</span></span>
           <span class="h-line"><span>de extintores na</span></span>
           <span class="h-line"><span><em>Baixada Santista</em>.</span></span>
-        </h1>
+        </h2>
         <p class="slide-text">Retiramos seus extintores, deixamos reservas no lugar e devolvemos em até 7 dias úteis, com selo do INMETRO. Vistoria e orçamento grátis.</p>
         <div class="slide-ctas">
           <a class="btn btn-primary" href="https://wa.me/5513997401621?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20quero%20vistoria%20e%20or%C3%A7amento%20gr%C3%A1tis." target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.668-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.875 1.213 3.074.148.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg><span>Solicitar orçamento</span></a>
@@ -111,28 +134,6 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
         </div>
       </div>
     </article>
-
-    <article class="slide slide-light">
-      <div class="slide-art">
-        <span class="art-ring" aria-hidden="true"></span>
-        <img class="art-photo" src="assets/img/sede-circulo.webp" alt="Fachada da sede da Baluarte Extintores em Guarujá" loading="lazy" decoding="async">
-        <span class="art-badge"><b>+30</b>anos de<br>mercado</span>
-      </div>
-      <div class="slide-panel" aria-hidden="true"></div>
-      <div class="wrap slide-content">
-        <p class="slide-kicker"><span class="dot"></span>Sede própria em Guarujá · Escritório em Santos</p>
-        <h2 class="slide-title">
-          <span class="h-line"><span>Mais de <em>14.000</em></span></span>
-          <span class="h-line"><span>clientes atendidos,</span></span>
-          <span class="h-line"><span>em toda a região.</span></span>
-        </h2>
-        <p class="slide-text">De condomínios residenciais a grandes empresas, com oficina própria e equipe técnica na Baixada Santista.</p>
-        <div class="slide-ctas">
-          <a class="btn btn-primary" href="https://wa.me/5513997401621?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20quero%20vistoria%20e%20or%C3%A7amento%20gr%C3%A1tis." target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.668-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.875 1.213 3.074.148.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg><span>Solicitar orçamento</span></a>
-          <a class="btn btn-outline" href="#empresa"><span>Conheça a empresa</span></a>
-        </div>
-      </div>
-    </article>
   </div>
 
   <a class="hero-google" href="https://www.google.com/maps/search/?api=1&amp;query=Baluarte+Extintores+Guaruj%C3%A1" target="_blank" rel="noopener" aria-label="Nota 5,0 no Google, com 704 avaliações">
@@ -145,10 +146,6 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
       <button class="hero-dot is-active" type="button" aria-label="Ir para o destaque 1" aria-current="true"><i>01</i><b><s></s></b></button>
       <button class="hero-dot" type="button" aria-label="Ir para o destaque 2"><i>02</i><b><s></s></b></button>
       <button class="hero-dot" type="button" aria-label="Ir para o destaque 3"><i>03</i><b><s></s></b></button>
-      <button class="hero-pause" type="button" aria-label="Pausar a troca automática" aria-pressed="false">
-        <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
-        <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
-      </button>
     </div>
   </div>
 </section>
@@ -605,6 +602,6 @@ d.className='anim'+(!f&&matchMedia('(prefers-reduced-motion: reduce)').matches?'
 
 <a class="wa-float" href="https://wa.me/5513997401621?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20quero%20vistoria%20e%20or%C3%A7amento%20gr%C3%A1tis." target="_blank" rel="noopener" aria-label="Falar pelo WhatsApp"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.668-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.875 1.213 3.074.148.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
 
-<script src="assets/js/site.js?v=1bd7e98d" defer></script>
+<script src="assets/js/site.js?v=21341184" defer></script>
 </body>
 </html>
