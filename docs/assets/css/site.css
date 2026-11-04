@@ -665,6 +665,7 @@ html.lenis-smooth{scroll-behavior:auto}
   .map-wrap{min-height:500px}
   .map-tip{font-size:12px}
   .pin:not(.pin-unit):not(.is-sel) b{display:none}
+  .pin-left b{left:50%;right:auto;top:auto;bottom:24px;translate:-50% 0}
   .gmaps{height:400px}
   .gmaps-card{max-width:none;width:100%}
 }
