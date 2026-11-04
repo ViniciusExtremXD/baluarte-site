@@ -5,6 +5,7 @@
   var full = anim && !root.classList.contains('calm');
   var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   var lenisSrc = document.currentScript.src.replace('site.js', 'lenis.min.js');
+  var idle = window.requestIdleCallback ? function (f) { requestIdleCallback(f, { timeout: 1500 }); } : function (f) { setTimeout(f, 300); };
 
   // Menu do celular
   var btn = document.querySelector('[data-menu-btn]');
@@ -20,17 +21,29 @@
   // Topo e barra de progresso
   var hdr = document.querySelector('.hdr');
   var bar = document.querySelector('.progress span');
-  var ticking = false;
+  var ticking = false, maxScroll = 0;
   var onScroll = function () {
     ticking = false;
-    hdr.classList.toggle('is-scrolled', scrollY > 8);
-    var max = root.scrollHeight - innerHeight;
-    bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
+    var y = scrollY;
+    hdr.classList.toggle('is-scrolled', y > 8);
+    bar.style.transform = 'scaleX(' + (maxScroll > 0 ? Math.min(y / maxScroll, 1) : 0) + ')';
   };
   addEventListener('scroll', function () {
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
-  onScroll();
+  // A altura da página só é lida quando muda, e não a cada passo da rolagem
+  var measurePage = function () { maxScroll = root.scrollHeight - innerHeight; onScroll(); };
+  addEventListener('resize', measurePage);
+  if ('ResizeObserver' in window) new ResizeObserver(measurePage).observe(document.body);
+  else requestAnimationFrame(measurePage);
+
+  // Fora da tela, as animações da peça ficam paradas
+  function pauseAway(el) {
+    if (!('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (en) { el.classList.toggle('is-away', !en[0].isIntersecting); }).observe(el);
+  }
+  var heroPage = document.querySelector('.hero-page');
+  if (heroPage) pauseAway(heroPage);
 
   // Formulário: abre o WhatsApp com a mensagem pronta
   document.querySelectorAll('[data-wa-form]').forEach(function (form) {
@@ -58,10 +71,15 @@
   function slider(box) {
     var slides = box.querySelectorAll('.slide');
     var dots = box.querySelectorAll('.hero-dot');
-    var dur = 6500, cur = 0, timer = null, leaving = null;
+    var dur = 6500, left = dur, t0 = 0, away = false, cur = 0, timer = null, leaving = null;
+    // Deixa a foto do próximo destaque pronta, para a troca não mostrar o fundo vazio
+    function prepare(i) {
+      var img = slides[(i + slides.length) % slides.length].querySelector('img');
+      idle(function () { if (img && img.decode) img.decode().catch(function () {}); });
+    }
     function go(i) {
       i = (i + slides.length) % slides.length;
-      if (i === cur) { schedule(); return; }
+      if (i === cur) return;
       // O destaque que sai fica por baixo até o novo cobrir a tela
       slides.forEach(function (s) { s.classList.remove('was-active'); });
       var out = slides[cur];
@@ -76,14 +94,28 @@
       dots[cur].classList.add('is-active');
       dots[cur].setAttribute('aria-current', 'true');
       box.classList.toggle('on-light', slides[cur].classList.contains('slide-light'));
-      schedule();
+      left = dur;
+      t0 = 0;
+      sync();
+      prepare(cur + 1);
     }
-    function schedule() {
+    // Fora da tela ou com a aba escondida, o tempo e a barrinha ficam parados e continuam de onde pararam
+    function sync() {
+      var off = away || document.hidden;
+      box.classList.toggle('is-away', off);
       clearTimeout(timer);
-      if (!document.hidden) timer = setTimeout(function () { go(cur + 1); }, dur);
+      if (t0) left = Math.max(left - (performance.now() - t0), 0);
+      t0 = 0;
+      if (!off) {
+        t0 = performance.now();
+        timer = setTimeout(function () { go(cur + 1); }, left);
+      }
     }
     dots.forEach(function (d, i) { d.addEventListener('click', function () { go(i); }); });
-    document.addEventListener('visibilitychange', schedule);
+    document.addEventListener('visibilitychange', sync);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { away = !en[0].isIntersecting; sync(); }).observe(box);
+    }
     var startX = null;
     box.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
     box.addEventListener('touchend', function (e) {
@@ -92,7 +124,8 @@
       startX = null;
       if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1));
     }, { passive: true });
-    schedule();
+    sync();
+    prepare(1);
   }
 
   // Menu acompanha a seção visível (só na página inicial)
@@ -124,6 +157,8 @@
     var go = box.querySelector('.map-go');
     var map = null, pins = [], sel = -1, here = -1;
     rows.forEach(function (r, i) { if (r.dataset.here) here = i; });
+    // A linha da cidade já nasce marcada: se esperasse o mapa carregar, a página pularia na frente de quem lê
+    if (here > -1) rows[here].classList.add('is-sel');
 
     function select(i, stay) {
       if (sel > -1) { rows[sel].classList.remove('is-sel'); pins[sel].getElement().classList.remove('is-sel'); }
@@ -159,7 +194,7 @@
     function draw() {
       map = L.map(canvas, { scrollWheelZoom: false, dragging: fine, tap: false, attributionControl: true });
       map.fitBounds(L.latLngBounds(Array.prototype.map.call(rows, function (r) { return [+r.dataset.lat, +r.dataset.lng]; })), canvas.clientWidth < 600 ? { paddingTopLeft: [34, 70], paddingBottomRight: [34, 250] } : { padding: [70, 70] });
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap', updateWhenZooming: false }).addTo(map);
       map.attributionControl.setPrefix(false);
       rows.forEach(function (row, i) {
         var d = row.dataset;
@@ -188,10 +223,11 @@
       document.head.appendChild(css);
       var js = document.createElement('script');
       js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-      js.onload = draw;
+      js.onload = function () { idle(draw); }; // monta o mapa numa folga, sem travar quem está rolando
       document.head.appendChild(js);
     }
 
+    pauseAway(wrap);
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en, o) {
         if (en[0].isIntersecting) { o.disconnect(); load(); }
@@ -207,15 +243,16 @@
     var shell = box.parentNode;
     var track = box.querySelector('.marquee-track');
     var group = track.firstElementChild;
-    var speed = 28, x = 0, v = 0, nudge = 0, resume = 0, hover = false, drag = null, raf = 0, last = 0;
-    var width = group.offsetWidth;
-    addEventListener('resize', function () { width = group.offsetWidth; });
+    var speed = 28, x = 0, painted = -1, v = 0, nudge = 0, resume = 0, hover = false, drag = null, raf = 0, last = 0;
+    var width = 0;
+    addEventListener('resize', function () { width = 0; });
     box.classList.add('is-live');
 
     function tick(t) {
       raf = requestAnimationFrame(tick);
       var dt = Math.min((t - last) / 1000, 0.05);
       last = t;
+      if (!width) width = group.offsetWidth;
       if (!drag) {
         if (Math.abs(nudge) > 0.5) {
           var step = nudge * Math.min(1, dt * 7);
@@ -229,7 +266,10 @@
         }
       }
       if (width) x = ((x % width) + width) % width;
-      track.style.transform = 'translate3d(' + -x + 'px,0,0)';
+      if (x !== painted) {
+        painted = x;
+        track.style.transform = 'translate3d(' + -x + 'px,0,0)';
+      }
     }
     function wait() { resume = performance.now() + 2500; }
     function move(by) { v = 0; nudge += by; wait(); }
@@ -290,29 +330,34 @@
     var count = box.querySelector('.rv-count');
     var total = items.length;
     var pauseUntil = 0, hover = false, inView = true, drag = null;
+    var stepW = 1, vis = 1, shown = '';
     var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    var step = function () { return total > 1 ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth; };
-    var visible = function () {
-      var s = step();
-      return Math.max(1, Math.round((track.clientWidth + s - items[0].offsetWidth) / s));
-    };
-    var cur = function () { return Math.round(track.scrollLeft / step()); };
+    var cur = function () { return Math.round(track.scrollLeft / stepW); };
     var wait = function (ms) { pauseUntil = performance.now() + ms; };
 
     function go(i, behavior) {
-      var last = total - visible();
+      var last = total - vis;
       if (i < 0) i = last;
       if (i > last) i = 0;
-      track.scrollTo({ left: i * step(), behavior: behavior || 'smooth' });
+      track.scrollTo({ left: i * stepW, behavior: behavior || 'smooth' });
+    }
+    // As medidas só mudam com a janela; durante o deslize o contador só é escrito quando troca
+    function measure() {
+      stepW = total > 1 ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth;
+      vis = Math.max(1, Math.round((track.clientWidth + stepW - items[0].offsetWidth) / stepW));
+      shown = '';
+      paint();
     }
     function paint() {
-      var i = cur(), vis = visible();
+      var i = cur(), label = pad(Math.min(total, i + vis)) + ' / ' + pad(total);
+      if (label === shown) return;
+      shown = label;
       bar.style.transform = 'scaleX(' + Math.min(1, (i + vis) / total) + ')';
-      count.textContent = pad(Math.min(total, i + vis)) + ' / ' + pad(total);
+      count.textContent = label;
     }
     track.addEventListener('scroll', function () { requestAnimationFrame(paint); }, { passive: true });
-    addEventListener('resize', paint);
-    paint();
+    addEventListener('resize', measure);
+    requestAnimationFrame(measure);
 
     box.querySelector('.rv-prev').addEventListener('click', function () { wait(9000); go(cur() - 1); });
     box.querySelector('.rv-next').addEventListener('click', function () { wait(9000); go(cur() + 1); });
@@ -345,10 +390,10 @@
         if (!drag) return;
         var moved = drag.start - e.clientX, i = cur();
         // Um arraste curto já conta como trocar de avaliação
-        if (Math.abs(moved) > 40 && Math.round(drag.left / step()) === i) i += moved > 0 ? 1 : -1;
+        if (Math.abs(moved) > 40 && Math.round(drag.left / stepW) === i) i += moved > 0 ? 1 : -1;
         drag = null;
-        i = Math.max(0, Math.min(total - visible(), i));
-        track.scrollTo({ left: i * step(), behavior: 'smooth' });
+        i = Math.max(0, Math.min(total - vis, i));
+        track.scrollTo({ left: i * stepW, behavior: 'smooth' });
         setTimeout(function () { track.classList.remove('is-drag'); }, 450);
         wait(9000);
       };
@@ -365,7 +410,8 @@
     }, 5500);
   }
 
-  // Bairros: o nome em destaque troca sozinho, e escolher um bairro já prepara o pedido no WhatsApp
+  // Bairros: o nome em destaque troca sozinho. Só quem escolhe um bairro muda o botão do WhatsApp,
+  // para o botão não pular a cada troca nem mandar um bairro que a pessoa não escolheu.
   var bb = document.querySelector('[data-bairros]');
   if (bb && anim) bairros(bb);
 
@@ -374,12 +420,14 @@
     var names = box.querySelectorAll('.bairro-now span');
     var cta = box.querySelector('.bairro-cta');
     var label = cta.querySelector('span');
+    var plain = { text: label.textContent, href: cta.href };
     var base = cta.href.split('?')[0];
     var msg = decodeURIComponent(cta.href.split('text=')[1] || '');
-    var cur = 0, hover = false, until = 0, inView = !('IntersectionObserver' in window);
+    var cur = 0, picked = false, hover = false, until = 0, inView = !('IntersectionObserver' in window);
 
-    function paint() {
-      var n = chips[cur].textContent;
+    function point(i) {
+      show(i);
+      var n = chips[i].textContent;
       label.textContent = 'Orçamento: ' + n;
       cta.href = base + '?text=' + encodeURIComponent(msg + ' Local: ' + n + '.');
     }
@@ -394,21 +442,23 @@
       names[cur].classList.remove('was');
       names[cur].classList.add('on');
       chips[cur].classList.add('on');
-      paint();
     }
     chips.forEach(function (chip, i) {
-      chip.addEventListener('click', function () { until = performance.now() + 8000; show(i); });
-      chip.addEventListener('focus', function () { until = performance.now() + 8000; show(i); });
-      chip.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') show(i); });
+      chip.addEventListener('click', function () { picked = true; point(i); });
+      chip.addEventListener('focus', function () { picked = true; point(i); });
+      chip.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') point(i); });
     });
     box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
-    box.addEventListener('pointerleave', function () { hover = false; until = performance.now() + 1500; });
+    box.addEventListener('pointerleave', function () {
+      hover = false;
+      until = performance.now() + 1500;
+      if (!picked) { label.textContent = plain.text; cta.href = plain.href; } // só passou o mouse: o botão volta ao normal
+    });
     if (!inView) {
       new IntersectionObserver(function (en) { inView = en[0].isIntersecting; }, { threshold: 0.3 }).observe(box);
     }
-    paint();
     setInterval(function () {
-      if (hover || !inView || document.hidden || performance.now() < until) return;
+      if (picked || hover || !inView || document.hidden || performance.now() < until) return;
       show((cur + 1) % chips.length);
     }, 2400);
   }
@@ -466,11 +516,12 @@
   };
   var io = new IntersectionObserver(show, { rootMargin: '0px 0px -7% 0px' });
   var ioEnd = new IntersectionObserver(show); // o rodapé nunca passa da margem acima: ele é o fim da página
-  document.querySelectorAll('.reveal').forEach(function (el) {
-    if (el.getBoundingClientRect().bottom > 0) {
-      el.classList.add('pre');
-      (el.closest('.ftr') ? ioEnd : io).observe(el);
-    }
+  // Primeiro mede tudo, depois escreve: alternar os dois faria o navegador recalcular a página a cada item
+  Array.prototype.filter.call(document.querySelectorAll('.reveal'), function (el) {
+    return el.getBoundingClientRect().bottom > 0;
+  }).forEach(function (el) {
+    el.classList.add('pre');
+    (el.closest('.ftr') ? ioEnd : io).observe(el);
   });
 
   // Números que contam ao aparecer
@@ -481,11 +532,14 @@
     var so = new IntersectionObserver(function (en) {
       if (!en[0].isIntersecting) return;
       so.disconnect();
+      // toLocaleString trava o primeiro quadro em aparelhos lentos; o ponto de milhar é simples de colocar
+      var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+$)/g, '.'); };
       nums.forEach(function (el) {
-        var end = +el.dataset.n, t0 = performance.now();
+        var end = +el.dataset.n, t0 = performance.now(), prev = 0;
         requestAnimationFrame(function tick(t) {
           var p = Math.min(Math.max(t - t0, 0) / 1800, 1);
-          el.textContent = Math.round(end * (1 - Math.pow(1 - p, 4))).toLocaleString('pt-BR');
+          var n = Math.round(end * (1 - Math.pow(1 - p, 4)));
+          if (n !== prev) { prev = n; el.textContent = fmt(n); }
           if (p < 1) requestAnimationFrame(tick);
         });
       });

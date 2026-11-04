@@ -58,6 +58,15 @@ Todo componente aparece ao rolar. O `site.js` marca os itens por seletor (lista 
 
 Se o aparelho pede menos movimento (no Windows, com "Efeitos de animação" desligado), os itens aparecem com deslocamento curto e saem a rolagem suave, os zooms e a foto que acompanha a rolagem. Para ver tudo mesmo assim, abra o site com `?motion=full` no fim do endereço. A escolha fica salva no navegador, e `?motion=auto` volta ao normal.
 
+Para a animação continuar fluida ao mexer no site:
+
+- Em `@keyframes`, anime só `translate`, `scale`, `rotate`, `transform` e `opacity`. `width`, `height`, `top` e `clip-path` fazem o navegador refazer a página a cada quadro.
+- Animação que repete deve parar fora da tela: coloque a peça em `pauseAway()`, no `site.js`, e a classe `.is-away` pausa tudo dentro dela.
+- No JavaScript, primeiro meça e depois escreva. Só escreva no HTML quando o valor mudar.
+- O banner só conta o tempo enquanto está na tela. Ao voltar, ele continua de onde parou.
+- O botão de WhatsApp dos bairros só muda quando a pessoa aponta ou escolhe um bairro. A troca automática nunca entra na mensagem.
+- `base.html` pré-carrega dois arquivos de fonte do Google pelo endereço exato (Inter v20 e Plus Jakarta Sans v12). Se o Google lançar outra versão, troque esses dois endereços: nada quebra, mas o ganho some até lá.
+
 ## Fotos
 
 As fotos vêm do site antigo da Baluarte, ampliadas por IA. A exceção é a do cartão de porta corta-fogo (`svc-porta.webp`), de banco livre, licença CC0: https://wordpress.org/photos/photo/20167f4a8b/. Troque por uma foto real assim que houver.
