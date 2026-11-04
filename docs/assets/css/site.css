@@ -314,7 +314,7 @@ a.link:hover .ico,.post-card:hover .link .ico{transform:translateX(5px)}
 .map-name{display:block;font:800 18px/1.25 var(--head);color:var(--navy);margin-bottom:4px}
 .map-short{display:block;font-size:14px;line-height:1.45;color:var(--s600)}
 .map-addr{display:block;margin-top:6px;font-size:13px;font-weight:600;color:var(--navy-700)}
-.map-go{margin-top:14px}
+.map-go{width:100%;margin-top:14px}
 .pin{background:none;border:0}
 .pin i{position:absolute;left:0;top:0;display:block;width:16px;height:16px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 2px 6px rgba(15,23,42,.4);transition:scale .3s var(--ease),background .25s}
 .pin-unit i{left:-5px;top:-5px;width:26px;height:26px;border:5px solid #fff;background:var(--red)}
@@ -622,6 +622,8 @@ html.lenis-smooth{scroll-behavior:auto}
   .art-seal{left:calc(50% + 42px);top:92px;width:54px;height:54px}
   .topbar-loc{display:none}
   .topbar-in{justify-content:center}
+  .btn{white-space:normal;line-height:1.25;text-align:center;padding-left:14px;padding-right:14px}
+  .cta-band .btn,.post-cta .btn{width:100%}
   .marquee-group{gap:36px;padding-right:36px}
   .marquee-group img{width:104px;height:52px}
   .mq-btn{width:38px;height:38px;margin-top:-19px}
@@ -662,7 +664,6 @@ html.lenis-smooth{scroll-behavior:auto}
   .band::after{display:none}
   .map-wrap{min-height:500px}
   .map-tip{font-size:12px}
-  .map-go{width:100%}
   .pin:not(.pin-unit):not(.is-sel) b{display:none}
   .gmaps{height:400px}
   .gmaps-card{max-width:none;width:100%}

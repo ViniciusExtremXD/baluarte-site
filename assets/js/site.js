@@ -137,7 +137,6 @@
       addr.textContent = d.addr;
       addr.hidden = !d.addr;
       go.href = rows[i].href;
-      go.querySelector('span').textContent = 'Abrir a página de ' + d.name;
       wrap.classList.add('has-sel');
       // No celular o cartão cobre a parte de baixo do mapa: o ponto fica mais acima
       var center = map.unproject(map.project([+d.lat, +d.lng], 12).add([0, canvas.clientWidth < 600 ? 130 : 0]), 12);
