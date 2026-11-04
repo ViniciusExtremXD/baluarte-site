@@ -49,7 +49,7 @@
     <div class="svc-grid">
       {% for s in SERVICES %}
       <article class="svc{{ ' svc-featured' if s.featured }}">
-        <div class="svc-media"><img src="{{ root }}assets/img/{{ s.img }}" alt="{{ s.alt }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async"></div>
+        <div class="svc-media{{ ' svc-plate' if s.plate }}"><img src="{{ root }}assets/img/{{ s.img }}" alt="{{ s.alt }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async"></div>
         <div class="svc-body">
           <h3>{{ s.title }}</h3>
           <p>{{ s.text }}</p>

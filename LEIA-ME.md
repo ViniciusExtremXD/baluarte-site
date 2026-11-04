@@ -65,11 +65,17 @@ Para a animação continuar fluida ao mexer no site:
 - No JavaScript, primeiro meça e depois escreva. Só escreva no HTML quando o valor mudar.
 - O banner só conta o tempo enquanto está na tela. Ao voltar, ele continua de onde parou.
 - O botão de WhatsApp dos bairros só muda quando a pessoa aponta ou escolhe um bairro. A troca automática nunca entra na mensagem.
-- `base.html` pré-carrega dois arquivos de fonte do Google pelo endereço exato (Inter v20 e Plus Jakarta Sans v12). Se o Google lançar outra versão, troque esses dois endereços: nada quebra, mas o ganho some até lá.
+- As fontes (Inter e Plus Jakarta Sans) ficam em `assets/fonts/`, com o aviso de licença, e não dependem do Google. O `site.css` as declara e o `base.html` as pré-carrega: para trocar um arquivo, use um nome novo e atualize os dois lugares. Elas têm só os caracteres latinos, que cobrem o português; o `₂` de "CO₂" vem da fonte do sistema.
+
+## Prazo e desconto
+
+O `build.py` coloca sozinho um asterisco em "dias úteis" e "20% de desconto" no texto visível, e mostra a observação no rodapé só das páginas que têm a marca (`NOTA_PRAZO`). Não digite o asterisco nos textos. Se escrever a promessa de outro jeito, ajuste `PROMESSA` no `build.py` ou coloque o `*` à mão. Título e descrição das páginas, que aparecem no Google, ficam sem asterisco.
 
 ## Fotos
 
-As fotos vêm do site antigo da Baluarte, ampliadas por IA. A exceção é a do cartão de porta corta-fogo (`svc-porta.webp`), de banco livre, licença CC0: https://wordpress.org/photos/photo/20167f4a8b/. Troque por uma foto real assim que houver.
+As fotos vêm do site antigo da Baluarte, ampliadas por IA. As exceções são as dos cartões de sinalização (`svc-sinalizacao.webp`) e de porta corta-fogo (`svc-porta.webp`), enviadas pelo Diego em novembro de 2026. Elas não são da Baluarte e a origem ainda precisa ser confirmada. Troque por fotos reais assim que houver.
+
+A placa de sinalização aparece inteira sobre um fundo do mesmo verde (classe `.svc-plate`), para não cortar em nenhuma largura de tela. Se trocar a imagem, ajuste essa cor no `site.css`.
 
 ## Avaliações
 

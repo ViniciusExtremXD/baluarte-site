@@ -7,6 +7,7 @@ Uso:
 import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 from datetime import date
@@ -91,8 +92,8 @@ for c in cities:
 SERVICES = [
     {"title": "Recarga e manutenção de extintores", "text": "Todos os tipos, com selo do INMETRO. Retiramos no seu imóvel, deixamos reservas no lugar e devolvemos em até 7 dias úteis. Obrigatória a cada 12 meses.", "msg": "Olá! Quero orçamento de recarga de extintores.", "icon": "refresh", "img": "svc-recarga.webp", "w": 1040, "h": 960, "alt": "Técnico manuseando um extintor com selo do INMETRO", "featured": True},
     {"title": "Teste hidrostático de mangueiras", "text": "Feito no seu prédio, com equipamento automático. Obrigatório todo ano.", "msg": "Olá! Quero orçamento de teste hidrostático de mangueiras.", "icon": "droplets", "img": "svc-mangueira.webp", "w": 1280, "h": 382, "alt": "Mangueira de incêndio enrolada"},
-    {"title": "Sinalização de emergência", "text": "Placas de rota de fuga, saída e equipamentos, conforme o Corpo de Bombeiros.", "msg": "Olá! Quero orçamento de sinalização de emergência.", "icon": "exit", "img": "svc-sinalizacao.webp", "w": 1280, "h": 382, "alt": "Placa de saída de emergência"},
-    {"title": "Porta corta-fogo", "text": "Manutenção e regulagem para fechar e vedar como a norma exige.", "msg": "Olá! Quero orçamento de manutenção de porta corta-fogo.", "icon": "door", "img": "svc-porta.webp", "w": 1280, "h": 584, "alt": "Porta corta-fogo dupla em corredor de prédio"},
+    {"title": "Sinalização de emergência", "text": "Placas de rota de fuga, saída e equipamentos, conforme o Corpo de Bombeiros.", "msg": "Olá! Quero orçamento de sinalização de emergência.", "icon": "exit", "img": "svc-sinalizacao.webp", "w": 971, "h": 469, "alt": "Placa de saída de emergência com escada e seta", "plate": True},
+    {"title": "Porta corta-fogo", "text": "Venda e manutenção para fechar e proteger como a norma exige.", "msg": "Olá! Quero orçamento de manutenção de porta corta-fogo.", "icon": "door", "img": "svc-porta.webp", "w": 890, "h": 520, "alt": "Porta corta-fogo dupla cinza com barra antipânico e placas de sinalização"},
     {"title": "Vistoria de segurança", "text": "Levantamento dos equipamentos do imóvel, sem custo e sem compromisso.", "msg": "Olá! Quero agendar uma vistoria de segurança grátis.", "icon": "clipboard", "img": "svc-vistoria.webp", "w": 1280, "h": 382, "alt": "Manômetro de um extintor sendo conferido"},
     {"title": "Venda de extintores e equipamentos", "text": "Novos, com orientação sobre o tipo e a quantidade certos para o seu imóvel.", "msg": "Olá! Quero orçamento de extintores novos.", "icon": "extinguisher", "img": "svc-venda.webp", "w": 1200, "h": 547, "alt": "Extintor de incêndio novo"},
 ]
@@ -162,8 +163,28 @@ ORG_SCHEMA = {
 }
 
 
+# Toda menção ao prazo de devolução ou ao desconto leva asterisco, e a observação aparece no rodapé da página.
+NOTA_PRAZO = "* Prazo por lote quando não realizado em única etapa, sujeito à região atendida, disponibilidade logística e períodos de alta demanda. Exceções informadas previamente."
+PROMESSA = re.compile(r"dias úteis|20% de desconto(?: no próximo serviço)?")
+
+
 def faq_schema(items):
-    return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": i["q"], "acceptedAnswer": {"@type": "Answer", "text": i["a"]}} for i in items]}
+    def answer(text):
+        marked, n = PROMESSA.subn(r"\g<0>*", text)
+        return f"{marked} {NOTA_PRAZO}" if n else text
+    return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": i["q"], "acceptedAnswer": {"@type": "Answer", "text": answer(i["a"])}} for i in items]}
+
+
+def mark_promises(html):
+    """Marca só o texto visível do corpo da página; título, descrição, atributos e scripts ficam como estão."""
+    head, body = html.split("<body>", 1)
+    parts = re.split(r"(<script.*?</script>|<svg.*?</svg>|<[^>]+>)", body, flags=re.S)
+    has_mark = False
+    for i in range(0, len(parts), 2):
+        parts[i], n = PROMESSA.subn(r"\g<0>*", parts[i])
+        has_mark = has_mark or n > 0
+    note = f'<p class="ftr-nota">{NOTA_PRAZO}</p>' if has_mark else ""
+    return head + "<body>" + "".join(parts).replace("<!--nota-prazo-->", note)
 
 
 def crumbs_schema(items):
@@ -192,7 +213,7 @@ env.globals.update(
 def render(tpl, path, **ctx):
     depth = path.count("/")
     root = "../" * depth
-    html = env.get_template(tpl).render(root=root, path=path, canonical=SITE_URL + "/" + path, **ctx)
+    html = mark_promises(env.get_template(tpl).render(root=root, path=path, canonical=SITE_URL + "/" + path, **ctx))
     dest = os.path.join(OUT, path, "index.html") if path else os.path.join(OUT, "index.html")
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     open(dest, "w", encoding="utf-8").write(html)
@@ -256,7 +277,7 @@ def main():
         ))
 
     # 404 (GitHub Pages e Apache usam /404.html)
-    html404 = env.get_template("404.html").render(root="/" if MODE != "preview" else "/baluarte-site/", path="404", canonical=SITE_URL + "/", title="Página não encontrada | Baluarte Extintores", description="Página não encontrada.", schema=ld(ORG_SCHEMA))
+    html404 = mark_promises(env.get_template("404.html").render(root="/" if MODE != "preview" else "/baluarte-site/", path="404", canonical=SITE_URL + "/", title="Página não encontrada | Baluarte Extintores", description="Página não encontrada.", schema=ld(ORG_SCHEMA)))
     open(os.path.join(OUT, "404.html"), "w", encoding="utf-8").write(html404)
 
     # robots, sitemap, llms
