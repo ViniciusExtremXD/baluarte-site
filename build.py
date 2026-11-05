@@ -22,10 +22,10 @@ OUT = os.path.join(ROOT, "docs" if MODE == "preview" else "dist")
 SITE_URL = "https://www.baluarteextintores.com.br"
 GTM_ID = "GTM-58MG5F9P"
 
-WA_NUMBER = "5513997401621"
+WA_NUMBER = "5513997401624"
 PHONE_TEL = "+551333522500"
 PHONE_LABEL = "(13) 3352-2500"
-WA_LABEL = "(13) 99740-1621"
+WA_LABEL = "(13) 99740-1624"
 EMAIL = "baluarte@baluarteextintores.com.br"
 HOURS = "Segunda a sexta, das 8h às 12h e das 13h15 às 18h"
 REVIEWS_URL = "https://www.google.com/maps/search/?api=1&query=Baluarte+Extintores+Guaruj%C3%A1"

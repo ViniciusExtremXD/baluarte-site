@@ -3,6 +3,44 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 Options -Indexes
 
+# O servidor entrega as fontes sem tipo.
+AddType font/woff2 .woff2
+
+<IfModule mod_headers.c>
+    # Segurança. Sem includeSubDomains, porque o domínio pode ter outros serviços.
+    # O HSTS começa em 1 dia: só aumentar depois de confirmar a renovação automática do certificado.
+    # A CSP não restringe scripts, para não bloquear as tags do GTM, do GA4 e do Ads.
+    Header always set Strict-Transport-Security "max-age=86400"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Content-Security-Policy "frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
+
+    # No Plesk, o nginx entrega direto os arquivos acima de 1 KB e descarta os cabeçalhos de segurança acima.
+    # Sem esse pedido interno, as páginas passam pelo Apache e os cabeçalhos chegam ao navegador. CSS, JS, imagens e fontes seguem direto pelo nginx.
+    # O Apache só compacta em gzip: sem ele, o nginx continua aplicando Brotli, que deixa as páginas menores.
+    <FilesMatch "\.html$">
+        RequestHeader unset X-Accel-Internal
+        SetEnv no-gzip 1
+    </FilesMatch>
+
+    # Cache. Páginas sempre conferem se há versão nova.
+    <FilesMatch "\.(html|xml|txt)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+    # O site.css, o site.js e o lenis.min.js levam ?v=, que muda a cada build. As fontes têm a versão no nome.
+    <FilesMatch "\.(css|js|woff2)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    # Imagens não têm versão: trocar uma mantendo o nome pode levar até 30 dias para chegar a quem já visitou.
+    <FilesMatch "\.(webp|jpg|jpeg|png|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
+
 RewriteEngine On
 
 # Endereços do site antigo.

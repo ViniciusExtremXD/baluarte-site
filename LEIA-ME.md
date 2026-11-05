@@ -20,7 +20,7 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 ## Rastreamento (já pronto)
 
 - O Google Tag Manager `GTM-58MG5F9P` já está no `<head>` de todas as páginas. Ele **só carrega no domínio oficial**, para a prévia não sujar os dados do GA4 e do Google Ads.
-- Os botões de WhatsApp usam `https://wa.me/5513997401621?...` e os de telefone usam `tel:+551333522500`. Os acionadores do GTM já reconhecem esses formatos e registram as conversões no GA4 e no Ads.
+- Os botões de WhatsApp usam `https://wa.me/5513997401624?...` e os de telefone usam `tel:+551333522500`. Os acionadores do GTM já reconhecem esses formatos e registram as conversões no GA4 e no Ads.
 - O formulário de orçamento não grava dados: ele envia o evento `orcamento_enviado` ao `dataLayer` e abre o WhatsApp com a mensagem pronta. O GTM usa esse evento para `generate_lead` e para a conversão de formulário no Google Ads. O telefone vai criptografado para as conversões otimizadas, pelo campo `#f-tel`: se mudar o id, ajuste a variável no GTM.
 - A conversão conta quando o WhatsApp abre. Não dá para saber pelo site se a pessoa enviou a mensagem.
 
