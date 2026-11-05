@@ -53,14 +53,12 @@
       form.querySelectorAll('[data-l]').forEach(function (el) {
         if (el.value.trim()) lines.push(el.dataset.l + ': ' + el.value.trim());
       });
-      // Um clique em link de verdade: os acionadores de wa.me do GTM também enxergam este envio.
-      var a = document.createElement('a');
-      a.href = form.action + '?text=' + encodeURIComponent(lines.join('\n'));
-      a.target = '_blank';
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      // O GTM conta o envio por este evento. Sem clique em link: o que a pessoa digitou não vai para o Analytics.
+      (window.dataLayer = window.dataLayer || []).push({ event: 'orcamento_enviado' });
+      var url = form.action + '?text=' + encodeURIComponent(lines.join('\n'));
+      var w = window.open(url, '_blank');
+      if (w) w.opener = null;
+      else location.href = url;
     });
   });
 

@@ -1,0 +1,35 @@
+# Site estático da Baluarte. O build copia este arquivo para dist/.htaccess
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+Options -Indexes
+
+RewriteEngine On
+
+# Endereços do site antigo.
+# Quando o destino tem #, o parâmetro dos anúncios (gclid) precisa vir antes dele, senão a conversão perde a origem.
+RewriteRule ^index\.php$ / [R=301,L]
+RewriteRule ^home/?$ / [R=301,L]
+RewriteRule ^conteudo/videos/?$ / [R=301,L]
+RewriteRule ^conteudo/areas-de-atuacao/?$ /baixada-santista/ [R=301,L]
+RewriteRule ^(conteudo/nossas-unidades|unidade/[^/]+)/?$ /baixada-santista/ [R=301,L]
+RewriteRule ^(noticias|noticias-arquivo|artigos|conteudo/noticias|noticia/.+|artigo/.+)/?$ /conteudos/ [R=301,L]
+
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^depoimentos/?$ /?%{QUERY_STRING}#avaliacoes [R=301,NE,L]
+RewriteRule ^depoimentos/?$ /#avaliacoes [R=301,NE,L]
+
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^conteudo/quem-somos/?$ /?%{QUERY_STRING}#empresa [R=301,NE,L]
+RewriteRule ^conteudo/quem-somos/?$ /#empresa [R=301,NE,L]
+
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^(conteudo/servicos|servicos/[^/]+)/?$ /?%{QUERY_STRING}#servicos [R=301,NE,L]
+RewriteRule ^(conteudo/servicos|servicos/[^/]+)/?$ /#servicos [R=301,NE,L]
+
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^conteudo/clientes/?$ /?%{QUERY_STRING}#clientes [R=301,NE,L]
+RewriteRule ^conteudo/clientes/?$ /#clientes [R=301,NE,L]
+
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^contato/?$ /?%{QUERY_STRING}#contato [R=301,NE,L]
+RewriteRule ^contato/?$ /#contato [R=301,NE,L]

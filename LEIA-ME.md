@@ -21,23 +21,13 @@ Também ficam na raiz: `robots.txt`, `sitemap.xml`, `llms.txt` (resumo da empres
 
 - O Google Tag Manager `GTM-58MG5F9P` já está no `<head>` de todas as páginas. Ele **só carrega no domínio oficial**, para a prévia não sujar os dados do GA4 e do Google Ads.
 - Os botões de WhatsApp usam `https://wa.me/5513997401621?...` e os de telefone usam `tel:+551333522500`. Os acionadores do GTM já reconhecem esses formatos e registram as conversões no GA4 e no Ads.
-- O formulário de orçamento não grava dados: ele abre o WhatsApp com a mensagem pronta, por um clique em link `wa.me`. Ao publicar, confira no Tag Assistant quais conversões esse envio dispara.
+- O formulário de orçamento não grava dados: ele envia o evento `orcamento_enviado` ao `dataLayer` e abre o WhatsApp com a mensagem pronta. O GTM usa esse evento para `generate_lead` e para a conversão de formulário no Google Ads. O telefone vai criptografado para as conversões otimizadas, pelo campo `#f-tel`: se mudar o id, ajuste a variável no GTM.
+- A conversão conta quando o WhatsApp abre. Não dá para saber pelo site se a pessoa enviou a mensagem.
 
 ## Ao publicar em produção
 
-1. Suba a pasta `dist/` inteira para a raiz do domínio, mantendo as pastas.
-2. Crie redirecionamentos 301 das URLs antigas, por exemplo no `.htaccess`:
-   ```
-   Redirect 301 /conteudo/quem-somos /
-   Redirect 301 /conteudo/servicos /#servicos
-   Redirect 301 /conteudo/clientes /#clientes
-   Redirect 301 /conteudo/areas-de-atuacao /baixada-santista/
-   Redirect 301 /contato /#contato
-   Redirect 301 /servicos/recarga-vistoria-de-extintor /#servicos
-   Redirect 301 /servicos/placas-de-sinalizacao /#servicos
-   Redirect 301 /servicos/teste-hidrostatico /#servicos
-   Redirect 301 /servicos/porta-corta-fogo /#servicos
-   ```
+1. Suba a pasta `dist/` inteira para a raiz do domínio, mantendo as pastas. Arquivos ocultos também: o `.htaccess` faz parte dela.
+2. Os redirecionamentos 301 das URLs antigas estão em `data/htaccess`, que o build copia para `dist/.htaccess`. Não use `Redirect` para destino com `#`: o `gclid` dos anúncios cairia depois do `#` e a conversão perderia a origem.
 3. Envie `https://www.baluarteextintores.com.br/sitemap.xml` no Google Search Console.
 
 ## Como publicar um artigo novo no blog

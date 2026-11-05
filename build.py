@@ -294,6 +294,8 @@ def main():
     open(os.path.join(OUT, "llms.txt"), "w", encoding="utf-8").write(llms)
     if MODE == "preview":
         open(os.path.join(OUT, ".nojekyll"), "w").write("")
+    else:
+        shutil.copy(os.path.join(ROOT, "data", "htaccess"), os.path.join(OUT, ".htaccess"))
     print(f"{MODE}: {len(pages)} páginas em {OUT}")
 
 
