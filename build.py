@@ -166,6 +166,7 @@ ORG_SCHEMA = {
 # Toda menção ao prazo de devolução ou ao desconto leva asterisco, e a observação aparece no rodapé da página.
 NOTA_PRAZO = "* Prazo por lote quando não realizado em única etapa, sujeito à região atendida, disponibilidade logística e períodos de alta demanda. Exceções informadas previamente."
 PROMESSA = re.compile(r"dias úteis|20% de desconto(?: no próximo serviço)?")
+AST_TITULO = '<span style="margin-right:-.14em">*</span>'
 
 
 def faq_schema(items):
@@ -184,7 +185,9 @@ def mark_promises(html):
         parts[i], n = PROMESSA.subn(r"\g<0>*", parts[i])
         has_mark = has_mark or n > 0
     note = f'<p class="ftr-nota">{NOTA_PRAZO}</p>' if has_mark else ""
-    return head + "<body>" + "".join(parts).replace("<!--nota-prazo-->", note)
+    corpo = "".join(parts).replace("<!--nota-prazo-->", note)
+    # No título grande do banner, a fonte deixa um vão depois do asterisco.
+    return head + "<body>" + corpo.replace("dias úteis*</em>, ou", f"dias úteis{AST_TITULO}</em>, ou").replace("de desconto*.", f"de desconto{AST_TITULO}.")
 
 
 def crumbs_schema(items):
